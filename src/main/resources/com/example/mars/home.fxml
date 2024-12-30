@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="540.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Home">
+   <children>
+      <Button fx:id="play_game" layoutX="341.0" layoutY="130.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="Play Game" />
+      <Button fx:id="continue" layoutX="341.0" layoutY="208.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="178.0" text="Continue" />
+   </children>
+</AnchorPane>

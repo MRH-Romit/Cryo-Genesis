@@ -1,0 +1,11 @@
+/* styles.css */
+
+.root {
+    -fx-background-color: black;
+}
+
+.canvas {
+    /* Example: Add a border around the canvas */
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+}
