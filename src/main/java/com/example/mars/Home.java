@@ -37,7 +37,7 @@ public class Home {
         try {
             // Load the Game.fxml file
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GamePanel.fxml"));
-            Scene gameScene = new Scene(fxmlLoader.load(), 816, 540);
+            Scene gameScene = new Scene(fxmlLoader.load(), 850, 550);
 
             // Get the current stage from the button's scene
             Stage currentStage = (Stage) play_game.getScene().getWindow();

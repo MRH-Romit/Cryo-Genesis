@@ -66,7 +66,7 @@ public class start {
         System.out.println("Switching to Home Page..."); // Debug line
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("home.fxml"));
-            Scene homeScene = new Scene(fxmlLoader.load(), 816, 540);
+            Scene homeScene = new Scene(fxmlLoader.load(), 850, 550);
 
             Stage currentStage = (Stage) Label1.getScene().getWindow();
             currentStage.setScene(homeScene);

@@ -8,6 +8,6 @@
 
     <!-- Define the canvas where the game will be drawn. -->
     <!-- The width and height can match your screenWidth and screenHeight. -->
-    <Canvas fx:id="gameCanvas" height="634.0" width="898.0" />
-   <Button layoutX="832.0" layoutY="14.0" mnemonicParsing="false" text="Pause" />
+    <Canvas fx:id="gameCanvas" height="550.0" width="850.0" />
+   <Button layoutX="788.0" layoutY="14.0" mnemonicParsing="false" text="Pause" />
 </AnchorPane>
