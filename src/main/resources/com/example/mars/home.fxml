@@ -36,18 +36,18 @@
          <font>
             <Font name="Centaur" size="24.0" />
          </font></Button>
-      <Button fx:id="play_game1" layoutX="326.0" layoutY="317.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="Support">
+      <Button fx:id="support" layoutX="326.0" layoutY="317.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="Support">
          <font>
             <Font name="Centaur" size="24.0" />
          </font>
       </Button>
 
       <!-- "Continue" Button -->
-      <Button fx:id="continue" layoutX="325.0" layoutY="379.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Settings">
+      <Button fx:id="settings" layoutX="325.0" layoutY="379.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Settings">
          <font>
             <Font name="Centaur" size="24.0" />
          </font></Button>
-      <Button layoutX="325.0" layoutY="251.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Character">
+      <Button fx:id="character" layoutX="325.0" layoutY="251.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Character">
          <font>
             <Font name="Centaur" size="24.0" />
          </font>
