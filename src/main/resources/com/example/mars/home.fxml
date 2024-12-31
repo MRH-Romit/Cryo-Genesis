@@ -11,18 +11,18 @@
 <!-- Make sure the fx:controller is set to the fully qualified name
      of your controller class (e.g. com.example.mars.Home). -->
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="777.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Home">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Home">
 
    <children>
       <!-- Background image -->
-      <ImageView fitHeight="650.0" fitWidth="798.0" layoutX="-10.0" layoutY="-85.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="682.0" fitWidth="841.0" layoutX="-10.0" layoutY="-97.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/bg.jpg" />
          </image>
       </ImageView>
 
       <!-- Title Label -->
-      <Label layoutX="263.0" layoutY="61.0" prefHeight="62.0" prefWidth="250.0" text="CRYO GENESIS" textFill="WHITE" underline="true">
+      <Label layoutX="273.0" layoutY="62.0" prefHeight="62.0" prefWidth="250.0" text="CRYO GENESIS" textFill="WHITE" underline="true">
          <font>
             <Font name="Centaur" size="36.0" />
          </font>
@@ -32,22 +32,22 @@
       </Label>
 
       <!-- "Play Game" Button -->
-      <Button fx:id="play_game" layoutX="294.0" layoutY="185.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="Play Game">
+      <Button fx:id="play_game" layoutX="304.0" layoutY="186.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="Play Game">
          <font>
             <Font name="Centaur" size="24.0" />
          </font></Button>
-      <Button fx:id="play_game1" layoutX="295.0" layoutY="317.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="Support">
+      <Button fx:id="play_game1" layoutX="305.0" layoutY="318.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="Support">
          <font>
             <Font name="Centaur" size="24.0" />
          </font>
       </Button>
 
       <!-- "Continue" Button -->
-      <Button fx:id="continue" layoutX="294.0" layoutY="379.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Settings">
+      <Button fx:id="continue" layoutX="304.0" layoutY="380.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Settings">
          <font>
             <Font name="Centaur" size="24.0" />
          </font></Button>
-      <Button layoutX="294.0" layoutY="251.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Character">
+      <Button layoutX="304.0" layoutY="252.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Character">
          <font>
             <Font name="Centaur" size="24.0" />
          </font>
