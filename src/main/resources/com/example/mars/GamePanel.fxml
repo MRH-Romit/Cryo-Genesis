@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.GamePanelController">
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.GamePanelController">
 
     <!-- Define the canvas where the game will be drawn. -->
     <!-- The width and height can match your screenWidth and screenHeight. -->
     <Canvas fx:id="gameCanvas" height="634.0" width="898.0" />
+   <Button layoutX="832.0" layoutY="14.0" mnemonicParsing="false" text="Pause" />
 </AnchorPane>
