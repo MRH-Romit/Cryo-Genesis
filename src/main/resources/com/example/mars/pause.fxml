@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<!-- Make sure the fx:controller is set to the fully qualified name
+     of your controller class (e.g. com.example.mars.Home). -->
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Home">
+
+    <children>
+        <!-- Background image -->
+        <ImageView fitHeight="682.0" fitWidth="841.0" layoutX="-10.0" layoutY="-97.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../images/bg.jpg" />
+            </image>
+        </ImageView>
+
+        <!-- Title Label -->
+        <Label layoutX="273.0" layoutY="62.0" prefHeight="62.0" prefWidth="250.0" text="CRYO GENESIS" textFill="WHITE" underline="true">
+            <font>
+                <Font name="Centaur" size="36.0" />
+            </font>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+        </Label>
+
+        <!-- "Play Game" Button -->
+        <Button fx:id="new_game" layoutX="305.0" layoutY="256.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="New Game">
+            <font>
+                <Font name="Centaur" size="24.0" />
+            </font></Button>
+        <Button fx:id="support" layoutX="305.0" layoutY="318.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="Support">
+            <font>
+                <Font name="Centaur" size="24.0" />
+            </font>
+        </Button>
+
+        <!-- "Continue" Button -->
+        <Button fx:id="settings" layoutX="304.0" layoutY="380.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Settings">
+            <font>
+                <Font name="Centaur" size="24.0" />
+            </font></Button>
+        <Button fx:id="resume" layoutX="305.0" layoutY="187.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Resume">
+            <font>
+                <Font name="Centaur" size="24.0" />
+            </font>
+        </Button>
+    </children>
+</AnchorPane>
