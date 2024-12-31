@@ -1,44 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <!-- Make sure the fx:controller is set to the fully qualified name
      of your controller class (e.g. com.example.mars.Home). -->
-<AnchorPane maxHeight="-Infinity"
-            maxWidth="-Infinity"
-            minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="452.0"
-            prefWidth="690.0"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.mars.Home">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="777.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Home">
 
    <children>
       <!-- Background image -->
-      <ImageView fitHeight="587.0"
-                 fitWidth="707.0"
-                 layoutX="-8.0"
-                 layoutY="-116.0"
-                 pickOnBounds="true"
-                 preserveRatio="true">
+      <ImageView fitHeight="650.0" fitWidth="798.0" layoutX="-10.0" layoutY="-85.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/bg.jpg" />
          </image>
       </ImageView>
 
       <!-- Title Label -->
-      <Label layoutX="212.0"
-             layoutY="59.0"
-             prefHeight="62.0"
-             prefWidth="266.0"
-             text="CRYO GENESIS"
-             textFill="WHITE"
-             underline="true">
+      <Label layoutX="263.0" layoutY="61.0" prefHeight="62.0" prefWidth="250.0" text="CRYO GENESIS" textFill="WHITE" underline="true">
          <font>
             <Font name="Centaur" size="36.0" />
          </font>
@@ -48,22 +32,25 @@
       </Label>
 
       <!-- "Play Game" Button -->
-      <Button fx:id="play_game"
-              layoutX="244.0"
-              layoutY="155.0"
-              mnemonicParsing="false"
-              onAction="#onPlayGame"
-              prefHeight="31.0"
-              prefWidth="178.0"
-              text="Play Game" />
+      <Button fx:id="play_game" layoutX="294.0" layoutY="185.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="Play Game">
+         <font>
+            <Font name="Centaur" size="24.0" />
+         </font></Button>
+      <Button fx:id="play_game1" layoutX="295.0" layoutY="317.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="Support">
+         <font>
+            <Font name="Centaur" size="24.0" />
+         </font>
+      </Button>
 
       <!-- "Continue" Button -->
-      <Button fx:id="continue"
-              layoutX="247.0"
-              layoutY="215.0"
-              mnemonicParsing="false"
-              prefHeight="31.0"
-              prefWidth="171.0"
-              text="Continue" />
+      <Button fx:id="continue" layoutX="294.0" layoutY="379.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Settings">
+         <font>
+            <Font name="Centaur" size="24.0" />
+         </font></Button>
+      <Button layoutX="294.0" layoutY="251.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Character">
+         <font>
+            <Font name="Centaur" size="24.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
