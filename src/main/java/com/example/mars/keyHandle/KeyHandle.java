@@ -1,4 +1,4 @@
-package com.example.mars;
+package com.example.mars.keyHandle;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;

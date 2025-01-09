@@ -1,5 +1,6 @@
 package com.example.mars;
 
+import com.example.mars.keyHandle.KeyHandle;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class GamePanelController {
+public class GamePanel {
     private final int originalTileSize = 16;
     private final int scale = 4;
     private final int tileSize = originalTileSize * scale; // 64
