@@ -1,6 +1,8 @@
 package com.example.mars;
 
 import com.example.mars.keyHandle.KeyHandle;
+import com.example.mars.tiles.tileManager;
+import com.example.mars.tiles.tileManager;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,14 +22,17 @@ import java.io.InputStream;
 public class GamePanel {
     private final int originalTileSize = 16;
     private final int scale = 4;
-    private final int tileSize = originalTileSize * scale; // 64
-    private final int screenWidth = tileSize * 16; // 1024
-    private final int screenHeight = tileSize * 12; // 768
+    public final int maxScreenCol = 13;
+    public final int maxScreenRow = 9;
+    public final int tileSize = originalTileSize * scale; // 64
+    private final int screenWidth = tileSize * maxScreenCol; // 1024
+    private final int screenHeight = tileSize * maxScreenRow; // 768
 
     private int playerX = 100;
     private int playerY = 100;
     private int playerSpeed = 2;
 
+    tileManager tileM = new tileManager(   this);  // TileManager initialization
     private KeyHandle keyH = new KeyHandle();
 
     @FXML
@@ -111,6 +116,8 @@ public class GamePanel {
 
     private void draw() {
         gc.clearRect(0, 0, screenWidth, screenHeight);
+        // Draw the tiles
+        tileM.draw(gc);
         // Draw the character
         gc.drawImage(characterSprite, playerX, playerY, tileSize, tileSize);
     }
