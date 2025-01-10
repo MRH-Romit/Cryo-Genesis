@@ -22,8 +22,8 @@ import java.io.InputStream;
 public class GamePanel {
     private final int originalTileSize = 16;
     private final int scale = 4;
-    public final int maxScreenCol = 13;
-    public final int maxScreenRow = 9;
+    public final int maxScreenCol = 12;
+    public final int maxScreenRow = 8;
     public final int tileSize = originalTileSize * scale; // 64
     private final int screenWidth = tileSize * maxScreenCol; // 1024
     private final int screenHeight = tileSize * maxScreenRow; // 768
@@ -31,6 +31,17 @@ public class GamePanel {
     private int playerX = 100;
     private int playerY = 100;
     private int playerSpeed = 2;
+
+    private int idleFrame = 0; // Current frame for idle animation
+    private long idleLastUpdate = 0; // Last time the idle frame updated
+    private final long idleFrameDuration = 500_000_000; // 0.5 seconds per frame
+    private int frameWidth = 85; // Calculated frame width
+    private int frameHeight = 100; // Estimate from the sprite sheet rows
+    private int walkingFrame = 0; // Current frame for walking animation
+    private final int totalWalkingFrames = 4; // Total frames per walking animation direction
+    private long lastFrameTime = 0; // Time of the last frame update
+    private final long frameDuration = 100_000_000; // Duration for each frame (100 ms)
+
 
     tileManager tileM = new tileManager(   this);  // TileManager initialization
     private KeyHandle keyH = new KeyHandle();
@@ -91,36 +102,53 @@ public class GamePanel {
     }
 
     private void update() {
-        // Update player position and sprite based on direction
+        boolean isMoving = false;
+
         if (keyH.upPressed) {
             playerY = Math.max(playerY - playerSpeed, 0);
-            // "up" frame
-            characterSprite = new WritableImage(spriteSheet.getPixelReader(), 0, 0, 128, 112);
-        }
-        if (keyH.downPressed) {
+            isMoving = true;
+        } else if (keyH.downPressed) {
             playerY = Math.min(playerY + playerSpeed, screenHeight - tileSize);
-            // "down" frame
-            characterSprite = new WritableImage(spriteSheet.getPixelReader(), 128, 0, 128, 112);
-        }
-        if (keyH.leftPressed) {
+            isMoving = true;
+        } else if (keyH.leftPressed) {
             playerX = Math.max(playerX - playerSpeed, 0);
-            // "left" frame
-            characterSprite = new WritableImage(spriteSheet.getPixelReader(), 256, 0, 128, 112);
-        }
-        if (keyH.rightPressed) {
+            isMoving = true;
+        } else if (keyH.rightPressed) {
             playerX = Math.min(playerX + playerSpeed, screenWidth - tileSize);
-            // "right" frame
-            characterSprite = new WritableImage(spriteSheet.getPixelReader(), 384, 0, 128, 112);
+            isMoving = true;
+        }
+
+        long currentTime = System.nanoTime();
+        if (isMoving) {
+            if (currentTime - lastFrameTime > frameDuration) {
+                walkingFrame = (walkingFrame + 1) % totalWalkingFrames; // Loop walking frames
+                lastFrameTime = currentTime;
+            }
+            characterSprite = new WritableImage(
+                    spriteSheet.getPixelReader(),
+                    walkingFrame * frameWidth, // X position of frame
+                    calculateYDirectionOffset(), // Y offset based on direction
+                    frameWidth,
+                    frameHeight
+            );
         }
     }
 
+    private int calculateYDirectionOffset() {
+        if (keyH.upPressed) return frameHeight * 3;
+        if (keyH.downPressed) return 0;
+        if (keyH.leftPressed) return frameHeight * 1;
+        if (keyH.rightPressed) return frameHeight * 2;
+        return 0; // Default to the down direction if no input is detected
+    }
+
+
     private void draw() {
         gc.clearRect(0, 0, screenWidth, screenHeight);
-        // Draw the tiles
         tileM.draw(gc);
-        // Draw the character
         gc.drawImage(characterSprite, playerX, playerY, tileSize, tileSize);
     }
+
 
     /**
      * Invoked when the user clicks the Pause button.

@@ -1,6 +1,5 @@
 package com.example.mars.tiles;
 
-
 import com.example.mars.GamePanel;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -31,61 +30,44 @@ public class tileManager {
             tile[1] = new tile();
             tile[1].image = new Image(getClass().getResourceAsStream("/tiles/wall.png"));
 
-            tile[2] = new tile() ;
-            tile[2].image = new Image(getClass().getResourceAsStream("/tiles/whole.png"));
+            tile[2] = new tile();
+            tile[2].image = new Image(getClass().getResourceAsStream("/tiles/water.png")); // Example
 
+            tile[3] = new tile();
+            tile[3].image = new Image(getClass().getResourceAsStream("/tiles/lava.png")); // Example
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void loadMap() {
-        try {
-            InputStream is = getClass().getResourceAsStream("/maps/map01.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        try (InputStream is = getClass().getResourceAsStream("/maps/map01.txt");
+             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 
-            int col = 0;
-            int row = 0;
-
-            while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
+            for (int row = 0; row < gp.maxScreenRow; row++) {
                 String line = br.readLine();
+                if (line == null) break; // Stop if no more rows
                 String[] numbers = line.split(" ");
-
-                while (col < gp.maxScreenCol) {
-                    int num = Integer.parseInt(numbers[col]);
-                    mapTileNum[col][row] = num;
-                    col++;
-                }
-                if (col == gp.maxScreenCol) {
-                    col = 0;
-                    row++;
+                for (int col = 0; col < gp.maxScreenCol; col++) {
+                    if (col < numbers.length) {
+                        mapTileNum[col][row] = Integer.parseInt(numbers[col]);
+                    }
                 }
             }
-            br.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void draw(GraphicsContext gc) {
-        int col = 0;
-        int row = 0;
-        double x = 0;
-        double y = 0;
-
-        while (col < gp.maxScreenCol && row < gp.maxScreenRow) {
-            int tileNum = mapTileNum[col][row];
-            gc.drawImage(tile[tileNum].image, x, y, gp.tileSize, gp.tileSize);
-
-            col++;
-            x += gp.tileSize;
-
-            if (col == gp.maxScreenCol) {
-                col = 0;
-                x = 0;
-                row++;
-                y += gp.tileSize;
+        for (int row = 0; row < gp.maxScreenRow; row++) {
+            for (int col = 0; col < gp.maxScreenCol; col++) {
+                int tileNum = 0; // Default to ground if tile is missing
+                if (col < mapTileNum.length && row < mapTileNum[col].length) {
+                    tileNum = mapTileNum[col][row];
+                }
+                gc.drawImage(tile[tileNum].image, col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize);
             }
         }
     }
-}
+} // Add this closing curly brace to fix the error
