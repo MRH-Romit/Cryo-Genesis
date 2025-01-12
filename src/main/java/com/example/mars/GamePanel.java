@@ -32,8 +32,11 @@ public class GamePanel {
     private int playerSpeed = 2;
 
     private int currentFrame = 0; // Current animation frame
+    private int currentRow = 0; // Tracks the current animation row
     private long lastFrameTime = 0; // Last time the frame was updated
     private final long frameDuration = 100_000_000; // Frame duration (100ms)
+    private boolean isAttacking = false; // Tracks if the player is attacking
+    private boolean isDead = false; // Tracks if the player is dead
 
     private tileManager tileM = new tileManager(this);  // TileManager initialization
     private KeyHandle keyH = new KeyHandle();
@@ -93,52 +96,79 @@ public class GamePanel {
     private void update() {
         boolean isMoving = false;
 
-        // Movement keys
+        // Handle movement logic
         if (keyH.upPressed) {
             playerY = Math.max(playerY - playerSpeed, 0);
             isMoving = true;
+            currentRow = 3; // Row 3 for moving up
         }
         if (keyH.downPressed) {
             playerY = Math.min(playerY + playerSpeed, screenHeight - tileSize);
             isMoving = true;
-        }
-        if (keyH.leftPressed) {
-            playerX = Math.max(playerX - playerSpeed, 0);
-            isMoving = true;
+            currentRow = 4; // Row 4 for moving down
         }
         if (keyH.rightPressed) {
             playerX = Math.min(playerX + playerSpeed, screenWidth - tileSize);
             isMoving = true;
+            currentRow = 5; // Row 5 for moving right
+        }
+        if (keyH.leftPressed) {
+            playerX = Math.max(playerX - playerSpeed, 0);
+            isMoving = true;
+            currentRow = 5; // Use row 5 (flipped) for moving left
         }
 
-        // Update frame for animation
+        // Handle attack logic
+        if (keyH.attackPressed) {
+            isAttacking = true;
+            currentRow = 6; // Row 6 for attack animations
+        }
+
+        // Determine the current frame for animations
         long currentTime = System.nanoTime();
-        if (isMoving) {
+        if (isAttacking) {
             if (currentTime - lastFrameTime > frameDuration) {
-                currentFrame = (currentFrame + 1) % 3; // Loop through 3 frames
+                currentFrame = (currentFrame + 1) % 3; // Loop through 3 frames for attack
                 lastFrameTime = currentTime;
             }
-            int row = calculateYDirectionOffset(); // Get correct row based on direction
-            characterSprite = new WritableImage(
-                    spriteSheet.getPixelReader(),
-                    currentFrame * 48, // Select frame column
-                    row * 48,          // Select frame row
-                    48, 48             // Frame size
-            );
+            if (currentFrame == 0) { // Reset attack after one loop
+                isAttacking = false;
+            }
+        } else if (isMoving) {
+            if (currentTime - lastFrameTime > frameDuration) {
+                currentFrame = (currentFrame + 1) % 3; // Loop through 3 frames for movement
+                lastFrameTime = currentTime;
+            }
+        } else if (!isDead) { // Idle animation
+            if (currentTime - lastFrameTime > frameDuration) {
+                currentFrame = (currentFrame + 1) % 3; // Loop through 3 frames for idle
+                lastFrameTime = currentTime;
+                currentRow = 0; // Row 0 for idle
+            }
         }
 
-        // Handle attack
-        if (keyH.attackPressed) {
-            performAttack();
+        // Handle death animation
+        if (isDead) {
+            currentRow = 9; // Row 9 for death
+            currentFrame = 0; // Static frame for death
         }
+
+        // Update the sprite based on the current frame and row
+        characterSprite = new WritableImage(
+                spriteSheet.getPixelReader(),
+                currentFrame * 48, // Frame column
+                currentRow * 48,   // Frame row
+                48, 48             // Frame size
+        );
     }
 
-    private int calculateYDirectionOffset() {
-        if (keyH.upPressed) return 3;   // Moving up row
-        if (keyH.downPressed) return 4; // Moving down row
-        if (keyH.leftPressed) return 5; // Moving left row
-        if (keyH.rightPressed) return 5; // Moving right row
-        return 0; // Default to idle
+
+    private int calculateMoveRow() {
+        if (keyH.upPressed) return 5;
+        if (keyH.downPressed) return 5;
+        if (keyH.leftPressed) return 5;
+        if (keyH.rightPressed) return 4;
+        return 0;
     }
 
     private void draw() {
@@ -151,12 +181,28 @@ public class GamePanel {
         if (keyH.leftPressed) {
             gc.save();
             gc.scale(-1, 1); // Flip horizontally
-            gc.drawImage(characterSprite, -playerX - characterWidth, playerY, characterWidth, characterHeight);
+            gc.drawImage(
+                    characterSprite,
+                    -playerX - characterWidth, // Adjust position for flipping
+                    playerY,
+                    characterWidth,
+                    characterHeight
+            );
             gc.restore();
         } else {
-            gc.drawImage(characterSprite, playerX, playerY, characterWidth, characterHeight);
+            gc.drawImage(
+                    characterSprite,
+                    playerX,
+                    playerY,
+                    characterWidth,
+                    characterHeight
+            );
         }
     }
+    public void triggerDeath() {
+        isDead = true;
+    }
+
 
     private void performAttack() {
         // Example attack animation logic

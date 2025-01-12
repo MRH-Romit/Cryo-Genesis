@@ -27,7 +27,7 @@ public class KeyHandle {
                     rightPressed = true;
                     break;
                 case SPACE:
-                    attackPressed = true; // Attack action starts when SPACE is pressed
+                    attackPressed = true;
                     break;
                 default:
                     break;
@@ -56,7 +56,7 @@ public class KeyHandle {
                     rightPressed = false;
                     break;
                 case SPACE:
-                    attackPressed = false; // Reset attack action when SPACE is released
+                    attackPressed = false;
                     break;
                 default:
                     break;
