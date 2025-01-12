@@ -2,7 +2,6 @@ package com.example.mars;
 
 import com.example.mars.keyHandle.KeyHandle;
 import com.example.mars.tiles.tileManager;
-import com.example.mars.tiles.tileManager;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -32,31 +31,21 @@ public class GamePanel {
     private int playerY = 100;
     private int playerSpeed = 2;
 
-    private int idleFrame = 0; // Current frame for idle animation
-    private long idleLastUpdate = 0; // Last time the idle frame updated
-    private final long idleFrameDuration = 500_000_000; // 0.5 seconds per frame
-    private int frameWidth = 85; // Calculated frame width
-    private int frameHeight = 100; // Estimate from the sprite sheet rows
-    private int walkingFrame = 0; // Current frame for walking animation
-    private final int totalWalkingFrames = 4; // Total frames per walking animation direction
-    private long lastFrameTime = 0; // Time of the last frame update
-    private final long frameDuration = 100_000_000; // Duration for each frame (100 ms)
+    private int currentFrame = 0; // Current animation frame
+    private long lastFrameTime = 0; // Last time the frame was updated
+    private final long frameDuration = 100_000_000; // Frame duration (100ms)
 
-
-    tileManager tileM = new tileManager(   this);  // TileManager initialization
+    private tileManager tileM = new tileManager(this);  // TileManager initialization
     private KeyHandle keyH = new KeyHandle();
 
     @FXML
     private Canvas gameCanvas;
 
-    // Reference to the GraphicsContext
-    private GraphicsContext gc;
+    private GraphicsContext gc; // Reference to the GraphicsContext
 
-    // Sprite data
     private Image spriteSheet;
     private WritableImage characterSprite;
 
-    // Reference to our AnimationTimer so we can pause/stop it
     private AnimationTimer gameLoop;
 
     @FXML
@@ -66,8 +55,8 @@ public class GamePanel {
         // Load sprite sheet
         try (InputStream is = getClass().getResourceAsStream("/images/character.png")) {
             spriteSheet = new Image(is);
-            // Extract a sub-image (example: x=128, y=116, width=64, height=40)
-            characterSprite = new WritableImage(spriteSheet.getPixelReader(), 128, 116, 64, 40);
+            // Set initial character sprite
+            characterSprite = new WritableImage(spriteSheet.getPixelReader(), 0, 0, 48, 48);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -104,64 +93,84 @@ public class GamePanel {
     private void update() {
         boolean isMoving = false;
 
+        // Movement keys
         if (keyH.upPressed) {
             playerY = Math.max(playerY - playerSpeed, 0);
             isMoving = true;
-        } else if (keyH.downPressed) {
+        }
+        if (keyH.downPressed) {
             playerY = Math.min(playerY + playerSpeed, screenHeight - tileSize);
             isMoving = true;
-        } else if (keyH.leftPressed) {
+        }
+        if (keyH.leftPressed) {
             playerX = Math.max(playerX - playerSpeed, 0);
             isMoving = true;
-        } else if (keyH.rightPressed) {
+        }
+        if (keyH.rightPressed) {
             playerX = Math.min(playerX + playerSpeed, screenWidth - tileSize);
             isMoving = true;
         }
 
+        // Update frame for animation
         long currentTime = System.nanoTime();
         if (isMoving) {
             if (currentTime - lastFrameTime > frameDuration) {
-                walkingFrame = (walkingFrame + 1) % totalWalkingFrames; // Loop walking frames
+                currentFrame = (currentFrame + 1) % 3; // Loop through 3 frames
                 lastFrameTime = currentTime;
             }
+            int row = calculateYDirectionOffset(); // Get correct row based on direction
             characterSprite = new WritableImage(
                     spriteSheet.getPixelReader(),
-                    walkingFrame * frameWidth, // X position of frame
-                    calculateYDirectionOffset(), // Y offset based on direction
-                    frameWidth,
-                    frameHeight
+                    currentFrame * 48, // Select frame column
+                    row * 48,          // Select frame row
+                    48, 48             // Frame size
             );
+        }
+
+        // Handle attack
+        if (keyH.attackPressed) {
+            performAttack();
         }
     }
 
     private int calculateYDirectionOffset() {
-        if (keyH.upPressed) return frameHeight * 3;
-        if (keyH.downPressed) return 0;
-        if (keyH.leftPressed) return frameHeight * 1;
-        if (keyH.rightPressed) return frameHeight * 2;
-        return 0; // Default to the down direction if no input is detected
+        if (keyH.upPressed) return 3;   // Moving up row
+        if (keyH.downPressed) return 4; // Moving down row
+        if (keyH.leftPressed) return 5; // Moving left row
+        if (keyH.rightPressed) return 5; // Moving right row
+        return 0; // Default to idle
     }
-
 
     private void draw() {
         gc.clearRect(0, 0, screenWidth, screenHeight);
         tileM.draw(gc);
-        gc.drawImage(characterSprite, playerX, playerY, tileSize, tileSize);
+
+        if (keyH.leftPressed) {
+            gc.save();
+            gc.scale(-1, 1); // Flip horizontally
+            gc.drawImage(characterSprite, -playerX - tileSize, playerY, tileSize, tileSize);
+            gc.restore();
+        } else {
+            gc.drawImage(characterSprite, playerX, playerY, tileSize, tileSize);
+        }
     }
 
+    private void performAttack() {
+        // Example attack animation logic
+        characterSprite = new WritableImage(
+                spriteSheet.getPixelReader(),
+                currentFrame * 48,      // Attack frames
+                6 * 48,                 // Attack row (6th row)
+                48, 48                  // Frame size
+        );
+    }
 
-    /**
-     * Invoked when the user clicks the Pause button.
-     * Opens pause.fxml in a new window and stops the game loop.
-     */
     @FXML
     private void onPauseClick() {
-        // Stop the game loop so the game is paused
         if (gameLoop != null) {
             gameLoop.stop();
         }
 
-        // Load the pause menu in a new window
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("pause.fxml"));
             Parent pauseRoot = loader.load();

@@ -4,7 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
 public class KeyHandle {
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, attackPressed;
 
     public EventHandler<KeyEvent> keyPressedHandler = new EventHandler<KeyEvent>() {
         @Override
@@ -25,6 +25,9 @@ public class KeyHandle {
                 case D:
                 case RIGHT:
                     rightPressed = true;
+                    break;
+                case SPACE:
+                    attackPressed = true; // Attack action starts when SPACE is pressed
                     break;
                 default:
                     break;
@@ -51,6 +54,9 @@ public class KeyHandle {
                 case D:
                 case RIGHT:
                     rightPressed = false;
+                    break;
+                case SPACE:
+                    attackPressed = false; // Reset attack action when SPACE is released
                     break;
                 default:
                     break;
