@@ -25,16 +25,19 @@ public class tileManager {
     public void getTileImage() {
         try {
             tile[0] = new tile();
-            tile[0].image = new Image(getClass().getResourceAsStream("/tiles/ground.png"));
+            tile[0].image = new Image(getClass().getResourceAsStream("/tiles/flat.png"));
 
             tile[1] = new tile();
             tile[1].image = new Image(getClass().getResourceAsStream("/tiles/wall.png"));
 
             tile[2] = new tile();
-            tile[2].image = new Image(getClass().getResourceAsStream("/tiles/water.png")); // Example
+            tile[2].image = new Image(getClass().getResourceAsStream("/tiles/Water.png")); // Example
 
             tile[3] = new tile();
-            tile[3].image = new Image(getClass().getResourceAsStream("/tiles/lava.png")); // Example
+            tile[3].image = new Image(getClass().getResourceAsStream("/tiles/whole.png")); // Example
+
+            tile[4] = new tile();
+            tile[4].image = new Image(getClass().getResourceAsStream("/tiles/twoWhole.png")); // Example
         } catch (Exception e) {
             e.printStackTrace();
         }
