@@ -143,15 +143,18 @@ public class GamePanel {
 
     private void draw() {
         gc.clearRect(0, 0, screenWidth, screenHeight);
-        tileM.draw(gc);
+        tileM.draw(gc); // Draw tiles
+
+        int characterWidth = tileSize * 2; // Double the width
+        int characterHeight = tileSize * 2; // Double the height
 
         if (keyH.leftPressed) {
             gc.save();
             gc.scale(-1, 1); // Flip horizontally
-            gc.drawImage(characterSprite, -playerX - tileSize, playerY, tileSize, tileSize);
+            gc.drawImage(characterSprite, -playerX - characterWidth, playerY, characterWidth, characterHeight);
             gc.restore();
         } else {
-            gc.drawImage(characterSprite, playerX, playerY, tileSize, tileSize);
+            gc.drawImage(characterSprite, playerX, playerY, characterWidth, characterHeight);
         }
     }
 
