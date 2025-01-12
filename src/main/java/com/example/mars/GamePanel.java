@@ -100,39 +100,45 @@ public class GamePanel {
         if (keyH.upPressed) {
             playerY = Math.max(playerY - playerSpeed, 0);
             isMoving = true;
-            currentRow = 3; // Row 3 for moving up
+            currentRow = 5; // Row 5 for upside movement
         }
         if (keyH.downPressed) {
             playerY = Math.min(playerY + playerSpeed, screenHeight - tileSize);
             isMoving = true;
-            currentRow = 4; // Row 4 for moving down
+            currentRow = 3; // Row 3 for downside movement
         }
         if (keyH.rightPressed) {
             playerX = Math.min(playerX + playerSpeed, screenWidth - tileSize);
             isMoving = true;
-            currentRow = 5; // Row 5 for moving right
+            currentRow = 4; // Row 4 for right-side movement
         }
         if (keyH.leftPressed) {
             playerX = Math.max(playerX - playerSpeed, 0);
             isMoving = true;
-            currentRow = 5; // Use row 5 (flipped) for moving left
+            currentRow = 4; // Row 4 for left-side movement (flipped)
         }
 
         // Handle attack logic
-        if (keyH.attackPressed) {
+        if (keyH.attackPressed && !isAttacking) {
             isAttacking = true;
-            currentRow = 6; // Row 6 for attack animations
+            if (keyH.upPressed) currentRow = 8;          // Row 8 for upside attack
+            else if (keyH.downPressed) currentRow = 6;   // Row 6 for downside attack
+            else if (keyH.rightPressed) currentRow = 7;  // Row 7 for right-side attack
+            else if (keyH.leftPressed) currentRow = 7;   // Row 7 for left-side attack (flipped)
+            else currentRow = 6;                         // Default to downside attack if no movement
+            currentFrame = 0; // Start attack animation from the first frame
         }
 
-        // Determine the current frame for animations
         long currentTime = System.nanoTime();
         if (isAttacking) {
             if (currentTime - lastFrameTime > frameDuration) {
-                currentFrame = (currentFrame + 1) % 3; // Loop through 3 frames for attack
+                currentFrame++;
                 lastFrameTime = currentTime;
             }
-            if (currentFrame == 0) { // Reset attack after one loop
+            if (currentFrame >= 3) { // Reset attack animation after 3 frames
+                currentFrame = 0;
                 isAttacking = false;
+                keyH.attackPressed = false; // Reset the attack key flag
             }
         } else if (isMoving) {
             if (currentTime - lastFrameTime > frameDuration) {
@@ -140,10 +146,14 @@ public class GamePanel {
                 lastFrameTime = currentTime;
             }
         } else if (!isDead) { // Idle animation
+            if (keyH.upPressed) currentRow = 2;          // Row 2 for upside idle
+            else if (keyH.downPressed) currentRow = 0;   // Row 0 for downside idle
+            else if (keyH.rightPressed) currentRow = 1;  // Row 1 for right-side idle
+            else if (keyH.leftPressed) currentRow = 1;   // Row 1 for left-side idle (flipped)
+
             if (currentTime - lastFrameTime > frameDuration) {
                 currentFrame = (currentFrame + 1) % 3; // Loop through 3 frames for idle
                 lastFrameTime = currentTime;
-                currentRow = 0; // Row 0 for idle
             }
         }
 
@@ -156,9 +166,9 @@ public class GamePanel {
         // Update the sprite based on the current frame and row
         characterSprite = new WritableImage(
                 spriteSheet.getPixelReader(),
-                currentFrame * 48, // Frame column
-                currentRow * 48,   // Frame row
-                48, 48             // Frame size
+                currentFrame * 48,
+                currentRow * 48,
+                48, 48
         );
     }
 
@@ -173,17 +183,17 @@ public class GamePanel {
 
     private void draw() {
         gc.clearRect(0, 0, screenWidth, screenHeight);
-        tileM.draw(gc); // Draw tiles
+        tileM.draw(gc);
 
-        int characterWidth = tileSize * 2; // Double the width
-        int characterHeight = tileSize * 2; // Double the height
+        int characterWidth = tileSize * 2;
+        int characterHeight = tileSize * 2;
 
-        if (keyH.leftPressed) {
+        if (keyH.leftPressed || (isAttacking && currentRow == 7 && keyH.leftPressed)) {
             gc.save();
             gc.scale(-1, 1); // Flip horizontally
             gc.drawImage(
                     characterSprite,
-                    -playerX - characterWidth, // Adjust position for flipping
+                    -playerX - characterWidth,
                     playerY,
                     characterWidth,
                     characterHeight
@@ -199,6 +209,7 @@ public class GamePanel {
             );
         }
     }
+
     public void triggerDeath() {
         isDead = true;
     }
