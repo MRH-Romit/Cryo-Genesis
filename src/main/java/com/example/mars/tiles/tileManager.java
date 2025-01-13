@@ -9,63 +9,68 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class tileManager {
-    private Image flat, flooring, twoWhole, wall, bigblueWall, water, woodenDoor;
-    private int[][] map;
-    private final int tileSize = 64; // Ensure consistent tile size
+
+    GamePanel gp;
+    tile[] tile;
+    int[][] mapTileNum;
 
     public tileManager(GamePanel gp) {
-        flat = new Image(getClass().getResourceAsStream("/tiles/flat.png"), tileSize, tileSize, false, false);
-        flooring = new Image(getClass().getResourceAsStream("/tiles/flooring.png"), tileSize, tileSize, false, false);
-        twoWhole = new Image(getClass().getResourceAsStream("/tiles/twoWhole.png"), tileSize, tileSize, false, false);
-        wall = new Image(getClass().getResourceAsStream("/tiles/wall.png"), tileSize, tileSize, false, false);
-        bigblueWall = new Image(getClass().getResourceAsStream("/tiles/bigblueWall.png"), tileSize, tileSize, false, false);
-        water = new Image(getClass().getResourceAsStream("/tiles/Water.png"), tileSize, tileSize, false, false);
-        woodenDoor = new Image(getClass().getResourceAsStream("/tiles/wooden_door.png"), tileSize, tileSize, false, false);
+        this.gp = gp;
+        tile = new tile[10];
+        mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
+        getTileImage();
+        loadMap();
+    }
 
-        // Example map data
-        map = new int[][] {
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 2, 2, 0, 0, 3, 3, 2, 2, 0, 0, 1},
-                {1, 4, 4, 0, 2, 2, 0, 4, 0, 0, 0, 1},
-                {1, 4, 0, 0, 2, 2, 0, 3, 3, 4, 0, 1},
-                {1, 3, 0, 4, 0, 0, 4, 2, 2, 2, 2, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-        };
+    public void getTileImage() {
+        try {
+            tile[0] = new tile();
+            tile[0].image = new Image(getClass().getResourceAsStream("/tiles/flat.png"));
+
+            tile[1] = new tile();
+            tile[1].image = new Image(getClass().getResourceAsStream("/tiles/wall.png"));
+
+            tile[2] = new tile();
+            tile[2].image = new Image(getClass().getResourceAsStream("/tiles/Water.png")); // Example
+
+            tile[3] = new tile();
+            tile[3].image = new Image(getClass().getResourceAsStream("/tiles/whole.png")); // Example
+
+            tile[4] = new tile();
+            tile[4].image = new Image(getClass().getResourceAsStream("/tiles/twoWhole.png")); // Example
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadMap() {
+        try (InputStream is = getClass().getResourceAsStream("/maps/map01.txt");
+             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+
+            for (int row = 0; row < gp.maxScreenRow; row++) {
+                String line = br.readLine();
+                if (line == null) break; // Stop if no more rows
+                String[] numbers = line.split(" ");
+                for (int col = 0; col < gp.maxScreenCol; col++) {
+                    if (col < numbers.length) {
+                        mapTileNum[col][row] = Integer.parseInt(numbers[col]);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void draw(GraphicsContext gc) {
-        for (int y = 0; y < map.length; y++) {
-            for (int x = 0; x < map[y].length; x++) {
-                int tile = map[y][x];
-                Image tileImage;
-
-                switch (tile) {
-                    case 1:
-                        tileImage = wall;
-                        break;
-                    case 2:
-                        tileImage = flooring;
-                        break;
-                    case 3:
-                        tileImage = twoWhole;
-                        break;
-                    case 4:
-                        tileImage = bigblueWall;
-                        break;
-                    case 5:
-                        tileImage = water;
-                        break;
-                    case 6:
-                        tileImage = woodenDoor;
-                        break;
-                    default:
-                        tileImage = flat;
-                        break;
+        for (int row = 0; row < gp.maxScreenRow; row++) {
+            for (int col = 0; col < gp.maxScreenCol; col++) {
+                int tileNum = 0; // Default to ground if tile is missing
+                if (col < mapTileNum.length && row < mapTileNum[col].length) {
+                    tileNum = mapTileNum[col][row];
                 }
-
-                // Draw each tile at the correct position
-                gc.drawImage(tileImage, x * tileSize, y * tileSize);
+                gc.drawImage(tile[tileNum].image, col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize);
             }
         }
     }
-}
+} // Add this closing curly brace to fix the error
