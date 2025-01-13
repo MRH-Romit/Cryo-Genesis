@@ -21,8 +21,8 @@ import java.io.InputStream;
 public class GamePanel {
     private final int originalTileSize = 16;
     private final int scale = 4;
-    public final int maxScreenCol = 12;
-    public final int maxScreenRow = 8;
+    public final int maxScreenCol = 13;
+    public final int maxScreenRow = 11;
     public final int tileSize = originalTileSize * scale; // 64
     private final int screenWidth = tileSize * maxScreenCol; // 1024
     private final int screenHeight = tileSize * maxScreenRow; // 768
