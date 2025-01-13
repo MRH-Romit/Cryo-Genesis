@@ -53,14 +53,12 @@ public class KeyHandle {
                     break;
                 case D:
                 case RIGHT:
-                    rightPressed = false;
-                    break;
-                case SPACE:
-                    attackPressed = false;
+                    rightPressed = false; // Ensure this is present
                     break;
                 default:
                     break;
             }
         }
     };
+
 }

@@ -86,56 +86,85 @@ public class GamePanel {
         gameLoop.start();
     }
 
+    private boolean isFacingRight = true; // Track the direction the character is facing
+    private boolean isFacingUp = false;  // Track if the character is facing up
+    private boolean isFacingDown = true; // Default facing direction
+
     private void update() {
         boolean isMoving = false;
 
+        // Handle movement logic
         if (keyH.upPressed) {
             playerY = Math.max(playerY - playerSpeed, 0);
             isMoving = true;
-            currentRow = 5;
+            currentRow = 5; // Row 5 for upside movement
+            isFacingUp = true;
+            isFacingDown = false;
         }
         if (keyH.downPressed) {
             playerY = Math.min(playerY + playerSpeed, screenHeight - tileSize);
             isMoving = true;
-            currentRow = 3;
+            currentRow = 3; // Row 3 for downside movement
+            isFacingDown = true;
+            isFacingUp = false;
         }
         if (keyH.rightPressed) {
             playerX = Math.min(playerX + playerSpeed, screenWidth - tileSize);
             isMoving = true;
-            currentRow = 4;
+            currentRow = 4; // Row 4 for right-side movement
+            isFacingRight = true;
         }
         if (keyH.leftPressed) {
             playerX = Math.max(playerX - playerSpeed, 0);
             isMoving = true;
-            currentRow = 4;
+            currentRow = 4; // Row 4 for left-side movement (flipped)
+            isFacingRight = false;
         }
 
+        // Handle attack logic
         if (keyH.attackPressed && !isAttacking) {
             isAttacking = true;
-            currentRow = 6;
-            currentFrame = 0;
+            if (keyH.upPressed) currentRow = 8;          // Row 8 for upside attack
+            else if (keyH.downPressed) currentRow = 6;   // Row 6 for downside attack
+            else if (keyH.rightPressed) currentRow = 7;  // Row 7 for right-side attack
+            else if (keyH.leftPressed) currentRow = 7;   // Row 7 for left-side attack (flipped)
+            else if (isFacingUp) currentRow = 8;         // Default to upside attack if facing up
+            else if (isFacingDown) currentRow = 6;       // Default to downside attack if facing down
+            else if (isFacingRight) currentRow = 7;      // Default to right-side attack
+            else currentRow = 7;                         // Default to left-side attack
+            currentFrame = 0; // Start attack animation from the first frame
         }
 
+        // Handle animation frame updates
         long currentTime = System.nanoTime();
         if (isAttacking) {
             if (currentTime - lastFrameTime > frameDuration) {
                 currentFrame++;
                 lastFrameTime = currentTime;
             }
-            if (currentFrame >= 3) {
+            if (currentFrame >= 3) { // Reset attack animation after 3 frames
                 currentFrame = 0;
                 isAttacking = false;
                 keyH.attackPressed = false;
             }
         } else if (isMoving) {
             if (currentTime - lastFrameTime > frameDuration) {
-                currentFrame = (currentFrame + 1) % 3;
+                currentFrame = (currentFrame + 1) % 3; // Loop through 3 frames for movement
                 lastFrameTime = currentTime;
             }
         } else {
-            currentFrame = 0;
+            if (currentTime - lastFrameTime > frameDuration) {
+                currentFrame = (currentFrame + 1) % 3; // Loop through 3 frames for idle animation
+                lastFrameTime = currentTime;
+            }
+            // Set idle row based on the last direction faced
+            if (isFacingUp) currentRow = 2;         // Row 2 for upside idle
+            else if (isFacingDown) currentRow = 0;  // Row 0 for downside idle
+            else if (isFacingRight) currentRow = 1; // Row 1 for right-side idle
+            else currentRow = 1;                    // Row 1 for left-side idle (flipped handled in draw)
         }
 
+        // Update the sprite based on the current frame and row
         characterSprite = new WritableImage(
                 spriteSheet.getPixelReader(),
                 currentFrame * 48,
@@ -145,14 +174,15 @@ public class GamePanel {
     }
 
     private void draw() {
-        gc.clearRect(0, 0, screenWidth, screenHeight);  // Clear the entire canvas before drawing
+        gc.clearRect(0, 0, screenWidth, screenHeight); // Clear the entire canvas before drawing
 
         tileM.draw(gc);
 
         int characterWidth = tileSize * 2;
         int characterHeight = tileSize * 2;
 
-        if (keyH.leftPressed || (isAttacking && currentRow == 6)) {
+        // Flip the sprite if the character is facing left
+        if (!isFacingRight) {
             gc.save();
             gc.scale(-1, 1);
             gc.drawImage(characterSprite, -playerX - characterWidth, playerY, characterWidth, characterHeight);
@@ -161,6 +191,7 @@ public class GamePanel {
             gc.drawImage(characterSprite, playerX, playerY, characterWidth, characterHeight);
         }
     }
+
 
     @FXML
     private void onPauseClick() {
