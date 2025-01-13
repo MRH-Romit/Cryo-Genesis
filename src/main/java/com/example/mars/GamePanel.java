@@ -20,15 +20,28 @@ import java.io.InputStream;
 
 public class GamePanel {
     private final int originalTileSize = 16;
-    private final int scale = 4;
+    private final int scale = 3;
     public final int maxScreenCol = 13;
-    public final int maxScreenRow = 11;
+    public final int maxScreenRow = 9;
     public final int tileSize = originalTileSize * scale; // 64
     private final int screenWidth = tileSize * maxScreenCol; // 1024
     private final int screenHeight = tileSize * maxScreenRow; // 768
 
-    private int playerX = 100;
-    private int playerY = 100;
+
+
+    public final int maxWorldCol=50;
+    public final int maxWorldRow=50;
+    public final int worldWidth=tileSize*maxWorldCol;
+    public final int worldHeight=tileSize*maxWorldRow;
+
+
+
+
+
+
+
+    private int playerX = (screenWidth - tileSize) / 2; // Center horizontally
+    private int playerY = (screenHeight - tileSize) / 2; // Center vertically
     private int playerSpeed = 2;
 
     private int currentFrame = 0; // Current animation frame

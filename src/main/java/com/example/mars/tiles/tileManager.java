@@ -17,7 +17,7 @@ public class tileManager {
     public tileManager(GamePanel gp) {
         this.gp = gp;
         tile = new tile[10];
-        mapTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
+        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
         loadMap();
     }
@@ -38,13 +38,17 @@ public class tileManager {
 
             tile[4] = new tile();
             tile[4].image = new Image(getClass().getResourceAsStream("/tiles/twoWhole.png")); // Example
+
+            tile[5] = new tile();
+            tile[5].image = new Image(getClass().getResourceAsStream("/tiles/wooden_door.png")); // Example
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void loadMap() {
-        try (InputStream is = getClass().getResourceAsStream("/maps/map01.txt");
+        try (InputStream is = getClass().getResourceAsStream("/maps/world01.txt");
              BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 
             for (int row = 0; row < gp.maxScreenRow; row++) {
