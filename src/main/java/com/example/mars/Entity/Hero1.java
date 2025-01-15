@@ -1,4 +1,4 @@
-package com.example.mars.Characters;
+package com.example.mars.Entity;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

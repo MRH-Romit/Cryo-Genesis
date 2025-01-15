@@ -1,6 +1,7 @@
 package com.example.mars;
 
-import com.example.mars.Characters.Hero1;
+import com.example.mars.Entity.Slime;
+import com.example.mars.Entity.Hero1;
 import com.example.mars.keyHandle.KeyHandle;
 import com.example.mars.tiles.tileManager;
 import javafx.fxml.FXML;
@@ -27,6 +28,7 @@ public class GamePanel {
     private final int screenWidth = tileSize * maxScreenCol; // 1024
     private final int screenHeight = tileSize * maxScreenRow; // 768
 
+    private Slime slime;
     private tileManager tileM = new tileManager(this);
     private KeyHandle keyH = new KeyHandle();
     private Hero1 hero;
@@ -44,6 +46,13 @@ public class GamePanel {
         try (InputStream is = getClass().getResourceAsStream("/images/character.png")) {
             Image spriteSheet = new Image(is);
             hero = new Hero1(100, 100, 5, spriteSheet, tileSize); // Initialize hero with spriteSheet and tileSize
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try (InputStream is = getClass().getResourceAsStream("/images/slime.png")) {
+            Image slimeSpriteSheet = new Image(is);
+            slime = new Slime(300, 300, 2, slimeSpriteSheet, tileSize); // Initialize slime
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,7 +87,7 @@ public class GamePanel {
     private void update() {
         long currentNanoTime = System.nanoTime();
 
-        // Delegate all movement and animation to Hero1
+        // Update hero logic
         hero.update(
                 keyH.upPressed,
                 keyH.downPressed,
@@ -94,6 +103,9 @@ public class GamePanel {
         if (keyH.attackPressed) {
             keyH.attackPressed = false; // Reset to prevent continuous attack
         }
+
+        // Update slime logic
+        slime.update(currentNanoTime, screenWidth, screenHeight);
     }
 
 
@@ -102,6 +114,8 @@ public class GamePanel {
 
         tileM.draw(gc); // Draw tiles
         hero.draw(gc);  // Draw hero
+        slime.draw(gc); // Draw slime
+
     }
 
     @FXML
