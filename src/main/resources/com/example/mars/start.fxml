@@ -6,9 +6,9 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="530.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.start">
+<AnchorPane prefHeight="548.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.start">
    <children>
-      <ImageView fitHeight="589.0" fitWidth="991.0" layoutX="-27.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="584.0" fitWidth="908.0" layoutX="-7.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/Start.jpeg" />
          </image>

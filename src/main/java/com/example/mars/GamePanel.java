@@ -102,14 +102,14 @@ public class GamePanel {
             isFacingDown = false;
         }
         if (keyH.downPressed) {
-            playerY = Math.min(playerY + playerSpeed, screenHeight - tileSize);
+            playerY = Math.min(playerY + playerSpeed, tileM.mapHeight * tileSize - tileSize);
             isMoving = true;
             currentRow = 3; // Row 3 for downside movement
             isFacingDown = true;
             isFacingUp = false;
         }
         if (keyH.rightPressed) {
-            playerX = Math.min(playerX + playerSpeed, screenWidth - tileSize);
+            playerX = Math.min(playerX + playerSpeed, tileM.mapWidth * tileSize - tileSize);
             isMoving = true;
             currentRow = 4; // Row 4 for right-side movement
             isFacingRight = true;
@@ -176,21 +176,36 @@ public class GamePanel {
     private void draw() {
         gc.clearRect(0, 0, screenWidth, screenHeight); // Clear the entire canvas before drawing
 
-        tileM.draw(gc);
+        // Calculate the camera's top-left position
+        int cameraX = playerX - screenWidth / 2 + tileSize / 2;
+        int cameraY = playerY - screenHeight / 2 + tileSize / 2;
+
+        // Clamp the camera to prevent showing out-of-bounds areas
+        cameraX = Math.max(0, Math.min(cameraX, tileM.mapWidth * tileSize - screenWidth));
+        cameraY = Math.max(0, Math.min(cameraY, tileM.mapHeight * tileSize - screenHeight));
+
+        // Draw the tile map adjusted for the camera position
+        tileM.draw(gc, cameraX, cameraY);
 
         int characterWidth = tileSize * 2;
         int characterHeight = tileSize * 2;
+
+        // Draw the character at the center of the screen
+        int screenX = (screenWidth - characterWidth) / 2;
+        int screenY = (screenHeight - characterHeight) / 2;
 
         // Flip the sprite if the character is facing left
         if (!isFacingRight) {
             gc.save();
             gc.scale(-1, 1);
-            gc.drawImage(characterSprite, -playerX - characterWidth, playerY, characterWidth, characterHeight);
+            gc.drawImage(characterSprite, -screenX - characterWidth, screenY, characterWidth, characterHeight);
             gc.restore();
         } else {
-            gc.drawImage(characterSprite, playerX, playerY, characterWidth, characterHeight);
+            gc.drawImage(characterSprite, screenX, screenY, characterWidth, characterHeight);
         }
     }
+
+
 
 
     @FXML
