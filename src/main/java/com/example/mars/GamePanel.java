@@ -29,7 +29,7 @@ public class GamePanel {
 
     private int playerX = 100;
     private int playerY = 100;
-    private int playerSpeed = 5;
+    private int playerSpeed = 6;
 
     private int currentFrame = 0; // Animation frame
     private int currentRow = 0; // Animation row

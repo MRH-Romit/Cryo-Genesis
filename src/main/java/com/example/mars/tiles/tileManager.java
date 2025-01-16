@@ -44,7 +44,7 @@ public class tileManager {
     }
 
     public void loadMap() {
-        try (InputStream is = getClass().getResourceAsStream("/maps/map01.txt");
+        try (InputStream is = getClass().getResourceAsStream("/maps/world01.txt");
              BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 
             for (int row = 0; row < gp.maxScreenRow; row++) {
