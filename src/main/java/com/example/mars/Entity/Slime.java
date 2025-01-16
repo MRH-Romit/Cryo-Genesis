@@ -42,23 +42,23 @@ public class Slime {
                 case 0: // Up
                     y = Math.max(y - speed, 0);
                     isMoving = true;
-                    currentRow = 0; // Adjust if needed for correct row
+                    currentRow = 0; // Adjust based on sprite sheet
                     break;
                 case 1: // Down
                     y = Math.min(y + speed, screenHeight - tileSize);
                     isMoving = true;
-                    currentRow = 1; // Adjust if needed for correct row
+                    currentRow = 1; // Adjust based on sprite sheet
                     break;
                 case 2: // Left
                     x = Math.max(x - speed, 0);
                     isMoving = true;
-                    currentRow = 2; // Adjust if needed for correct row
+                    currentRow = 2; // Adjust based on sprite sheet
                     isFacingRight = false;
                     break;
                 case 3: // Right
                     x = Math.min(x + speed, screenWidth - tileSize);
                     isMoving = true;
-                    currentRow = 3; // Adjust if needed for correct row
+                    currentRow = 3; // Adjust based on sprite sheet
                     isFacingRight = true;
                     break;
             }
@@ -74,10 +74,10 @@ public class Slime {
         // Update sprite for the current frame
         slimeSprite = new WritableImage(
                 spriteSheet.getPixelReader(),
-                currentFrame * 16, // Frame width (16 pixels)
-                currentRow * 16,   // Row height (16 pixels)
-                16,                // Width of a single frame
-                16                 // Height of a single frame
+                currentFrame * 16, // Frame width
+                currentRow * 16,   // Row height
+                16,                // Frame width
+                16                 // Frame height
         );
     }
 
