@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="530.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.start">
+<AnchorPane prefHeight="548.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.start">
    <children>
-      <ImageView fitHeight="578.0" fitWidth="879.0" layoutX="-8.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="584.0" fitWidth="908.0" layoutX="-7.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../images/9790956.png" />
+            <Image url="@../../../images/Start.jpeg" />
          </image>
       </ImageView>
-      <Rectangle fx:id="Rectangle2" arcHeight="5.0" arcWidth="5.0" fill="#65b3fc" height="26.0" layoutX="196.0" layoutY="448.0" stroke="BLACK" strokeType="INSIDE" width="488.0" />
-      <Rectangle fx:id="Rectangle1" arcHeight="5.0" arcWidth="5.0" fill="#005cb1" height="26.0" layoutX="196.0" layoutY="448.0" stroke="TRANSPARENT" strokeType="INSIDE" width="42.0" />
-      <Label fx:id="Label1" layoutX="197.0" layoutY="404.0" prefHeight="36.0" prefWidth="186.0" text="Loading..." textFill="#fafafa">
+      <Rectangle fx:id="Rectangle2" arcHeight="5.0" arcWidth="5.0" fill="#ffecae" height="26.0" layoutX="196.0" layoutY="448.0" stroke="BLACK" strokeType="INSIDE" width="488.0" />
+      <Rectangle fx:id="Rectangle1" arcHeight="5.0" arcWidth="5.0" fill="#ac5300" height="26.0" layoutX="196.0" layoutY="448.0" stroke="TRANSPARENT" strokeType="INSIDE" width="42.0" />
+      <Label fx:id="Label1" layoutX="197.0" layoutY="404.0" prefHeight="36.0" prefWidth="186.0" text="Loading..." textFill="#ac5300">
          <font>
             <Font name="Book Antiqua Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="Label2" layoutX="637.0" layoutY="406.0" prefHeight="31.0" prefWidth="56.0" text="25%" textFill="#fafafa">
+      <Label fx:id="Label2" layoutX="637.0" layoutY="406.0" prefHeight="31.0" prefWidth="56.0" text="25%" textFill="#ac5300">
          <font>
             <Font name="Book Antiqua Bold" size="24.0" />
          </font>
