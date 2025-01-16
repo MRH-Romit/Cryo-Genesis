@@ -19,6 +19,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class GamePanel {
+
+
+
+
+
     private final int originalTileSize = 16;
     private final int scale = 5; // Adjusted scaling
     public final int maxScreenCol = 12;
