@@ -34,7 +34,7 @@
          <font>
             <Font name="Centaur" size="24.0" />
          </font></Button>
-      <Button fx:id="character" layoutX="325.0" layoutY="251.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Character">
+      <Button fx:id="character" layoutX="325.0" layoutY="251.0" mnemonicParsing="false" onAction="#onCharacter" prefHeight="46.0" prefWidth="178.0" text="Character">
          <font>
             <Font name="Centaur" size="24.0" />
          </font>
