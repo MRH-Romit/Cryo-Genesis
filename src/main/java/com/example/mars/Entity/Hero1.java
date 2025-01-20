@@ -127,17 +127,18 @@ public class Hero1 {
         );
     }
 
-    public void draw(GraphicsContext gc) {
+    public void draw(GraphicsContext gc, int screenX, int screenY) {
         int characterWidth = tileSize * 2;
         int characterHeight = tileSize * 2;
 
         if (!isFacingRight) {
             gc.save();
             gc.scale(-1, 1);
-            gc.drawImage(characterSprite, -x - characterWidth, y, characterWidth, characterHeight);
+            gc.drawImage(characterSprite, -screenX - characterWidth, screenY, characterWidth, characterHeight);
             gc.restore();
         } else {
-            gc.drawImage(characterSprite, x, y, characterWidth, characterHeight);
+            gc.drawImage(characterSprite, screenX, screenY, characterWidth, characterHeight);
         }
     }
+
 }

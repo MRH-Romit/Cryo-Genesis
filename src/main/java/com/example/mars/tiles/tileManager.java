@@ -11,22 +11,21 @@ import java.io.InputStreamReader;
 
 public class tileManager {
 
-    // public int mapHeight;
-    //public int mapHeight;
-    GamePanel gp;
-    tile[] tile;
+    private GamePanel gp;
+    private tile[] tile;
     public int[][] mapTileNum;
-    public int mapWidth = 20;  // Define map width (number of tiles horizontally)
-    public int mapHeight = 20; // Define map height (number of tiles vertically)
+    public int mapWidth = 30;  // Define map width (number of tiles horizontally)
+    public int mapHeight = 30; // Define map height (number of tiles vertically)
 
     public tileManager(GamePanel gp) {
         this.gp = gp;
-        tile = new tile[10];
-        mapTileNum = new int[mapWidth][mapHeight]; // Adjusted for full map size
-        getTileImage();
-        loadMap();
+        tile = new tile[10]; // Array to hold different tile types
+        mapTileNum = new int[mapWidth][mapHeight]; // 2D array for the map layout
+        getTileImage(); // Load tile images
+        loadMap(); // Load map data from file
     }
 
+    // Method to load tile images
     public void getTileImage() {
         try {
             tile[0] = new tile();
@@ -48,6 +47,7 @@ public class tileManager {
         }
     }
 
+    // Method to load the map from a text file
     public void loadMap() {
         try (InputStream is = getClass().getResourceAsStream("/maps/world01.txt");
              BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
@@ -67,21 +67,22 @@ public class tileManager {
         }
     }
 
+    // Draw method to render visible tiles based on the camera position
     public void draw(GraphicsContext gc, int cameraX, int cameraY) {
-        // Determine the starting and ending tiles based on the camera position
         int startCol = Math.max(0, cameraX / gp.tileSize);
         int endCol = Math.min(mapWidth, (cameraX + gp.maxScreenCol * gp.tileSize) / gp.tileSize + 1);
         int startRow = Math.max(0, cameraY / gp.tileSize);
         int endRow = Math.min(mapHeight, (cameraY + gp.maxScreenRow * gp.tileSize) / gp.tileSize + 1);
 
-        // Draw visible tiles
         for (int row = startRow; row < endRow; row++) {
             for (int col = startCol; col < endCol; col++) {
                 int tileNum = mapTileNum[col][row];
                 int tileX = col * gp.tileSize - cameraX;
                 int tileY = row * gp.tileSize - cameraY;
 
-                gc.drawImage(tile[tileNum].image, tileX, tileY, gp.tileSize, gp.tileSize);
+                if (tileNum >= 0 && tileNum < tile.length) {
+                    gc.drawImage(tile[tileNum].image, tileX, tileY, gp.tileSize, gp.tileSize);
+                }
             }
         }
     }

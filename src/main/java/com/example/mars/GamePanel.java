@@ -50,14 +50,17 @@ public class GamePanel {
     public void initialize() {
         gc = gameCanvas.getGraphicsContext2D();
 
-        // Load hero sprite
+        // Calculate the map center
+        int centerX = (tileM.mapWidth * tileSize) / 2 - tileSize / 2;
+        int centerY = (tileM.mapHeight * tileSize) / 2 - tileSize / 2;
+
+        // Initialize the hero at the map's center
         try (InputStream is = getClass().getResourceAsStream("/images/character.png")) {
             Image heroSprite = new Image(is);
-            hero = new Hero1(100, 100, 7, heroSprite, tileSize); // Adjusted speed for Hero1
+            hero = new Hero1(centerX, centerY, 7, heroSprite, tileSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         // Set up key handling
         Platform.runLater(() -> {
@@ -67,12 +70,22 @@ public class GamePanel {
             gameCanvas.getScene().addEventHandler(KeyEvent.KEY_RELEASED, keyH.keyReleasedHandler);
         });
 
-        // Render the first frame immediately
         update();
         draw();
 
-        // Start the game loop
         startGameLoop();
+    }
+
+    private void draw() {
+        gc.clearRect(0, 0, screenWidth, screenHeight);
+
+        // Calculate camera position to center on the hero
+        int cameraX = Math.max(0, Math.min(hero.getX() - screenWidth / 2 + tileSize / 2, tileM.mapWidth * tileSize - screenWidth));
+        int cameraY = Math.max(0, Math.min(hero.getY() - screenHeight / 2 + tileSize / 2, tileM.mapHeight * tileSize - screenHeight));
+
+        // Draw the map and hero relative to the camera
+        tileM.draw(gc, cameraX, cameraY);
+        hero.draw(gc, screenWidth / 2 - tileSize / 2, screenHeight / 2 - tileSize / 2);
     }
 
     private void startGameLoop() {
@@ -111,23 +124,8 @@ public class GamePanel {
         }
     }
 
-    private void draw() {
-        gc.clearRect(0, 0, screenWidth, screenHeight); // Clear the canvas
 
-        // Calculate camera position
-        int cameraX = hero.getX() - screenWidth / 2 + tileSize / 2;
-        int cameraY = hero.getY() - screenHeight / 2 + tileSize / 2;
 
-        // Constrain the camera to the map bounds
-        cameraX = Math.max(0, Math.min(cameraX, tileM.mapWidth * tileSize - screenWidth));
-        cameraY = Math.max(0, Math.min(cameraY, tileM.mapHeight * tileSize - screenHeight));
-
-        // Draw tiles using the calculated camera position
-        tileM.draw(gc, cameraX, cameraY);
-
-        // Draw the hero
-        hero.draw(gc);
-    }
 
     @FXML
     private void onPauseClick() {
