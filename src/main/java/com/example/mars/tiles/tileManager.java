@@ -11,13 +11,13 @@ import java.io.InputStreamReader;
 
 public class tileManager {
 
-   // public int mapHeight;
+    // public int mapHeight;
     //public int mapHeight;
     GamePanel gp;
     tile[] tile;
-    int[][] mapTileNum;
+    public int[][] mapTileNum;
     public int mapWidth = 20;  // Define map width (number of tiles horizontally)
-   public int mapHeight = 20; // Define map height (number of tiles vertically)
+    public int mapHeight = 20; // Define map height (number of tiles vertically)
 
     public tileManager(GamePanel gp) {
         this.gp = gp;

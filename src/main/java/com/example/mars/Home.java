@@ -38,7 +38,7 @@ public class Home {
         try {
             // Load marketplace.fxml
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("marketplace.fxml"));
-            Scene marketplaceScene = new Scene(fxmlLoader.load(), 600, 400);
+            Scene marketplaceScene = new Scene(fxmlLoader.load(), 850, 550);
 
             // Create a new stage for the marketplace window
             Stage marketplaceStage = new Stage();

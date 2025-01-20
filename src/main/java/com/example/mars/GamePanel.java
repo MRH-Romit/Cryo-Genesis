@@ -1,7 +1,7 @@
 package com.example.mars;
 
-import com.example.mars.Entity.Slime;
 import com.example.mars.Entity.Hero1;
+import com.example.mars.Entity.Slime;
 import com.example.mars.keyHandle.KeyHandle;
 import com.example.mars.tiles.tileManager;
 import javafx.animation.AnimationTimer;
