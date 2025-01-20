@@ -37,7 +37,7 @@ public class GamePanel {
 
     private Hero1 hero;
     private Slime slime;
-    private final tileManager tileM = new tileManager(this);
+    public  final tileManager tileM = new tileManager(this);
     private final KeyHandle keyH = new KeyHandle();
 
     @FXML
@@ -50,7 +50,7 @@ public class GamePanel {
     public void initialize() {
         gc = gameCanvas.getGraphicsContext2D();
 
-        // Calculate the map center
+        // Calculate the center of the map
         int centerX = (tileM.mapWidth * tileSize) / 2 - tileSize / 2;
         int centerY = (tileM.mapHeight * tileSize) / 2 - tileSize / 2;
 
@@ -62,7 +62,7 @@ public class GamePanel {
             e.printStackTrace();
         }
 
-        // Set up key handling
+        // Ensure canvas is ready for input
         Platform.runLater(() -> {
             gameCanvas.setFocusTraversable(true);
             gameCanvas.requestFocus();
@@ -79,14 +79,17 @@ public class GamePanel {
     private void draw() {
         gc.clearRect(0, 0, screenWidth, screenHeight);
 
-        // Calculate camera position to center on the hero
+        // Center the camera on the hero
         int cameraX = Math.max(0, Math.min(hero.getX() - screenWidth / 2 + tileSize / 2, tileM.mapWidth * tileSize - screenWidth));
         int cameraY = Math.max(0, Math.min(hero.getY() - screenHeight / 2 + tileSize / 2, tileM.mapHeight * tileSize - screenHeight));
 
-        // Draw the map and hero relative to the camera
+        // Draw map relative to the camera
         tileM.draw(gc, cameraX, cameraY);
+
+        // Draw hero at the screen's center
         hero.draw(gc, screenWidth / 2 - tileSize / 2, screenHeight / 2 - tileSize / 2);
     }
+
 
     private void startGameLoop() {
         gameLoop = new AnimationTimer() {
