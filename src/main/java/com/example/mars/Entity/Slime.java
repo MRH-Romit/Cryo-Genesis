@@ -81,3 +81,4 @@ public class Slime {
         gc.drawImage(currentSprite, x, y, characterWidth, characterHeight);
     }
 }
+
