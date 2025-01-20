@@ -41,6 +41,9 @@ public class tileManager {
 
             tile[4] = new tile();
             tile[4].image = loadImage("/tiles/twoWhole.png");
+
+            tile[5] = new tile();
+            tile[5].image = loadImage("/tiles/hill.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
