@@ -41,17 +41,13 @@ public class tileManager {
 
             tile[4] = new tile();
             tile[4].image = loadImage("/tiles/twoWhole.png");
+
+            tile[5] = new tile();
+            tile[5].image = loadImage("/tiles/hill.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Ensure all other tiles are non-null to prevent crashes
-        for (int i = 0; i < tile.length; i++) {
-            if (tile[i] == null) {
-                tile[i] = new tile(); // Default to an empty tile
-                tile[i].image = loadImage("/tiles/default.png");
-            }
-        }
     }
 
     // Helper method to load an image
