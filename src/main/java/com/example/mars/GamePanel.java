@@ -1,42 +1,44 @@
 package com.example.mars;
 
-import com.example.mars.Entity.Slime;
 import com.example.mars.Entity.Hero1;
+import com.example.mars.Entity.Slime;
 import com.example.mars.keyHandle.KeyHandle;
 import com.example.mars.tiles.tileManager;
-import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.Parent;
-import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+//import com.example.mars.Entity.Obstacle;
+//import javafx.scene.image.Image;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.Random;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class GamePanel {
 
-
-
-
-
     private final int originalTileSize = 16;
     private final int scale = 5; // Adjusted scaling
     public final int maxScreenCol = 12;
     public final int maxScreenRow = 8;
-    public final int tileSize = originalTileSize * scale; // 64
-    private final int screenWidth = tileSize * maxScreenCol; // 1024
-    private final int screenHeight = tileSize * maxScreenRow; // 768
+    public final int tileSize = originalTileSize * scale; // 80
+    private final int screenWidth = tileSize * maxScreenCol; // 960
+    private final int screenHeight = tileSize * maxScreenRow; // 640
+  //  private List<Obstacle> obstacles; // List to store obstacles
 
-    private Slime slime;
-    private tileManager tileM = new tileManager(this);
-    private KeyHandle keyH = new KeyHandle();
+
     private Hero1 hero;
+    private Slime slime;
+    public  final tileManager tileM = new tileManager(this);
+    private final KeyHandle keyH = new KeyHandle();
 
     @FXML
     private Canvas gameCanvas;
@@ -48,20 +50,19 @@ public class GamePanel {
     public void initialize() {
         gc = gameCanvas.getGraphicsContext2D();
 
+        // Calculate the center of the map
+        int centerX = (tileM.mapWidth * tileSize) / 2 - tileSize / 2;
+        int centerY = (tileM.mapHeight * tileSize) / 2 - tileSize / 2;
+
+        // Initialize the hero at the map's center
         try (InputStream is = getClass().getResourceAsStream("/images/character.png")) {
-            Image spriteSheet = new Image(is);
-            hero = new Hero1(100, 100, 5, spriteSheet, tileSize); // Initialize hero with spriteSheet and tileSize
+            Image heroSprite = new Image(is);
+            hero = new Hero1(centerX, centerY, 7, heroSprite, tileSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        try (InputStream is = getClass().getResourceAsStream("/images/slime.png")) {
-            Image slimeSpriteSheet = new Image(is);
-            slime = new Slime(300, 300, 2, slimeSpriteSheet, tileSize); // Initialize slime
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        // Ensure canvas is ready for input
         Platform.runLater(() -> {
             gameCanvas.setFocusTraversable(true);
             gameCanvas.requestFocus();
@@ -69,8 +70,26 @@ public class GamePanel {
             gameCanvas.getScene().addEventHandler(KeyEvent.KEY_RELEASED, keyH.keyReleasedHandler);
         });
 
+        update();
+        draw();
+
         startGameLoop();
     }
+
+    private void draw() {
+        gc.clearRect(0, 0, screenWidth, screenHeight);
+
+        // Center the camera on the hero
+        int cameraX = Math.max(0, Math.min(hero.getX() - screenWidth / 2 + tileSize / 2, tileM.mapWidth * tileSize - screenWidth));
+        int cameraY = Math.max(0, Math.min(hero.getY() - screenHeight / 2 + tileSize / 2, tileM.mapHeight * tileSize - screenHeight));
+
+        // Draw map relative to the camera
+        tileM.draw(gc, cameraX, cameraY);
+
+        // Draw hero at the screen's center
+        hero.draw(gc, screenWidth / 2 - tileSize / 2, screenHeight / 2 - tileSize / 2);
+    }
+
 
     private void startGameLoop() {
         gameLoop = new AnimationTimer() {
@@ -80,8 +99,8 @@ public class GamePanel {
             @Override
             public void handle(long currentNanoTime) {
                 if (currentNanoTime - lastUpdate >= frameDuration) {
-                    update();
-                    draw();
+                    update(); // Update game state
+                    draw();   // Render the game
                     lastUpdate = currentNanoTime;
                 }
             }
@@ -90,8 +109,6 @@ public class GamePanel {
     }
 
     private void update() {
-        long currentNanoTime = System.nanoTime();
-
         // Update hero logic
         hero.update(
                 keyH.upPressed,
@@ -99,7 +116,7 @@ public class GamePanel {
                 keyH.leftPressed,
                 keyH.rightPressed,
                 keyH.attackPressed,
-                currentNanoTime,
+                System.nanoTime(),
                 screenWidth,
                 screenHeight
         );
@@ -108,20 +125,10 @@ public class GamePanel {
         if (keyH.attackPressed) {
             keyH.attackPressed = false; // Reset to prevent continuous attack
         }
-
-        // Update slime logic
-        slime.update(currentNanoTime, screenWidth, screenHeight);
     }
 
 
-    private void draw() {
-        gc.clearRect(0, 0, screenWidth, screenHeight); // Clear the entire canvas before drawing
 
-        tileM.draw(gc); // Draw tiles
-        hero.draw(gc);  // Draw hero
-        slime.draw(gc); // Draw slime
-
-    }
 
     @FXML
     private void onPauseClick() {

@@ -13,38 +13,38 @@ public class Home {
     @FXML
     private Button play_game;
     @FXML
-    private Button continueButton; // if needed for later use
+    private Button character; // Character button
 
     @FXML
     public void initialize() {
-        // If needed, you can set up event handlers here or directly in FXML.
-        // Example (if not using onAction in FXML):
-        // play_game.setOnAction(event -> switchToGameScene());
+        // Initialize logic if needed
     }
-
-    // This method will be called when "Play Game" button is clicked.
-    // To connect this to the button in FXML, you have two options:
-    //
-    // Option 1: Set the button's onAction in FXML:
-    // <Button fx:id="play_game" onAction="#onPlayGame" ... />
-    //
-    // Option 2: Programmatically set it in initialize():
-    // play_game.setOnAction(event -> onPlayGame());
 
     @FXML
     private void onPlayGame() {
-        // When the user clicks the Play Game button, load the game scene
         try {
-            // Load the Game.fxml file
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GamePanel.fxml"));
             Scene gameScene = new Scene(fxmlLoader.load(), 850, 550);
-
-            // Get the current stage from the button's scene
             Stage currentStage = (Stage) play_game.getScene().getWindow();
-
-            // Switch the scene to the game scene
             currentStage.setScene(gameScene);
             currentStage.setTitle("Game Page");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void onCharacter() {
+        try {
+            // Load marketplace.fxml
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("marketplace.fxml"));
+            Scene marketplaceScene = new Scene(fxmlLoader.load(), 850, 550);
+
+            // Create a new stage for the marketplace window
+            Stage marketplaceStage = new Stage();
+            marketplaceStage.setScene(marketplaceScene);
+            marketplaceStage.setTitle("Marketplace");
+            marketplaceStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -11,54 +11,100 @@ import java.io.InputStreamReader;
 
 public class tileManager {
 
-   // public int mapHeight;
-    //public int mapHeight;
-    GamePanel gp;
-    tile[] tile;
-    int[][] mapTileNum;
-    public int mapWidth = 20;  // Define map width (number of tiles horizontally)
-   public int mapHeight = 20; // Define map height (number of tiles vertically)
+    private GamePanel gp;
+    private tile[] tile;
+    public int[][] mapTileNum;
+    public int mapWidth;
+    public int mapHeight;
 
     public tileManager(GamePanel gp) {
         this.gp = gp;
-        tile = new tile[10];
-        mapTileNum = new int[mapWidth][mapHeight]; // Adjusted for full map size
-        getTileImage();
-        loadMap();
+        tile = new tile[10]; // Array to hold different tile types
+        getTileImage(); // Load tile images
+        loadMap(); // Load map data from file
     }
 
+    // Method to load tile images
     public void getTileImage() {
         try {
             tile[0] = new tile();
-            tile[0].image = new Image(getClass().getResourceAsStream("/tiles/flat.png"));
+            tile[0].image = loadImage("/tiles/flat.png");
 
             tile[1] = new tile();
-            tile[1].image = new Image(getClass().getResourceAsStream("/tiles/wall.png"));
+            tile[1].image = loadImage("/tiles/wall.png");
 
             tile[2] = new tile();
-            tile[2].image = new Image(getClass().getResourceAsStream("/tiles/water.png"));
+            tile[2].image = loadImage("/tiles/water.png");
 
             tile[3] = new tile();
-            tile[3].image = new Image(getClass().getResourceAsStream("/tiles/whole.png"));
+            tile[3].image = loadImage("/tiles/whole.png");
 
             tile[4] = new tile();
-            tile[4].image = new Image(getClass().getResourceAsStream("/tiles/twoWhole.png"));
+            tile[4].image = loadImage("/tiles/twoWhole.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // Ensure all other tiles are non-null to prevent crashes
+        for (int i = 0; i < tile.length; i++) {
+            if (tile[i] == null) {
+                tile[i] = new tile(); // Default to an empty tile
+                tile[i].image = loadImage("/tiles/default.png");
+            }
+        }
     }
 
+    // Helper method to load an image
+    private Image loadImage(String path) {
+        InputStream is = getClass().getResourceAsStream(path);
+        if (is == null) {
+            System.err.println("Error: Could not load image from path: " + path);
+            return null;
+        }
+        return new Image(is);
+    }
+    // Method to load the map from a text file
     public void loadMap() {
         try (InputStream is = getClass().getResourceAsStream("/maps/world01.txt");
              BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 
-            for (int row = 0; row < mapHeight; row++) {
-                String line = br.readLine();
-                if (line == null) break; // Stop if no more rows
-                String[] numbers = line.split(" ");
-                for (int col = 0; col < mapWidth; col++) {
-                    if (col < numbers.length) {
-                        mapTileNum[col][row] = Integer.parseInt(numbers[col]);
+            String line = br.readLine();
+            if (line == null) throw new IOException("Empty map file!");
+
+            // Dynamically calculate map dimensions
+            String[] firstRow = line.split(" ");
+            mapWidth = firstRow.length;
+
+            // Count total rows
+            int tempHeight = 1;
+            while (br.readLine() != null) tempHeight++;
+            mapHeight = tempHeight;
+
+            // Initialize mapTileNum array with dynamic dimensions
+            mapTileNum = new int[mapWidth][mapHeight];
+
+            // Reset the BufferedReader to read the file again
+            is.close();
+            try (InputStream newIs = getClass().getResourceAsStream("/maps/world01.txt");
+                 BufferedReader newBr = new BufferedReader(new InputStreamReader(newIs))) {
+
+                for (int row = 0; row < mapHeight; row++) {
+                    line = newBr.readLine();
+                    if (line == null) break;
+
+                    String[] numbers = line.split(" ");
+                    for (int col = 0; col < mapWidth; col++) {
+                        if (col < numbers.length) {
+                            int tileIndex = Integer.parseInt(numbers[col]);
+
+                            // Validate tile index
+                            if (tileIndex >= 0 && tileIndex < tile.length) {
+                                mapTileNum[col][row] = tileIndex;
+                            } else {
+                                mapTileNum[col][row] = 0; // Default to a valid tile
+                                System.err.println("Invalid tile index at (" + col + ", " + row + "): " + tileIndex);
+                            }
+                        }
                     }
                 }
             }
@@ -67,21 +113,22 @@ public class tileManager {
         }
     }
 
+    // Draw method to render visible tiles based on the camera position
     public void draw(GraphicsContext gc, int cameraX, int cameraY) {
-        // Determine the starting and ending tiles based on the camera position
         int startCol = Math.max(0, cameraX / gp.tileSize);
         int endCol = Math.min(mapWidth, (cameraX + gp.maxScreenCol * gp.tileSize) / gp.tileSize + 1);
         int startRow = Math.max(0, cameraY / gp.tileSize);
         int endRow = Math.min(mapHeight, (cameraY + gp.maxScreenRow * gp.tileSize) / gp.tileSize + 1);
 
-        // Draw visible tiles
         for (int row = startRow; row < endRow; row++) {
             for (int col = startCol; col < endCol; col++) {
                 int tileNum = mapTileNum[col][row];
                 int tileX = col * gp.tileSize - cameraX;
                 int tileY = row * gp.tileSize - cameraY;
 
-                gc.drawImage(tile[tileNum].image, tileX, tileY, gp.tileSize, gp.tileSize);
+                if (tileNum >= 0 && tileNum < tile.length) {
+                    gc.drawImage(tile[tileNum].image, tileX, tileY, gp.tileSize, gp.tileSize);
+                }
             }
         }
     }
