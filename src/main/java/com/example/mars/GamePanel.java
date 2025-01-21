@@ -170,4 +170,9 @@ public class GamePanel {
             e.printStackTrace();
         }
     }
+    public void resumeGameLoop() {
+        if (gameLoop != null) {
+            gameLoop.start();
+        }
+    }
 }
