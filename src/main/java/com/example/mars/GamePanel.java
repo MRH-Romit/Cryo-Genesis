@@ -15,11 +15,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-//import com.example.mars.Entity.Obstacle;
-//import javafx.scene.image.Image;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Random;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -32,12 +28,10 @@ public class GamePanel {
     public final int tileSize = originalTileSize * scale; // 80
     private final int screenWidth = tileSize * maxScreenCol; // 960
     private final int screenHeight = tileSize * maxScreenRow; // 640
-  //  private List<Obstacle> obstacles; // List to store obstacles
-
 
     private Hero1 hero;
     private Slime slime;
-    public  final tileManager tileM = new tileManager(this);
+    public final tileManager tileM = new tileManager(this);
     private final KeyHandle keyH = new KeyHandle();
 
     @FXML
@@ -90,7 +84,6 @@ public class GamePanel {
         hero.draw(gc, screenWidth / 2 - tileSize / 2, screenHeight / 2 - tileSize / 2);
     }
 
-
     private void startGameLoop() {
         gameLoop = new AnimationTimer() {
             private long lastUpdate = 0;
@@ -125,10 +118,38 @@ public class GamePanel {
         if (keyH.attackPressed) {
             keyH.attackPressed = false; // Reset to prevent continuous attack
         }
+
+        // Check the tile under the character
+        int heroTileX = hero.getX() / tileSize;
+        int heroTileY = hero.getY() / tileSize;
+
+        if (heroTileX >= 0 && heroTileX < tileM.mapWidth && heroTileY >= 0 && heroTileY < tileM.mapHeight) {
+            int currentTile = tileM.mapTileNum[heroTileX][heroTileY];
+
+            if (currentTile == 5) {
+                openNewFXML(); // Trigger new FXML loading
+            }
+        }
     }
 
+    private void openNewFXML() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/mars/newScreen.fxml"));
+            Parent root = loader.load();
 
+            // Set the new scene
+            Stage primaryStage = (Stage) gameCanvas.getScene().getWindow();
+            Scene newScene = new Scene(root);
+            primaryStage.setScene(newScene);
 
+            // Stop the game loop if needed
+            gameLoop.stop();
+
+            System.out.println("Transitioned to new screen!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void onPauseClick() {
@@ -147,6 +168,11 @@ public class GamePanel {
             pauseStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public void resumeGameLoop() {
+        if (gameLoop != null) {
+            gameLoop.start();
         }
     }
 }
