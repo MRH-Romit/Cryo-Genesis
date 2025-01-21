@@ -56,7 +56,7 @@ public class GamePanel {
             e.printStackTrace();
         }
 
-        // Ensure canvas is ready for input
+        // Set up keyboard input
         Platform.runLater(() -> {
             gameCanvas.setFocusTraversable(true);
             gameCanvas.requestFocus();
@@ -64,24 +64,7 @@ public class GamePanel {
             gameCanvas.getScene().addEventHandler(KeyEvent.KEY_RELEASED, keyH.keyReleasedHandler);
         });
 
-        update();
-        draw();
-
         startGameLoop();
-    }
-
-    private void draw() {
-        gc.clearRect(0, 0, screenWidth, screenHeight);
-
-        // Center the camera on the hero
-        int cameraX = Math.max(0, Math.min(hero.getX() - screenWidth / 2 + tileSize / 2, tileM.mapWidth * tileSize - screenWidth));
-        int cameraY = Math.max(0, Math.min(hero.getY() - screenHeight / 2 + tileSize / 2, tileM.mapHeight * tileSize - screenHeight));
-
-        // Draw map relative to the camera
-        tileM.draw(gc, cameraX, cameraY);
-
-        // Draw hero at the screen's center
-        hero.draw(gc, screenWidth / 2 - tileSize / 2, screenHeight / 2 - tileSize / 2);
     }
 
     private void startGameLoop() {
@@ -132,6 +115,24 @@ public class GamePanel {
         }
     }
 
+    private void draw() {
+        gc.clearRect(0, 0, screenWidth, screenHeight);
+
+        // Center the camera on the hero
+        int cameraX = hero.getX() - screenWidth / 2 + tileSize / 2;
+        int cameraY = hero.getY() - screenHeight / 2 + tileSize / 2;
+
+        // Constrain the camera to the map bounds
+        cameraX = Math.max(0, Math.min(cameraX, tileM.mapWidth * tileSize - screenWidth));
+        cameraY = Math.max(0, Math.min(cameraY, tileM.mapHeight * tileSize - screenHeight));
+
+        // Draw map relative to the camera
+        tileM.draw(gc, cameraX, cameraY);
+
+        // Draw hero at the screen's center
+        hero.draw(gc, screenWidth / 2 - tileSize / 2, screenHeight / 2 - tileSize / 2);
+    }
+
     private void openNewFXML() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/mars/newScreen.fxml"));
@@ -139,8 +140,7 @@ public class GamePanel {
 
             // Set the new scene
             Stage primaryStage = (Stage) gameCanvas.getScene().getWindow();
-            Scene newScene = new Scene(root);
-            primaryStage.setScene(newScene);
+            primaryStage.setScene(new Scene(root));
 
             // Stop the game loop if needed
             gameLoop.stop();
@@ -170,6 +170,7 @@ public class GamePanel {
             e.printStackTrace();
         }
     }
+
     public void resumeGameLoop() {
         if (gameLoop != null) {
             gameLoop.start();

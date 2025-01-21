@@ -22,15 +22,13 @@ public class Hero1 {
     private boolean isFacingDown = true;
 
     public boolean isAttackingDone() {
-        return !isAttacking; // Returns true when attack animation has completed
+        return !isAttacking;
     }
 
     public void resetAttack() {
-        isAttacking = false; // Reset attacking state
-        currentFrame = 0;    // Reset animation frame
+        isAttacking = false;
+        currentFrame = 0;
     }
-
-
 
     public Hero1(int startX, int startY, int speed, Image spriteSheet, int tileSize) {
         this.x = startX;
@@ -41,14 +39,20 @@ public class Hero1 {
         this.characterSprite = new WritableImage(spriteSheet.getPixelReader(), 0, 0, 48, 48);
     }
 
-    // Getter for x
     public int getX() {
         return x;
     }
 
-    // Getter for y
+    public void setX(int x) {
+        this.x = x;
+    }
+
     public int getY() {
         return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public void update(boolean upPressed, boolean downPressed, boolean leftPressed, boolean rightPressed, boolean attackPressed, long currentNanoTime, int screenWidth, int screenHeight) {
@@ -99,7 +103,7 @@ public class Hero1 {
                 currentFrame++;
                 lastFrameTime = currentNanoTime;
             }
-            if (currentFrame >= 3) { // Assuming 3 attack frames
+            if (currentFrame >= 3) {
                 currentFrame = 0;
                 isAttacking = false;
             }
@@ -140,6 +144,4 @@ public class Hero1 {
             gc.drawImage(characterSprite, screenX, screenY, characterWidth, characterHeight);
         }
     }
-
 }
-
