@@ -37,16 +37,17 @@ public class tileManager {
             tile[2].image = loadImage("/tiles/water.png");
 
             tile[3] = new tile();
-            tile[3].image = loadImage("/tiles/whole.png");
+           tile[3].image = loadImage("/tiles/whole.png");
 
-            tile[4] = new tile();
-            tile[4].image = loadImage("/tiles/twoWhole.png");
+           tile[4] = new tile();
+           tile[4].image = loadImage("/tiles/twoWhole.png");
 
-            tile[5] = new tile();
-            tile[5].image = loadImage("/tiles/hill.png");
+          tile[5] = new tile();
+           tile[5].image = loadImage("/tiles/hill.png");
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
     }
 
