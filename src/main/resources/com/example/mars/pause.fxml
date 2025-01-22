@@ -18,15 +18,67 @@
         </ImageView>
 
         <!-- "Resume Game" Button -->
-        <Button fx:id="resume_game" layoutX="286.0" layoutY="149.0" mnemonicParsing="false" onAction="#onResumeGame" prefHeight="50.0" prefWidth="242.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Resume Game" />
+        <Button fx:id="resume_game" layoutX="286.0" layoutY="149.0" mnemonicParsing="false" onAction="#onResumeGame" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+            <graphic>
+                <StackPane>
+                    <!-- Background Image -->
+                    <ImageView fitHeight="80.0" fitWidth="242.0">
+                        <image>
+                            <Image url="@../../../images/bg.png" />
+                        </image>
+                    </ImageView>
+                    <!-- Text on Top of Image -->
+                    <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" text="Resume" />
+                </StackPane>
+            </graphic>
+        </Button>
 
         <!-- "Settings" Button -->
-        <Button fx:id="pause_settings" layoutX="286.0" layoutY="228.0" mnemonicParsing="false" onAction="#onPauseSettings" prefHeight="50.0" prefWidth="242.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Settings" />
+        <Button fx:id="pause_settings" layoutX="286.0" layoutY="228.0" mnemonicParsing="false" onAction="#onPauseSettings" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+            <graphic>
+                <StackPane>
+                    <!-- Background Image -->
+                    <ImageView fitHeight="80.0" fitWidth="242.0">
+                        <image>
+                            <Image url="@../../../images/bg.png" />
+                        </image>
+                    </ImageView>
+                    <!-- Text on Top of Image -->
+                    <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" text="Settings" />
+                </StackPane>
+            </graphic>
+        </Button>
 
         <!-- "Main Menu" Button -->
-        <Button fx:id="main_menu" layoutX="286.0" layoutY="301.0" mnemonicParsing="false" onAction="#onMainMenu" prefHeight="50.0" prefWidth="242.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Main Menu" />
+        <Button fx:id="main_menu" layoutX="286.0" layoutY="301.0" mnemonicParsing="false" onAction="#onMainMenu" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+            <graphic>
+                <StackPane>
+                    <!-- Background Image -->
+                    <ImageView fitHeight="80.0" fitWidth="242.0">
+                        <image>
+                            <Image url="@../../../images/bg.png" />
+                        </image>
+                    </ImageView>
+                    <!-- Text on Top of Image -->
+                    <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" text="Main Menu" />
+                </StackPane>
+            </graphic>
+        </Button>
 
         <!-- "Quit Game" Button -->
-        <Button fx:id="quit_game" layoutX="286.0" layoutY="382.0" mnemonicParsing="false" onAction="#onQuitGame" prefHeight="50.0" prefWidth="242.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Quit Game" />
+        <Button fx:id="quit_game" layoutX="286.0" layoutY="382.0" mnemonicParsing="false" onAction="#onQuitGame" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+            <graphic>
+                <StackPane>
+                    <!-- Background Image -->
+                    <ImageView fitHeight="80.0" fitWidth="242.0">
+                        <image>
+                            <Image url="@../../../images/bg.png" />
+                        </image>
+                    </ImageView>
+                    <!-- Text on Top of Image -->
+                    <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" text="Quit Game" />
+                </StackPane>
+            </graphic>
+        </Button>
     </children>
 </AnchorPane>

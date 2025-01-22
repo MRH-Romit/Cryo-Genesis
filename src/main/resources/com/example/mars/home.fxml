@@ -17,18 +17,83 @@
       </ImageView>
 
       <!-- "Play Game" Button -->
-      <Button fx:id="play_game" layoutX="335.0" layoutY="155.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="50.0" prefWidth="242.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Play Game" />
+      <Button fx:id="play_game" layoutX="335.0" layoutY="155.0" mnemonicParsing="false" onAction="#onPlayGame" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+         <graphic>
+            <StackPane>
+               <!-- Background Image -->
+               <ImageView fitHeight="80.0" fitWidth="242.0">
+                  <image>
+                     <Image url="@../../../images/bg.png" />
+                  </image>
+               </ImageView>
+               <!-- Text on Top of Image -->
+               <Label text="New Game" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+            </StackPane>
+         </graphic>
+      </Button>
 
       <!-- "Character" Button -->
-      <Button fx:id="character" layoutX="337.0" layoutY="224.0" mnemonicParsing="false" onAction="#onCharacter" prefHeight="50.0" prefWidth="242.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Character" />
+      <Button fx:id="character" layoutX="337.0" layoutY="224.0" mnemonicParsing="false" onAction="#onCharacter" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+         <graphic>
+            <StackPane>
+               <!-- Background Image -->
+               <ImageView fitHeight="80.0" fitWidth="242.0">
+                  <image>
+                     <Image url="@../../../images/bg.png" />
+                  </image>
+               </ImageView>
+               <!-- Text on Top of Image -->
+               <Label text="Character" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+            </StackPane>
+         </graphic>
+      </Button>
 
       <!-- "Settings" Button -->
-      <Button fx:id="settings" layoutX="335.0" layoutY="295.0" mnemonicParsing="false" onAction="#onSettings" prefHeight="50.0" prefWidth="242.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Settings" />
+      <Button fx:id="settings" layoutX="335.0" layoutY="295.0" mnemonicParsing="false" onAction="#onSettings" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+         <graphic>
+            <StackPane>
+               <!-- Background Image -->
+               <ImageView fitHeight="80.0" fitWidth="242.0">
+                  <image>
+                     <Image url="@../../../images/bg.png" />
+                  </image>
+               </ImageView>
+               <!-- Text on Top of Image -->
+               <Label text="Settings" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+            </StackPane>
+         </graphic>
+      </Button>
 
       <!-- "Support" Button -->
-      <Button fx:id="support" layoutX="335.0" layoutY="365.0" mnemonicParsing="false" onAction="#onSupport" prefHeight="50.0" prefWidth="242.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Support" />
+      <Button fx:id="support" layoutX="335.0" layoutY="365.0" mnemonicParsing="false" onAction="#onSupport" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+         <graphic>
+            <StackPane>
+               <!-- Background Image -->
+               <ImageView fitHeight="80.0" fitWidth="242.0">
+                  <image>
+                     <Image url="@../../../images/bg.png" />
+                  </image>
+               </ImageView>
+               <!-- Text on Top of Image -->
+               <Label text="Support" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+            </StackPane>
+         </graphic>
+      </Button>
 
       <!-- "Marketplace" Button -->
-      <Button fx:id="marketplace" layoutX="335.0" layoutY="435.0" mnemonicParsing="false" onAction="#onMarketplace" prefHeight="50.0" prefWidth="241.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Marketplace" />
+      <Button fx:id="marketplace" layoutX="335.0" layoutY="435.0" mnemonicParsing="false" onAction="#onMarketplace" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+         <graphic>
+            <StackPane>
+               <!-- Background Image -->
+               <ImageView fitHeight="80.0" fitWidth="262.0">
+                  <image>
+                     <Image url="@../../../images/bg.png " />
+                  </image>
+               </ImageView>
+               <!-- Text on Top of Image -->
+               <Label text="Marketplace" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+            </StackPane>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
