@@ -3,7 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <!-- Make sure the fx:controller is set to the fully qualified name
      of your controller class (e.g. com.example.mars.Pause). -->
@@ -12,38 +11,22 @@
 
     <children>
         <!-- Background image -->
-        <ImageView fitHeight="561.0" fitWidth="947.0" layoutX="-87.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="561.0" fitWidth="947.0" layoutX="-66.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../images/home.jpeg" />
             </image>
         </ImageView>
 
         <!-- "Resume Game" Button -->
-        <Button fx:id="resume_game" layoutX="305.0" layoutY="256.0" mnemonicParsing="false" onAction="#onResumeGame" prefHeight="31.0" prefWidth="178.0" text="Resume Game">
-            <font>
-                <Font name="Centaur" size="24.0" />
-            </font>
-        </Button>
+        <Button fx:id="resume_game" layoutX="286.0" layoutY="149.0" mnemonicParsing="false" onAction="#onResumeGame" prefHeight="50.0" prefWidth="242.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Resume Game" />
 
         <!-- "Settings" Button -->
-        <Button fx:id="pause_settings" layoutX="305.0" layoutY="318.0" mnemonicParsing="false" onAction="#onPauseSettings" prefHeight="31.0" prefWidth="178.0" text="Settings">
-            <font>
-                <Font name="Centaur" size="24.0" />
-            </font>
-        </Button>
+        <Button fx:id="pause_settings" layoutX="286.0" layoutY="228.0" mnemonicParsing="false" onAction="#onPauseSettings" prefHeight="50.0" prefWidth="242.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Settings" />
 
         <!-- "Main Menu" Button -->
-        <Button fx:id="main_menu" layoutX="305.0" layoutY="380.0" mnemonicParsing="false" onAction="#onMainMenu" prefHeight="46.0" prefWidth="178.0" text="Main Menu">
-            <font>
-                <Font name="Centaur" size="24.0" />
-            </font>
-        </Button>
+        <Button fx:id="main_menu" layoutX="286.0" layoutY="301.0" mnemonicParsing="false" onAction="#onMainMenu" prefHeight="50.0" prefWidth="242.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Main Menu" />
 
         <!-- "Quit Game" Button -->
-        <Button fx:id="quit_game" layoutX="305.0" layoutY="450.0" mnemonicParsing="false" onAction="#onQuitGame" prefHeight="31.0" prefWidth="178.0" text="Quit Game">
-            <font>
-                <Font name="Centaur" size="24.0" />
-            </font>
-        </Button>
+        <Button fx:id="quit_game" layoutX="286.0" layoutY="382.0" mnemonicParsing="false" onAction="#onQuitGame" prefHeight="50.0" prefWidth="242.0" style="-fx-background-color: #FEEE99; -fx-text-fill: #000000; -fx-font-size: 22px; -fx-font-family: 'Super Pixel'; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" text="Quit Game" />
     </children>
 </AnchorPane>
