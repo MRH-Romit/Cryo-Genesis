@@ -6,9 +6,9 @@
 <?import javafx.scene.text.*?>
 
 <!-- Make sure the fx:controller is set to the fully qualified name
-     of your controller class (e.g. com.example.mars.Home). -->
+     of your controller class (e.g. com.example.mars.Pause). -->
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Home">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="814.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Pause">
 
     <children>
         <!-- Background image -->
@@ -18,23 +18,29 @@
             </image>
         </ImageView>
 
-        <!-- "Play Game" Button -->
-        <Button fx:id="new_game" layoutX="305.0" layoutY="256.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="New Game">
-            <font>
-                <Font name="Centaur" size="24.0" />
-            </font></Button>
-        <Button fx:id="support" layoutX="305.0" layoutY="318.0" mnemonicParsing="false" onAction="#onPlayGame" prefHeight="31.0" prefWidth="178.0" text="Support">
+        <!-- "Resume Game" Button -->
+        <Button fx:id="resume_game" layoutX="305.0" layoutY="256.0" mnemonicParsing="false" onAction="#onResumeGame" prefHeight="31.0" prefWidth="178.0" text="Resume Game">
             <font>
                 <Font name="Centaur" size="24.0" />
             </font>
         </Button>
 
-        <!-- "Continue" Button -->
-        <Button fx:id="settings" layoutX="304.0" layoutY="380.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Settings">
+        <!-- "Settings" Button -->
+        <Button fx:id="pause_settings" layoutX="305.0" layoutY="318.0" mnemonicParsing="false" onAction="#onPauseSettings" prefHeight="31.0" prefWidth="178.0" text="Settings">
             <font>
                 <Font name="Centaur" size="24.0" />
-            </font></Button>
-        <Button fx:id="resume" layoutX="305.0" layoutY="187.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="178.0" text="Resume">
+            </font>
+        </Button>
+
+        <!-- "Main Menu" Button -->
+        <Button fx:id="main_menu" layoutX="305.0" layoutY="380.0" mnemonicParsing="false" onAction="#onMainMenu" prefHeight="46.0" prefWidth="178.0" text="Main Menu">
+            <font>
+                <Font name="Centaur" size="24.0" />
+            </font>
+        </Button>
+
+        <!-- "Quit Game" Button -->
+        <Button fx:id="quit_game" layoutX="305.0" layoutY="450.0" mnemonicParsing="false" onAction="#onQuitGame" prefHeight="31.0" prefWidth="178.0" text="Quit Game">
             <font>
                 <Font name="Centaur" size="24.0" />
             </font>
