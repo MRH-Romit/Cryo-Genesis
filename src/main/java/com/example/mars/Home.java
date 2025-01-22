@@ -87,25 +87,36 @@ public class Home {
             e.printStackTrace();
         }
     }
+
     @FXML
     private void onMarketplace() {
         try {
-            // Load support.fxml
+            // Load marketplace.fxml
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("marketplace.fxml"));
-            Scene supportScene = new Scene(fxmlLoader.load(), 850, 550);
+            Scene marketplaceScene = new Scene(fxmlLoader.load(), 850, 550);
 
-            // Create a new stage for the support window
-            Stage supportStage = new Stage();
-            supportStage.setScene(supportScene);
-            supportStage.setTitle("Marketplace");
-            supportStage.show();
+            // Create a new stage for the marketplace window
+            Stage marketplaceStage = new Stage();
+            marketplaceStage.setScene(marketplaceScene);
+            marketplaceStage.setTitle("Marketplace");
+            marketplaceStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void onContinue() {
-        // Implement logic for continue button if needed
+    private void onBack() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("home.fxml"));
+            Scene homeScene = new Scene(fxmlLoader.load(), 850, 550);
+
+            // Get the current stage from any button that triggered the action
+            Stage currentStage = (Stage) ((Button) play_game.getScene().getFocusOwner()).getScene().getWindow();
+            currentStage.setScene(homeScene);
+            currentStage.setTitle("Home Page");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
