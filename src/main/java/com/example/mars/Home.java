@@ -18,6 +18,8 @@ public class Home {
     private Button settings; // Settings button
     @FXML
     private Button support; // Support button
+    @FXML
+    private Button back_button; // Back button
 
     @FXML
     public void initialize() {
@@ -40,11 +42,8 @@ public class Home {
     @FXML
     private void onCharacter() {
         try {
-            // Load marketplace.fxml
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("marketplace.fxml"));
             Scene marketplaceScene = new Scene(fxmlLoader.load(), 850, 550);
-
-            // Create a new stage for the marketplace window
             Stage marketplaceStage = new Stage();
             marketplaceStage.setScene(marketplaceScene);
             marketplaceStage.setTitle("Marketplace");
@@ -57,11 +56,8 @@ public class Home {
     @FXML
     private void onSettings() {
         try {
-            // Load settings.fxml
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("settings.fxml"));
             Scene settingsScene = new Scene(fxmlLoader.load(), 850, 550);
-
-            // Create a new stage for the settings window
             Stage settingsStage = new Stage();
             settingsStage.setScene(settingsScene);
             settingsStage.setTitle("Settings");
@@ -74,11 +70,8 @@ public class Home {
     @FXML
     private void onSupport() {
         try {
-            // Load support.fxml
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("support.fxml"));
             Scene supportScene = new Scene(fxmlLoader.load(), 850, 550);
-
-            // Create a new stage for the support window
             Stage supportStage = new Stage();
             supportStage.setScene(supportScene);
             supportStage.setTitle("Support");
@@ -91,11 +84,8 @@ public class Home {
     @FXML
     private void onMarketplace() {
         try {
-            // Load marketplace.fxml
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("marketplace.fxml"));
             Scene marketplaceScene = new Scene(fxmlLoader.load(), 850, 550);
-
-            // Create a new stage for the marketplace window
             Stage marketplaceStage = new Stage();
             marketplaceStage.setScene(marketplaceScene);
             marketplaceStage.setTitle("Marketplace");
@@ -110,9 +100,7 @@ public class Home {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("home.fxml"));
             Scene homeScene = new Scene(fxmlLoader.load(), 850, 550);
-
-            // Get the current stage from any button that triggered the action
-            Stage currentStage = (Stage) ((Button) play_game.getScene().getFocusOwner()).getScene().getWindow();
+            Stage currentStage = (Stage) back_button.getScene().getWindow();
             currentStage.setScene(homeScene);
             currentStage.setTitle("Home Page");
         } catch (IOException e) {

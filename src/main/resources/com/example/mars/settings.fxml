@@ -33,7 +33,7 @@
         <CheckBox layoutX="150.0" layoutY="200.0" />
 
         <!-- Back Button -->
-        <Button layoutX="250.0" layoutY="300.0" text="Back"
+        <Button fx:id="back_button" layoutX="250.0" layoutY="300.0" text="Back"
                 style="-fx-background-color: #000000; -fx-text-fill: #FEEE99; -fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-border-color: #000000; -fx-border-width: 2px; -fx-background-radius: 5;"
                 onAction="#onBack" />
     </children>
