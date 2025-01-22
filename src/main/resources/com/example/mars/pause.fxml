@@ -24,11 +24,11 @@
                     <!-- Background Image -->
                     <ImageView fitHeight="80.0" fitWidth="242.0">
                         <image>
-                            <Image url="@../../../images/Tem.png" />
+                            <Image url="@../../../images/bg.png" />
                         </image>
                     </ImageView>
                     <!-- Text on Top of Image -->
-                    <Label text="Resume Game" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+                    <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" text="Resume" />
                 </StackPane>
             </graphic>
         </Button>
@@ -40,11 +40,11 @@
                     <!-- Background Image -->
                     <ImageView fitHeight="80.0" fitWidth="242.0">
                         <image>
-                            <Image url="@../../../images/Tem.png" />
+                            <Image url="@../../../images/bg.png" />
                         </image>
                     </ImageView>
                     <!-- Text on Top of Image -->
-                    <Label text="Settings" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+                    <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" text="Settings" />
                 </StackPane>
             </graphic>
         </Button>
@@ -56,11 +56,11 @@
                     <!-- Background Image -->
                     <ImageView fitHeight="80.0" fitWidth="242.0">
                         <image>
-                            <Image url="@../../../images/Tem.png" />
+                            <Image url="@../../../images/bg.png" />
                         </image>
                     </ImageView>
                     <!-- Text on Top of Image -->
-                    <Label text="Main Menu" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+                    <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" text="Main Menu" />
                 </StackPane>
             </graphic>
         </Button>
@@ -72,11 +72,11 @@
                     <!-- Background Image -->
                     <ImageView fitHeight="80.0" fitWidth="242.0">
                         <image>
-                            <Image url="@../../../images/Tem.png" />
+                            <Image url="@../../../images/bg.png" />
                         </image>
                     </ImageView>
                     <!-- Text on Top of Image -->
-                    <Label text="Quit Game" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+                    <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" text="Quit Game" />
                 </StackPane>
             </graphic>
         </Button>
