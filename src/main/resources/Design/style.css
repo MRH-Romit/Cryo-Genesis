@@ -1,11 +1,14 @@
-/* styles.css */
-
-.root {
-    -fx-background-color: black;
+@font-face {
+    font-family: 'Super Pixel';
+    src: url('/Font/SuperPixel.ttf');
 }
 
-.canvas {
-    /* Example: Add a border around the canvas */
-    -fx-border-color: black;
+.button {
+    -fx-background-color: #FEEE99;
+    -fx-text-fill: #000000;
+    -fx-font-size: 22px;
+    -fx-font-family: 'Super Pixel';
+    -fx-border-color: #bbbbbb;
     -fx-border-width: 2px;
+    -fx-background-radius: 5;
 }

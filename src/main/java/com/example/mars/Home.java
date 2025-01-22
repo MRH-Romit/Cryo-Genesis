@@ -14,6 +14,10 @@ public class Home {
     private Button play_game;
     @FXML
     private Button character; // Character button
+    @FXML
+    private Button settings; // Settings button
+    @FXML
+    private Button support; // Support button
 
     @FXML
     public void initialize() {
@@ -45,6 +49,56 @@ public class Home {
             marketplaceStage.setScene(marketplaceScene);
             marketplaceStage.setTitle("Marketplace");
             marketplaceStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void onSettings() {
+        try {
+            // Load settings.fxml
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("settings.fxml"));
+            Scene settingsScene = new Scene(fxmlLoader.load(), 850, 550);
+
+            // Create a new stage for the settings window
+            Stage settingsStage = new Stage();
+            settingsStage.setScene(settingsScene);
+            settingsStage.setTitle("Settings");
+            settingsStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void onSupport() {
+        try {
+            // Load support.fxml
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("support.fxml"));
+            Scene supportScene = new Scene(fxmlLoader.load(), 850, 550);
+
+            // Create a new stage for the support window
+            Stage supportStage = new Stage();
+            supportStage.setScene(supportScene);
+            supportStage.setTitle("Support");
+            supportStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void onMarketplace() {
+        try {
+            // Load support.fxml
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("marketplace.fxml"));
+            Scene supportScene = new Scene(fxmlLoader.load(), 850, 550);
+
+            // Create a new stage for the support window
+            Stage supportStage = new Stage();
+            supportStage.setScene(supportScene);
+            supportStage.setTitle("Marketplace");
+            supportStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
