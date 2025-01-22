@@ -1,7 +1,6 @@
 package com.example.mars;
 
 import com.example.mars.Entity.Hero1;
-import com.example.mars.Entity.Slime;
 import com.example.mars.keyHandle.KeyHandle;
 import com.example.mars.tiles.tileManager;
 import javafx.animation.AnimationTimer;
@@ -30,7 +29,7 @@ public class GamePanel {
     private final int screenHeight = tileSize * maxScreenRow; // 640
 
     private Hero1 hero;
-    private Slime slime;
+    //private Slime slime;
     public final tileManager tileM = new tileManager(this);
     private final KeyHandle keyH = new KeyHandle();
 

@@ -7,19 +7,21 @@ import javafx.scene.image.WritableImage;
 import java.util.Random;
 
 public class Slime {
-    private int x, y; // Slime position
-    private int speed; // Movement speed
+    private int x, y; // Position
+    private int speed;
     private int tileSize;
     private Image spriteSheet;
-    private WritableImage currentSprite;
+    private WritableImage slimeSprite;
 
     private int currentFrame = 0; // Animation frame
     private int currentRow = 0; // Animation row
-    private long lastMoveTime = 0;
     private long lastFrameTime = 0;
-    private final long moveDuration = 500_000_000; // 500ms between movements
-    private final long frameDuration = 100_000_000; // 100ms per animation frame
-    private Random random;
+    private final long frameDuration = 100_000_000; // 100ms per frame
+    private boolean isFacingRight = true;
+
+    private Random random = new Random();
+    private long lastMoveTime = 0;
+    private final long moveCooldown = 1_000_000_000; // 1 second cooldown for changing direction
 
     public Slime(int startX, int startY, int speed, Image spriteSheet, int tileSize) {
         this.x = startX;
@@ -27,58 +29,73 @@ public class Slime {
         this.speed = speed;
         this.spriteSheet = spriteSheet;
         this.tileSize = tileSize;
-        this.random = new Random();
-        this.currentSprite = new WritableImage(spriteSheet.getPixelReader(), 0, 0, 48, 48);
+        this.slimeSprite = new WritableImage(spriteSheet.getPixelReader(), 0, 0, 16, 16);
     }
 
     public void update(long currentNanoTime, int screenWidth, int screenHeight) {
-        // Handle random movement
-        if (currentNanoTime - lastMoveTime >= moveDuration) {
-            int direction = random.nextInt(4); // 0: up, 1: down, 2: left, 3: right
+        boolean isMoving = false;
 
+        // Random movement logic
+        if (currentNanoTime - lastMoveTime > moveCooldown) {
+            int direction = random.nextInt(4); // Random direction: 0 = up, 1 = down, 2 = left, 3 = right
             switch (direction) {
-                case 0: // Move up
+                case 0: // Up
                     y = Math.max(y - speed, 0);
-                    currentRow = 1; // Row for upward movement
+                    isMoving = true;
+                    currentRow = 0; // Adjust based on sprite sheet
                     break;
-                case 1: // Move down
+                case 1: // Down
                     y = Math.min(y + speed, screenHeight - tileSize);
-                    currentRow = 0; // Row for downward movement
+                    isMoving = true;
+                    currentRow = 1; // Adjust based on sprite sheet
                     break;
-                case 2: // Move left
+                case 2: // Left
                     x = Math.max(x - speed, 0);
-                    currentRow = 2; // Row for left movement
+                    isMoving = true;
+                    currentRow = 2; // Adjust based on sprite sheet
+                    isFacingRight = false;
                     break;
-                case 3: // Move right
+                case 3: // Right
                     x = Math.min(x + speed, screenWidth - tileSize);
-                    currentRow = 3; // Row for right movement
+                    isMoving = true;
+                    currentRow = 3; // Adjust based on sprite sheet
+                    isFacingRight = true;
                     break;
             }
-
             lastMoveTime = currentNanoTime;
         }
 
-        // Handle animation frames
+        // Animation frame logic
         if (currentNanoTime - lastFrameTime > frameDuration) {
             currentFrame = (currentFrame + 1) % 3; // Loop through 3 animation frames
             lastFrameTime = currentNanoTime;
         }
 
-        // Update sprite for the current animation frame
-        currentSprite = new WritableImage(
+        // Update sprite for the current frame
+        slimeSprite = new WritableImage(
                 spriteSheet.getPixelReader(),
-                currentFrame * 48,
-                currentRow * 48,
-                48, 48
+                currentFrame * 16, // Frame width
+                currentRow * 16,   // Row height
+                16,                // Frame width
+                16                 // Frame height
         );
     }
 
     public void draw(GraphicsContext gc) {
-        int characterWidth = tileSize;
-        int characterHeight = tileSize;
+        int slimeWidth = tileSize;
+        int slimeHeight = tileSize;
 
-        // Clear overlapping sprites and ensure one sprite is drawn at a time
-        gc.drawImage(currentSprite, x, y, characterWidth, characterHeight);
+        gc.save(); // Save the current graphics context
+
+        if (!isFacingRight) {
+            gc.translate(x + slimeWidth, y); // Move to the slime's position
+            gc.scale(-1, 1); // Flip the sprite horizontally
+            gc.drawImage(slimeSprite, 0, 0, slimeWidth, slimeHeight);
+        } else {
+            gc.drawImage(slimeSprite, x, y, slimeWidth, slimeHeight);
+        }
+
+        gc.restore(); // Restore the graphics context
     }
 }
-
+//j
