@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Support">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Home">
    <children>
       <!-- Background image -->
       <ImageView fitHeight="600.0" fitWidth="800.0" layoutX="0" layoutY="0" pickOnBounds="true" preserveRatio="true">
@@ -14,15 +14,18 @@
       </ImageView>
 
       <!-- Title Label -->
-      <Label layoutX="292.0" layoutY="26.0" prefHeight="50.0" prefWidth="241.0" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 36px; -fx-text-fill: #ffc300;" text="SUPPORT" textAlignment="CENTER" />
+      <Label layoutX="293.0" layoutY="27.0" prefHeight="50.0" prefWidth="242.0" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 36px; -fx-text-fill: #ffc300;" text="SUPPORT" textAlignment="CENTER" />
 
       <!-- Chat Box -->
-      <TextArea fx:id="chatArea" editable="false" layoutX="50.0" layoutY="100.0" prefHeight="350.0" prefWidth="697.0" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 16px; -fx-background-color: #1e1e1e; -fx-text-fill: #ffffff; -fx-border-color: #ffc300; -fx-border-width: 2px;" wrapText="true" />
+      <TextArea fx:id="chatArea" editable="false" layoutX="50.0" layoutY="100.0" prefHeight="350.0" prefWidth="700.0" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 16px; -fx-background-color: #1e1e1e; -fx-text-fill: #ffffff; -fx-border-color: #ffc300; -fx-border-width: 2px;" wrapText="true" />
 
       <!-- User Input -->
       <TextField fx:id="userInput" layoutX="50.0" layoutY="470.0" prefHeight="30.0" prefWidth="600.0" promptText="Type your message..." style="-fx-font-family: 'Super Pixel'; -fx-font-size: 16px; -fx-background-color: #ffffff; -fx-border-color: #ffc300; -fx-border-width: 2px;" />
 
       <!-- Send Button -->
       <Button fx:id="sendButton" layoutX="670.0" layoutY="470.0" prefHeight="30.0" prefWidth="80.0" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 16px; -fx-background-color: #ffc300; -fx-text-fill: #000000; -fx-border-radius: 5;" text="Send" />
+
+      <!-- Back Button -->
+      <Button fx:id="backButton" layoutX="360.0" layoutY="524.0" onAction="#onBack" prefHeight="30.0" prefWidth="80.0" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 16px; -fx-background-color: #ffc300; -fx-text-fill: #000000; -fx-border-radius: 5;" text="Back" />
    </children>
 </AnchorPane>
