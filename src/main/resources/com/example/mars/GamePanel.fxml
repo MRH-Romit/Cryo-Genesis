@@ -6,26 +6,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.GamePanel">
-   <ImageView fitHeight="671.0" fitWidth="867.0" layoutX="-8.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../images/New map.png" />
-      </image>
-   </ImageView>
-   <Button fx:id="pause_btn" layoutX="798.0" layoutY="24.0" mnemonicParsing="false" onAction="#onPauseClick" text="Pause" />
-   <ImageView fitHeight="60.0" fitWidth="55.0" layoutX="10.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.GamePanel" style="-fx-background-color: #FEEE99;">
+   <!-- Pause Button at the top-right corner -->
+   <Button fx:id="pause_btn" layoutX="750.0" layoutY="10.0" mnemonicParsing="false" onAction="#onPauseClick" text="Pause"
+           style="-fx-background-color: #444444; -fx-text-fill: #FEEE99; -fx-font-family: 'Arial'; -fx-font-size: 16px; -fx-border-color: #bbbbbb; -fx-border-width: 2px; -fx-background-radius: 5;" />
+
+   <!-- Character Info and Level at the top-left corner -->
+   <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../../images/char.png" />
       </image>
    </ImageView>
-   <Label layoutX="65.0" layoutY="7.0" prefHeight="60.0" prefWidth="125.0" text="  Life: ⭐ ⭐ ⭐">
-      <font>
-         <Font name="Bodoni MT Condensed Bold" size="24.0" />
-      </font>
-   </Label>
 
-    <!-- Define the canvas where the game will be drawn. -->
-    <!-- The width and height can match your screenWidth and screenHeight. -->
-    <Canvas fx:id="gameCanvas" height="550.0" width="850.0" />
+   <VBox layoutX="80.0" layoutY="10.0" spacing="5.0">
+      <Label text="Name: Hero" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-text-fill: #000000;" />
+      <Label text="Level: 5" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-text-fill: #000000;" />
+   </VBox>
+
+   <!-- Life Indicator -->
+   <Label layoutX="10.0" layoutY="80.0" prefHeight="30.0" prefWidth="200.0" text="Life: ⭐ ⭐ ⭐"
+          style="-fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-text-fill: #000000;" />
+
+   <!-- Game Canvas for Drawing -->
+   <Canvas fx:id="gameCanvas" layoutX="0.0" layoutY="120.0" height="430.0" width="850.0"
+           style="-fx-border-color: #444444; -fx-border-width: 2px;" />
 
 </AnchorPane>
