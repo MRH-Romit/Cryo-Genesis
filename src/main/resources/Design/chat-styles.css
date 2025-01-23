@@ -1,0 +1,24 @@
+.client-message {
+    -fx-background-color: #e9ecef;
+    -fx-padding: 8px;
+    -fx-background-radius: 15px;
+    -fx-max-width: 300px; /* Set a fixed max width */
+}
+
+.agent-message {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-padding: 8px;
+    -fx-background-radius: 15px;
+    -fx-max-width: 300px; /* Set a fixed max width */
+}
+
+.message-container {
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+}
+
+.message-box {
+    -fx-padding: 5px;
+    -fx-min-width: 100%;
+}
