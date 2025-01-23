@@ -42,7 +42,7 @@ public class Home {
     @FXML
     private void onCharacter() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("marketplace.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("character.fxml"));
             Scene marketplaceScene = new Scene(fxmlLoader.load(), 850, 550);
             Stage marketplaceStage = new Stage();
             marketplaceStage.setScene(marketplaceScene);
@@ -53,7 +53,7 @@ public class Home {
         }
     }
 
-    @FXML
+   @FXML
     private void onSettings() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("settings.fxml"));
