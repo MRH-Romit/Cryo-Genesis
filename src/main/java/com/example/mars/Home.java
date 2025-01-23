@@ -1,5 +1,6 @@
 package com.example.mars;
 
+import com.example.mars.Socket.ChatServer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -70,13 +71,30 @@ public class Home {
     @FXML
     private void onSupport() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("support.fxml"));
-            Scene supportScene = new Scene(fxmlLoader.load(), 850, 550);
-            Stage supportStage = new Stage();
-            supportStage.setScene(supportScene);
-            supportStage.setTitle("Support");
-            supportStage.show();
+            System.out.println("Opening chat windows...");
+
+            // Client window
+            System.out.println("Loading client chat...");
+            FXMLLoader clientLoader = new FXMLLoader(getClass().getResource("/com/example/mars/Chat.fxml"));
+            Scene clientScene = new Scene(clientLoader.load(), 850, 550);
+            Stage clientStage = new Stage();
+            clientStage.setScene(clientScene);
+            clientStage.setTitle("Client Support Chat");
+            clientStage.show();
+            System.out.println("Client chat window opened");
+
+            // Agent window
+            System.out.println("Loading agent chat...");
+            FXMLLoader agentLoader = new FXMLLoader(getClass().getResource("/com/example/mars/AgentChat.fxml"));
+            Scene agentScene = new Scene(agentLoader.load(), 850, 550);
+            Stage agentStage = new Stage();
+            agentStage.setScene(agentScene);
+            agentStage.setTitle("Agent Support Chat");
+            agentStage.show();
+            System.out.println("Agent chat window opened");
+
         } catch (IOException e) {
+            System.err.println("Error opening chat windows: " + e.getMessage());
             e.printStackTrace();
         }
     }
