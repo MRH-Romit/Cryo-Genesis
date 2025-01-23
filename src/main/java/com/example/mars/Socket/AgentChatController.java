@@ -19,31 +19,38 @@ public class AgentChatController {
 
     private PrintWriter writer;
     private Socket socket;
+    private BufferedReader reader;
 
     @FXML
     public void initialize() {
         try {
             socket = new Socket("localhost", 5000);
             writer = new PrintWriter(socket.getOutputStream(), true);
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            new Thread(() -> {
-                try {
-                    BufferedReader reader = new BufferedReader(
-                            new InputStreamReader(socket.getInputStream()));
-                    String message;
-                    while ((message = reader.readLine()) != null) {
-                        String finalMessage = message;
-                        Platform.runLater(() -> {
-                            if (finalMessage.startsWith("CLIENT: ")) {
-                                String displayMessage = finalMessage.substring(8);
-                                addMessage(displayMessage, false);
-                            }
-                        });
+            // Start message receiving thread
+            new Thread(this::receiveMessages).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void receiveMessages() {
+        try {
+            String message;
+            while ((message = reader.readLine()) != null) {
+                String finalMessage = message;
+                Platform.runLater(() -> {
+                    boolean isAgentMessage = finalMessage.startsWith("AGENT: ");
+                    boolean isClientMessage = finalMessage.startsWith("CLIENT: ");
+
+                    if (isAgentMessage) {
+                        addMessage(finalMessage.substring(7), true);
+                    } else if (isClientMessage) {
+                        addMessage(finalMessage.substring(8), false);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }).start();
+                });
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -53,7 +60,9 @@ public class AgentChatController {
     private void sendMessage() {
         String message = messageField.getText().trim();
         if (!message.isEmpty()) {
-            writer.println("AGENT: " + message);
+            String fullMessage = "AGENT: " + message;
+            writer.println(fullMessage);
+            writer.flush();
             addMessage(message, true);
             messageField.clear();
         }
