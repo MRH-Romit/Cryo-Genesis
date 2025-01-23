@@ -3,8 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-
-<!-- Updated Moon-based Game UI -->
+<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Home">
 
@@ -27,7 +26,11 @@
                   </image>
                </ImageView>
                <!-- Text on Top of Image -->
-               <Label text="New Game" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+               <Label style="-fx-font-family: 'Monospaced'; -fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="New Game">
+                  <font>
+                     <Font name="Monospaced" size="14.0" />
+                  </font>
+               </Label>
             </StackPane>
          </graphic>
       </Button>
@@ -43,7 +46,7 @@
                   </image>
                </ImageView>
                <!-- Text on Top of Image -->
-               <Label text="Character" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+               <Label style="-fx-font-family: 'Monospaced'; -fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Character" />
             </StackPane>
          </graphic>
       </Button>
@@ -59,7 +62,7 @@
                   </image>
                </ImageView>
                <!-- Text on Top of Image -->
-               <Label text="Settings" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+               <Label style="-fx-font-family: 'Monospaced'; -fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Settings" />
             </StackPane>
          </graphic>
       </Button>
@@ -75,7 +78,7 @@
                   </image>
                </ImageView>
                <!-- Text on Top of Image -->
-               <Label text="Support" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
+               <Label style="-fx-font-family: 'Monospaced'; -fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Support" />
             </StackPane>
          </graphic>
       </Button>
@@ -83,17 +86,16 @@
       <!-- "Marketplace" Button -->
       <Button fx:id="marketplace" layoutX="335.0" layoutY="435.0" mnemonicParsing="false" onAction="#onMarketplace" style="-fx-background-color: transparent; -fx-border-color: transparent;">
          <graphic>
-            <StackPane>
-               <!-- Background Image -->
-               <ImageView fitHeight="80.0" fitWidth="262.0">
-                  <image>
-                     <Image url="@../../../images/bg.png " />
-                  </image>
-               </ImageView>
-               <!-- Text on Top of Image -->
-               <Label text="Marketplace" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" />
-            </StackPane>
+            <StackPane />
          </graphic>
       </Button>
+      <!-- Background Image -->
+      <ImageView fitHeight="80.0" fitWidth="262.0" layoutX="336.0" layoutY="442.0">
+         <image>
+            <Image url="@../../../images/bg.png " />
+         </image>
+      </ImageView>
+      <!-- Text on Top of Image -->
+      <Label layoutX="379.0" layoutY="466.0" style="-fx-font-family: 'Monospaced'; -fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Marketplace" />
    </children>
 </AnchorPane>
