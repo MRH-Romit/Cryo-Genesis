@@ -4,45 +4,55 @@ import com.example.mars.GamePanel;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class tileManager {
 
-    private GamePanel gp;
-    private tile[] tile;
-    public int[][] mapTileNum;
-    public int mapWidth;
-    public int mapHeight;
+    private final GamePanel gp;
+    private final tile[] tile;
+    public final int[][] mapTileNum; // Map array holding tile indices
+    public final int mapWidth; // Number of tiles horizontally
+    public final int mapHeight; // Number of tiles vertically
 
     public tileManager(GamePanel gp) {
         this.gp = gp;
-        tile = new tile[10]; // Array for tile types
-        getTileImage();
-        loadMap();
+
+        // Define map dimensions
+        this.mapWidth = 20;  // 20 tiles wide
+        this.mapHeight = 20; // 20 tiles high
+        this.mapTileNum = new int[mapHeight][mapWidth]; // 2D array for map layout
+
+        tile = new tile[10]; // Array to store up to 10 tile types
+        getTileImage(); // Load tile images
+        loadMap(); // Define the map layout
     }
 
     public void getTileImage() {
         try {
             tile[0] = new tile();
-            tile[0].image = loadImage("/tiles/flat.png");
+            tile[0].image = loadImage("/Map1/map1.png"); // Empty tile
 
             tile[1] = new tile();
-            tile[1].image = loadImage("/tiles/wall.png");
+            tile[1].image = loadImage("/Map1/mapBor.png"); // Wall tile
 
             tile[2] = new tile();
-            tile[2].image = loadImage("/tiles/water.png");
+            tile[2].image = loadImage("/Map1/mapGr.png"); // Ground tile
 
             tile[3] = new tile();
-            tile[3].image = loadImage("/tiles/whole.png");
+            tile[3].image = loadImage("/Map1/mapRock.png"); // Rock tile
 
             tile[4] = new tile();
-            tile[4].image = loadImage("/tiles/twoWhole.png");
+            tile[4].image = loadImage("/Map1/mapTree.png"); // Tree tile
 
             tile[5] = new tile();
-            tile[5].image = loadImage("/tiles/hill.png");
+            tile[5].image = loadImage("/Map1/mapWay.png"); // Path tile
+
+            tile[6] = new tile();
+            tile[6].image = loadImage("/Map1/map4.png"); // Additional tile 1
+
+            tile[7] = new tile();
+            tile[7].image = loadImage("/Map1/mapwhole.png"); // Additional tile 2
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,38 +68,35 @@ public class tileManager {
     }
 
     public void loadMap() {
-        try (InputStream is = getClass().getResourceAsStream("/maps/world01.txt")) {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+        // Define a 2D array to represent the map layout
+        int[][] predefinedMap = {
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 4, 4, 4, 4, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 0, 1},
+                {1, 4, 4, 4, 6, 4, 4, 4, 4, 5, 4, 4, 0, 4, 4, 4, 0, 4, 4, 1},
+                {1, 4, 6, 4, 7, 0, 4, 4, 4, 5, 4, 4, 4, 2, 2, 2, 4, 4, 4, 1},
+                {1, 4, 4, 6, 5, 4, 4, 4, 4, 5, 4, 6, 4, 2, 2, 2, 4, 4, 4, 1},
+                {1, 4, 4, 4, 5, 4, 4, 4, 4, 5, 4, 4, 4, 2, 2, 2, 4, 4, 4, 1},
+                {1, 3, 4, 3, 5, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 3, 4, 4, 1},
+                {1, 3, 3, 3, 5, 4, 4, 3, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1},
+                {1, 4, 4, 4, 5, 4, 3, 3, 4, 5, 3, 3, 3, 3, 3, 3, 4, 4, 4, 1},
+                {1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1},
+                {1, 3, 3, 3, 3, 3, 3, 3, 3, 5, 2, 2, 2, 2, 5, 3, 3, 3, 3, 1},
+                {1, 2, 0, 3, 3, 3, 3, 0, 2, 5, 3, 3, 3, 3, 5, 2, 2, 2, 2, 1},
+                {1, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 5, 3, 2, 2, 2, 1},
+                {1, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 5, 3, 2, 2, 2, 1},
+                {1, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 5, 3, 2, 2, 2, 1},
+                {1, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 5, 3, 3, 3, 2, 1},
+                {1, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 5, 3, 6, 3, 2, 1},
+                {1, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 7, 3, 3, 3, 2, 1},
+                {1, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 3, 0, 3, 3, 2, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+        };
 
-                String line = br.readLine();
-                if (line == null) throw new IOException("Empty map file!");
-
-                String[] firstRow = line.split(" ");
-                mapWidth = firstRow.length;
-
-                mapHeight = 1;
-                while (br.readLine() != null) mapHeight++;
-
-                mapTileNum = new int[mapWidth][mapHeight];
-
-                is.close();
-                try (InputStream newIs = getClass().getResourceAsStream("/maps/world01.txt");
-                     BufferedReader newBr = new BufferedReader(new InputStreamReader(newIs))) {
-
-                    for (int row = 0; row < mapHeight; row++) {
-                        line = newBr.readLine();
-                        if (line == null) break;
-
-                        String[] numbers = line.split(" ");
-                        for (int col = 0; col < mapWidth; col++) {
-                            int tileIndex = Integer.parseInt(numbers[col]);
-                            mapTileNum[col][row] = (tileIndex >= 0 && tileIndex < tile.length) ? tileIndex : 0;
-                        }
-                    }
-                }
+        // Copy the predefinedMap into mapTileNum
+        for (int row = 0; row < mapHeight; row++) {
+            for (int col = 0; col < mapWidth; col++) {
+                mapTileNum[row][col] = predefinedMap[row][col];
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -101,11 +108,11 @@ public class tileManager {
 
         for (int row = startRow; row < endRow; row++) {
             for (int col = startCol; col < endCol; col++) {
-                int tileNum = mapTileNum[col][row];
+                int tileNum = mapTileNum[row][col];
                 int tileX = col * gp.tileSize - cameraX;
                 int tileY = row * gp.tileSize - cameraY;
 
-                if (tileNum >= 0 && tileNum < tile.length) {
+                if (tileNum >= 0 && tileNum < tile.length && tile[tileNum].image != null) {
                     gc.drawImage(tile[tileNum].image, tileX, tileY, gp.tileSize, gp.tileSize);
                 }
             }
