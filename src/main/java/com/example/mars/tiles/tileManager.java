@@ -53,6 +53,9 @@ public class tileManager {
             tile[7] = new tile();
             tile[7].image = loadImage("/Map1/mapwhole.png"); // Additional tile 2
 
+            tile[8] = new tile();
+            tile[8].image = loadImage("/Map1/space.png"); // Additional tile 2
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,7 +81,7 @@ public class tileManager {
                 {1, 4, 4, 4, 5, 4, 4, 4, 4, 5, 4, 4, 4, 2, 2, 2, 4, 4, 4, 1},
                 {1, 3, 4, 3, 5, 4, 4, 4, 4, 5, 4, 4, 4, 4, 4, 4, 3, 4, 4, 1},
                 {1, 3, 3, 3, 5, 4, 4, 3, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1},
-                {1, 4, 4, 4, 5, 4, 3, 3, 4, 5, 3, 3, 3, 3, 3, 3, 4, 4, 4, 1},
+                {1, 4, 4, 4, 5, 4, 3, 3, 4, 5, 8, 3, 3, 3, 3, 3, 4, 4, 4, 1},
                 {1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1},
                 {1, 3, 3, 3, 3, 3, 3, 3, 3, 5, 2, 2, 2, 2, 5, 3, 3, 3, 3, 1},
                 {1, 2, 0, 3, 3, 3, 3, 0, 2, 5, 3, 3, 3, 3, 5, 2, 2, 2, 2, 1},
