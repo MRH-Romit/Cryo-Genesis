@@ -86,9 +86,19 @@
       <!-- "Marketplace" Button -->
       <Button fx:id="marketplace" layoutX="335.0" layoutY="435.0" mnemonicParsing="false" onAction="#onMarketplace" style="-fx-background-color: transparent; -fx-border-color: transparent;">
          <graphic>
-            <StackPane />
+            <StackPane>
+               <!-- Background Image -->
+               <ImageView fitHeight="80.0" fitWidth="242.0">
+                  <image>
+                     <Image url="@../../../images/bg.png" />
+                  </image>
+               </ImageView>
+               <!-- Text on Top of Image -->
+               <Label style="-fx-font-family: 'Monospaced'; -fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Marketplace" />
+            </StackPane>
          </graphic>
       </Button>
+
       <!-- Background Image -->
       <ImageView fitHeight="80.0" fitWidth="262.0" layoutX="336.0" layoutY="442.0">
          <image>

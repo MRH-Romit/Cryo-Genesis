@@ -20,7 +20,9 @@ public class Home {
     @FXML
     private Button support; // Support button
     @FXML
-    private Button back_button; // Back button
+    private Button back_button;
+    @FXML
+    private Button marketplace; // Back button
 
     @FXML
     public void initialize() {
@@ -47,7 +49,7 @@ public class Home {
             Scene marketplaceScene = new Scene(fxmlLoader.load(), 850, 550);
             Stage marketplaceStage = new Stage();
             marketplaceStage.setScene(marketplaceScene);
-            marketplaceStage.setTitle("Marketplace");
+            marketplaceStage.setTitle("Character");
             marketplaceStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -102,14 +104,18 @@ public class Home {
     @FXML
     private void onMarketplace() {
         try {
+            System.out.println("Marketplace button clicked!");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("marketplace.fxml"));
+            if (fxmlLoader == null) {
+                System.out.println("FXML file not found!");
+            }
             Scene marketplaceScene = new Scene(fxmlLoader.load(), 850, 550);
-            Stage marketplaceStage = new Stage();
-            marketplaceStage.setScene(marketplaceScene);
-            marketplaceStage.setTitle("Marketplace");
-            marketplaceStage.show();
+            Stage currentStage = (Stage) marketplace.getScene().getWindow();
+            currentStage.setScene(marketplaceScene);
+            currentStage.setTitle("Marketplace");
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error loading marketplace.fxml: " + e.getMessage());
         }
     }
 
