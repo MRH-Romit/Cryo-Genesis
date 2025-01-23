@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.CharacterController">
+    <children>
+        <!-- Background -->
+        <ImageView fitHeight="708.0" fitWidth="971.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../images/pic.jpg" />
+            </image>
+        </ImageView>
+
+        <!-- Back Button in Top-Left Corner -->
+        <Button fx:id="onBack" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#onBack" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+            <graphic>
+                <StackPane>
+                    <!-- Background Image -->
+                    <ImageView fitHeight="50.0" fitWidth="150.0">
+                        <image>
+                            <Image url="@../../../images/bg.png" />
+                        </image>
+                    </ImageView>
+                    <!-- Label Text -->
+                    <Label style="-fx-font-family: 'Monospaced'; -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="BACK" />
+                </StackPane>
+            </graphic>
+        </Button>
+
+        <!-- Character Display -->
+        <ImageView fx:id="characterImage" fitHeight="400.0" fitWidth="300.0" layoutX="300.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../images/MaleCharacter.jpg" />
+            </image>
+        </ImageView>
+
+        <!-- Left Button -->
+        <Button fx:id="leftButton" layoutX="200.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleLeftButton" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+            <graphic>
+                <ImageView fitHeight="50.0" fitWidth="50.0">
+                    <image>
+                        <Image url="@../../../images/LeftArrow.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <!-- Right Button -->
+        <Button fx:id="rightButton" layoutX="600.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleRightButton" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+            <graphic>
+                <ImageView fitHeight="50.0" fitWidth="50.0">
+                    <image>
+                        <Image url="@../../../images/RightArrow.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <!-- Select Character Button -->
+        <Button fx:id="selectButton" layoutX="380.0" layoutY="520.0" mnemonicParsing="false" onAction="#handleSelectButton" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+            <graphic>
+                <StackPane>
+                    <!-- Background Image -->
+                    <ImageView fitHeight="80.0" fitWidth="348.0">
+                        <image>
+                            <Image url="@../../../images/bg.png" />
+                        </image>
+                    </ImageView>
+                    <!-- Label Text -->
+                    <Label prefHeight="32.0" prefWidth="276.0" style="-fx-font-family: 'Monospaced'; -fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Select Character" />
+                </StackPane>
+            </graphic>
+        </Button>
+    </children>
+</AnchorPane>
