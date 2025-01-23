@@ -30,9 +30,9 @@
         </Button>
 
         <!-- Character Display -->
-        <ImageView fx:id="characterImage" fitHeight="400.0" fitWidth="300.0" layoutX="300.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="characterImage" fitHeight="255.0" fitWidth="256.0" layoutX="344.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../images/MaleCharacter.jpg" />
+                <Image url="@../../../images/char.png" />
             </image>
         </ImageView>
 

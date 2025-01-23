@@ -29,7 +29,6 @@ public class GamePanel {
     private final int screenHeight = tileSize * maxScreenRow; // 640
 
     private Hero1 hero;
-    //private Slime slime;
     public final tileManager tileM = new tileManager(this);
     private final KeyHandle keyH = new KeyHandle();
 
@@ -92,8 +91,8 @@ public class GamePanel {
                 keyH.rightPressed,
                 keyH.attackPressed,
                 System.nanoTime(),
-                screenWidth,
-                screenHeight
+                tileM.mapWidth * tileSize, // Map width in pixels
+                tileM.mapHeight * tileSize // Map height in pixels
         );
 
         // Reset attack key after handling it
@@ -106,9 +105,9 @@ public class GamePanel {
         int heroTileY = hero.getY() / tileSize;
 
         if (heroTileX >= 0 && heroTileX < tileM.mapWidth && heroTileY >= 0 && heroTileY < tileM.mapHeight) {
-            int currentTile = tileM.mapTileNum[heroTileX][heroTileY];
+            int currentTile = tileM.mapTileNum[heroTileY][heroTileX];
 
-            if (currentTile == 5) {
+            if (currentTile == 7) {
                 openNewFXML(); // Trigger new FXML loading
             }
         }
@@ -128,8 +127,10 @@ public class GamePanel {
         // Draw map relative to the camera
         tileM.draw(gc, cameraX, cameraY);
 
-        // Draw hero at the screen's center
-        hero.draw(gc, screenWidth / 2 - tileSize / 2, screenHeight / 2 - tileSize / 2);
+        // Draw hero relative to the screen
+        int heroScreenX = Math.max(tileSize / 2, Math.min(hero.getX() - cameraX, screenWidth - tileSize / 2));
+        int heroScreenY = Math.max(tileSize / 2, Math.min(hero.getY() - cameraY, screenHeight - tileSize / 2));
+        hero.draw(gc, heroScreenX - tileSize / 2, heroScreenY - tileSize / 2);
     }
 
     private void openNewFXML() {
