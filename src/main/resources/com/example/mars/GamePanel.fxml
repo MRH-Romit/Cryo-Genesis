@@ -6,6 +6,9 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane style="-fx-background-color: #FEEE99;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.GamePanel">
+
+   <!-- Game Canvas for Drawing -->
+   <Canvas fx:id="gameCanvas" height="560.0" layoutX="5.0" layoutY="4.0" style="-fx-border-color: #444444; -fx-border-width: 2px;" width="864.0" />
    <!-- Pause Button at the top-right corner -->
    <Button fx:id="pause_btn" layoutX="750.0" layoutY="10.0" mnemonicParsing="false" onAction="#onPauseClick" style="-fx-background-color: transparent; -fx-border-color: transparent;">
       <graphic>
@@ -17,22 +20,21 @@
       </graphic>
    </Button>
 
+   <!-- Life Indicator -->
+   <Label layoutX="379.0" layoutY="18.0" prefHeight="30.0" prefWidth="125.0" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-text-fill: #000000;" text="Life: ⭐ ⭐ ⭐">
+      <graphic>
+      
+         <VBox spacing="5.0">
+            <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-text-fill: #000000;" text="Name: Hero" />
+            <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-text-fill: #000000;" text="Level: 5" />
+         </VBox>
+      </graphic></Label>
+
    <!-- Character Info and Level at the top-left corner -->
    <ImageView fitHeight="66.0" fitWidth="55.0" layoutX="10.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../../../images/char.png" />
       </image>
    </ImageView>
-
-   <VBox layoutX="80.0" layoutY="10.0" spacing="5.0">
-      <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-text-fill: #000000;" text="Name: Hero" />
-      <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-text-fill: #000000;" text="Level: 5" />
-   </VBox>
-
-   <!-- Life Indicator -->
-   <Label layoutX="379.0" layoutY="18.0" prefHeight="30.0" prefWidth="125.0" style="-fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-text-fill: #000000;" text="Life: ⭐ ⭐ ⭐" />
-
-   <!-- Game Canvas for Drawing -->
-   <Canvas fx:id="gameCanvas" height="560.0" layoutX="5.0" layoutY="4.0" style="-fx-border-color: #444444; -fx-border-width: 2px;" width="864.0" />
 
 </AnchorPane>
