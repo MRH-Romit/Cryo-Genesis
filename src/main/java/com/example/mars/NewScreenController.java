@@ -15,9 +15,9 @@ import java.io.InputStream;
 
 public class NewScreenController {
 
-    private final int screenWidth = 960; // Screen width
-    private final int screenHeight = 640; // Screen height
-    private final int tileSize = 80; // Tile size for consistent scaling
+    private final int screenWidth = 960;
+    private final int screenHeight = 640;
+    private final int tileSize = 80;
 
     private Hero1 hero;
     private final KeyHandle keyH = new KeyHandle();
@@ -30,43 +30,46 @@ public class NewScreenController {
 
     @FXML
     public void initialize() {
-        gc = gameCanvas.getGraphicsContext2D();
+        try {
+            gc = gameCanvas.getGraphicsContext2D();
 
-        // Initialize TileManager2
-        tileManager2 = new TileManager2(tileSize);
+            // Initialize TileManager2
+            tileManager2 = new TileManager2(tileSize);
 
-        // Initialize the hero at the screen's center
-        int centerX = screenWidth / 2 - tileSize / 2;
-        int centerY = screenHeight / 2 - tileSize / 2;
+            // Initialize the hero
+            int centerX = screenWidth / 2 - tileSize / 2;
+            int centerY = screenHeight / 2 - tileSize / 2;
 
-        try (InputStream is = getClass().getResourceAsStream("/images/character.png")) {
-            Image heroSprite = new Image(is);
-            hero = new Hero1(centerX, centerY, 7, heroSprite, tileSize);
+            try (InputStream is = getClass().getResourceAsStream("/images/character.png")) {
+                if (is == null) throw new Exception("Hero image not found!");
+                Image heroSprite = new Image(is);
+                hero = new Hero1(centerX, centerY, 7, heroSprite, tileSize);
+            }
+
+            // Set up keyboard input
+            Platform.runLater(() -> {
+                gameCanvas.setFocusTraversable(true);
+                gameCanvas.requestFocus();
+                gameCanvas.getScene().addEventHandler(KeyEvent.KEY_PRESSED, keyH.keyPressedHandler);
+                gameCanvas.getScene().addEventHandler(KeyEvent.KEY_RELEASED, keyH.keyReleasedHandler);
+            });
+
+            startGameLoop();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        // Set up keyboard input
-        Platform.runLater(() -> {
-            gameCanvas.setFocusTraversable(true);
-            gameCanvas.requestFocus();
-            gameCanvas.getScene().addEventHandler(KeyEvent.KEY_PRESSED, keyH.keyPressedHandler);
-            gameCanvas.getScene().addEventHandler(KeyEvent.KEY_RELEASED, keyH.keyReleasedHandler);
-        });
-
-        startGameLoop();
     }
 
     private void startGameLoop() {
         gameLoop = new AnimationTimer() {
             private long lastUpdate = 0;
-            private final long frameDuration = 100_000_000; // 100ms
+            private final long frameDuration = 100_000_000;
 
             @Override
             public void handle(long currentNanoTime) {
                 if (currentNanoTime - lastUpdate >= frameDuration) {
-                    update(); // Update character movement
-                    draw();   // Render the character and map
+                    update();
+                    draw();
                     lastUpdate = currentNanoTime;
                 }
             }
@@ -75,7 +78,6 @@ public class NewScreenController {
     }
 
     private void update() {
-        // Update hero logic
         hero.update(
                 keyH.upPressed,
                 keyH.downPressed,
@@ -87,20 +89,20 @@ public class NewScreenController {
                 screenHeight
         );
 
-        // Reset attack key after handling it
+        // Reset attack key
         if (keyH.attackPressed) {
             keyH.attackPressed = false;
         }
 
-        // Constrain the hero to the map boundaries
+        // Constrain the hero within bounds
         hero.setX(Math.max(0, Math.min(hero.getX(), screenWidth - tileSize)));
         hero.setY(Math.max(0, Math.min(hero.getY(), screenHeight - tileSize)));
     }
 
     private void draw() {
-        gc.clearRect(0, 0, screenWidth, screenHeight); // Clear the canvas
+        gc.clearRect(0, 0, screenWidth, screenHeight);
 
-        // Draw the map using TileManager2
+        // Draw the map
         tileManager2.draw(gc, 0, 0);
 
         // Draw the hero

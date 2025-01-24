@@ -38,10 +38,10 @@ public class TileManager2 {
     private void loadTileImages() {
         try {
             tile[0] = new Tile();
-            tile[0].image = loadImage("/Map2/Map_Ground.png"); // Ground tile
+            tile[0].image = loadImage("/Map2/Map_Wall.png"); // Ground tile
 
             tile[1] = new Tile();
-            tile[1].image = loadImage("/Map2/Map_Wall_1.png"); // Wall tile
+            tile[1].image = loadImage("/Map2/Map_Wall_2.png"); // Wall tile
 
             tile[2] = new Tile();
             tile[2].image = loadImage("/Map2/MapWater.png"); // Water tile
@@ -49,6 +49,11 @@ public class TileManager2 {
             tile[3] = new Tile();
             tile[3].image = loadImage("/Map2/Map_Water.png"); // Water tile
 
+            tile[4] = new Tile();
+            tile[4].image = loadImage("/Map2/MapTree.png"); // Water tile
+
+            tile[5] = new Tile();
+            tile[5].image = loadImage("/Map2/mapGr.jpeg");
 
 
 
