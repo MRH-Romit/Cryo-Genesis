@@ -8,21 +8,37 @@
 
 <AnchorPane prefHeight="548.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.start">
    <children>
+      <!-- Background Image -->
       <ImageView fitHeight="584.0" fitWidth="908.0" layoutX="-7.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/Start.jpeg" />
          </image>
       </ImageView>
-      <Rectangle fx:id="Rectangle2" arcHeight="5.0" arcWidth="5.0" fill="#ffecae" height="26.0" layoutX="196.0" layoutY="448.0" stroke="BLACK" strokeType="INSIDE" width="488.0" />
-      <Rectangle fx:id="Rectangle1" arcHeight="5.0" arcWidth="5.0" fill="#ac5300" height="26.0" layoutX="196.0" layoutY="448.0" stroke="TRANSPARENT" strokeType="INSIDE" width="42.0" />
-      <Label fx:id="Label1" layoutX="197.0" layoutY="404.0" prefHeight="36.0" prefWidth="186.0" text="Loading..." textFill="#ac5300">
+
+      <!-- Outer Progress Bar -->
+      <Rectangle fx:id="Rectangle2" arcHeight="20.0" arcWidth="20.0" fill="#ffe4b5" height="30.0" layoutX="160.0" layoutY="448.0" stroke="BLACK" strokeType="INSIDE" width="500.0" />
+
+      <!-- Inner Progress Bar -->
+      <Rectangle fx:id="Rectangle1" arcHeight="20.0" arcWidth="20.0" fill="#ff8c00" height="30.0" layoutX="160.0" layoutY="448.0" stroke="TRANSPARENT" strokeType="INSIDE" width="125.0" />
+
+      <!-- Loading Text -->
+      <Label fx:id="Label1" layoutX="160.0" layoutY="400.0" prefHeight="40.0" prefWidth="200.0" text="Loading..." textFill="#ff4500">
          <font>
-            <Font name="Book Antiqua Bold" size="24.0" />
+            <Font name="Monospace Bold" size="26.0" />
          </font>
       </Label>
-      <Label fx:id="Label2" layoutX="637.0" layoutY="406.0" prefHeight="31.0" prefWidth="56.0" text="25%" textFill="#ac5300">
+
+      <!-- Percentage Display -->
+      <Label fx:id="Label2" layoutX="650.0" layoutY="400.0" prefHeight="40.0" prefWidth="80.0" text="25%" textFill="#ff4500">
          <font>
-            <Font name="Book Antiqua Bold" size="24.0" />
+            <Font name="Monospace Bold" size="26.0" />
+         </font>
+      </Label>
+
+      <!-- Optional Decorative Element -->
+      <Label layoutX="290.0" layoutY="360.0" prefHeight="30.0" prefWidth="300.0" text="WELCOME TO MARS" textFill="#ff4500">
+         <font>
+            <Font name="Monospace Bold" size="28.0" />
          </font>
       </Label>
    </children>
