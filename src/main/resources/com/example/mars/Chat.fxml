@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="550.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.mars.Socket.ChatController" stylesheets="@../../../Design/chat-styles.css">
+<AnchorPane prefHeight="550.0" prefWidth="850.0" stylesheets="@../../../Design/chat-styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Socket.ChatController">
    <VBox spacing="10" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
-      <ScrollPane fx:id="scrollPane" fitToWidth="true" VBox.vgrow="ALWAYS">
-         <VBox fx:id="messageContainer" styleClass="message-container"/>
+      <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="474.0" prefWidth="798.0" VBox.vgrow="ALWAYS">
+         <VBox fx:id="messageContainer" styleClass="message-container" />
       </ScrollPane>
       <HBox spacing="10">
-         <TextField fx:id="messageField" HBox.hgrow="ALWAYS" onAction="#sendMessage"/>
-         <Button text="Send" onAction="#sendMessage"/>
+         <TextField fx:id="messageField" onAction="#sendMessage" HBox.hgrow="ALWAYS" />
+         <Button onAction="#sendMessage" text="Send" />
       </HBox>
    </VBox>
 </AnchorPane>

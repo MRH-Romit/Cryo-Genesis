@@ -32,6 +32,7 @@ public class start {
 
     @FXML
     public void initialize() {
+
         Rectangle1.setWidth(0); // Start with an empty loading bar
         double maxWidth = Rectangle2.getWidth(); // Get the width of the background rectangle
 
@@ -75,5 +76,4 @@ public class start {
             e.printStackTrace();
         }
     }
-
 }
