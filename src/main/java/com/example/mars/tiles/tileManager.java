@@ -31,39 +31,70 @@ public class tileManager {
         try {
             tile[0] = new tile();
             tile[0].image = loadImage("/Map1/map1.png"); // Empty tile
+            tile[0].collision = false;  // No collision
 
             tile[1] = new tile();
             tile[1].image = loadImage("/Map1/Map_Wall_3.png"); // Wall tile
+            tile[1].collision = true;  // Only wall has collision
 
             tile[2] = new tile();
-            tile[2].image = loadImage("/Map1/mapGr.png"); // Ground tile
+            tile[2].image = loadImage("/Map1/mapGr.png"); // Ground/Grass tile
+            tile[2].collision = false;  // No collision
+            tile[2].isGrass = true;
 
             tile[3] = new tile();
             tile[3].image = loadImage("/Map1/mapRock.png"); // Rock tile
+            tile[3].collision = false;  // Changed to false
 
             tile[4] = new tile();
             tile[4].image = loadImage("/Map1/mapTree.png"); // Tree tile
+            tile[4].collision = false;  // Changed to false
 
             tile[5] = new tile();
             tile[5].image = loadImage("/Map1/mapWay.png"); // Path tile
+            tile[5].collision = false;
 
             tile[6] = new tile();
-            tile[6].image = loadImage("/obj/door.png"); // Additional tile 1
+            tile[6].image = loadImage("/obj/door.png"); // Door tile
+            tile[6].collision = false;  // Changed to false
 
             tile[7] = new tile();
-            tile[7].image = loadImage("/Map1/Map_Wall_Art_1.png"); // Additional tile 2
+            tile[7].image = loadImage("/Map1/Map_Wall_Art_1.png");
+            tile[7].collision = false;  // Changed to false
 
             tile[8] = new tile();
-            tile[8].image = loadImage("/Map1/space.png"); // Additional tile 2
+            tile[8].image = loadImage("/Map1/space.png");
+            tile[8].collision = false;
 
             tile[9] = new tile();
-            tile[9].image = loadImage("/Map1/Map_Wall_Art_2.png"); // Additional tile 2
-
-
+            tile[9].image = loadImage("/Map1/Map_Wall_Art_2.png");
+            tile[9].collision = false;  // Changed to false
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    // Add these helper methods
+    public boolean isCollision(int col, int row) {
+        if (col >= 0 && col < mapWidth && row >= 0 && row < mapHeight) {
+            int tileNum = mapTileNum[row][col];
+            return tileNum >= 0 && tileNum < tile.length && tile[tileNum].collision;
+        }
+        return true; // Consider out-of-bounds as collision
+    }
+
+    public boolean isGrassTile(int col, int row) {
+        if (col >= 0 && col < mapWidth && row >= 0 && row < mapHeight) {
+            int tileNum = mapTileNum[row][col];
+            return tileNum >= 0 && tileNum < tile.length && tile[tileNum].isGrass;
+        }
+        return false;
+    }
+    public int getTileTypeAt(int col, int row) {
+        if (col >= 0 && col < mapWidth && row >= 0 && row < mapHeight) {
+            return mapTileNum[row][col];
+        }
+        return -1; // Return -1 for invalid positions
     }
 
     private Image loadImage(String path) {
@@ -85,7 +116,7 @@ public class tileManager {
                 {1, 2, 2, 2, 2, 2, 1, 4, 4, 5, 4, 3, 4, 2, 2, 2, 4, 4, 4, 1},
                 {1, 2, 2, 2, 2, 2, 1, 4, 4, 5, 4, 4, 4, 2, 2, 2, 4, 4, 4, 1},
                 {9, 2, 2, 2, 2, 2, 1, 4, 4, 5, 4, 4, 4, 4, 4, 4, 3, 4, 4, 1},
-                {1, 1, 1, 6, 1, 1, 1, 3, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 9},
+                {1, 1, 1, 6, 6, 1, 1, 3, 4, 5, 4, 4, 4, 4, 4, 4, 4, 4, 4, 9},
                 {1, 4, 4, 5, 4, 4, 3, 3, 4, 5, 4, 4, 4, 3, 3, 3, 4, 4, 4, 9},
                 {1, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1},
                 {1, 3, 3, 3, 3, 3, 3, 3, 3, 5, 8, 2, 2, 2, 5, 3, 3, 3, 3, 1},

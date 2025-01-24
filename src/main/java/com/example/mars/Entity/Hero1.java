@@ -1,5 +1,6 @@
 package com.example.mars.Entity;
 
+import com.example.mars.tiles.tileManager;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -10,6 +11,7 @@ public class Hero1 {
     private int tileSize;
     private Image spriteSheet;
     private WritableImage characterSprite;
+    private tileManager tileM;
 
     private int currentFrame = 0;
     private int currentRow = 0;
@@ -30,12 +32,13 @@ public class Hero1 {
         currentFrame = 0;
     }
 
-    public Hero1(int startX, int startY, int speed, Image spriteSheet, int tileSize) {
+    public Hero1(int startX, int startY, int speed, Image spriteSheet, int tileSize, tileManager tileM) {
         this.x = startX;
         this.y = startY;
         this.speed = speed;
         this.spriteSheet = spriteSheet;
         this.tileSize = tileSize;
+        this.tileM = tileM;
         this.characterSprite = new WritableImage(spriteSheet.getPixelReader(), 0, 0, 48, 48);
     }
 
@@ -55,49 +58,81 @@ public class Hero1 {
         this.y = y;
     }
 
-    public void update(boolean upPressed, boolean downPressed, boolean leftPressed, boolean rightPressed, boolean attackPressed, long currentNanoTime, int screenWidth, int screenHeight) {
+    private boolean checkCollision(int newX, int newY) {
+        // Check all four corners of the hero's hitbox
+        int hitboxSize = tileSize; // You can adjust this for a smaller/larger hitbox
+
+        // Top left corner
+        int col1 = newX / tileSize;
+        int row1 = newY / tileSize;
+
+        // Top right corner
+        int col2 = (newX + hitboxSize - 1) / tileSize;
+        int row2 = newY / tileSize;
+
+        // Bottom left corner
+        int col3 = newX / tileSize;
+        int row3 = (newY + hitboxSize - 1) / tileSize;
+
+        // Bottom right corner
+        int col4 = (newX + hitboxSize - 1) / tileSize;
+        int row4 = (newY + hitboxSize - 1) / tileSize;
+
+        return tileM.isCollision(col1, row1) ||
+                tileM.isCollision(col2, row2) ||
+                tileM.isCollision(col3, row3) ||
+                tileM.isCollision(col4, row4);
+    }
+
+    public void update(boolean upPressed, boolean downPressed, boolean leftPressed,
+                       boolean rightPressed, boolean attackPressed, long currentNanoTime,
+                       int screenWidth, int screenHeight) {
         boolean isMoving = false;
+        int newX = x;
+        int newY = y;
 
         if (upPressed) {
-            y = Math.max(y - speed, 0);
+            newY = y - speed;
             isMoving = true;
             currentRow = 5;
             isFacingUp = true;
             isFacingDown = false;
         }
         if (downPressed) {
-            y = Math.min(y + speed, screenHeight - tileSize);
+            newY = y + speed;
             isMoving = true;
             currentRow = 3;
             isFacingDown = true;
             isFacingUp = false;
         }
         if (rightPressed) {
-            x = Math.min(x + speed, screenWidth - tileSize);
+            newX = x + speed;
             isMoving = true;
             currentRow = 4;
             isFacingRight = true;
         }
         if (leftPressed) {
-            x = Math.max(x - speed, 0);
+            newX = x - speed;
             isMoving = true;
             currentRow = 4;
             isFacingRight = false;
         }
 
+        // Check collision before updating position
+        if (!checkCollision(newX, newY)) {
+            x = Math.max(0, Math.min(newX, screenWidth - tileSize));
+            y = Math.max(0, Math.min(newY, screenHeight - tileSize));
+        }
+
         if (attackPressed && !isAttacking) {
             isAttacking = true;
-            if (upPressed) currentRow = 8;
-            else if (downPressed) currentRow = 6;
-            else if (rightPressed) currentRow = 7;
-            else if (leftPressed) currentRow = 7;
-            else if (isFacingUp) currentRow = 8;
+            if (isFacingUp) currentRow = 8;
             else if (isFacingDown) currentRow = 6;
-            else if (isFacingRight) currentRow = 7;
             else currentRow = 7;
             currentFrame = 0;
         }
 
+        // Animation logic
         if (isAttacking) {
             if (currentNanoTime - lastFrameTime > frameDuration) {
                 currentFrame++;
@@ -119,10 +154,10 @@ public class Hero1 {
             }
             if (isFacingUp) currentRow = 2;
             else if (isFacingDown) currentRow = 0;
-            else if (isFacingRight) currentRow = 1;
             else currentRow = 1;
         }
 
+        // Update sprite
         characterSprite = new WritableImage(
                 spriteSheet.getPixelReader(),
                 currentFrame * 48,
