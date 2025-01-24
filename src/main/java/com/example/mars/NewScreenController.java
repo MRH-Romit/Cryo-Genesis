@@ -2,19 +2,15 @@ package com.example.mars;
 
 import com.example.mars.Entity.Hero1;
 import com.example.mars.keyHandle.KeyHandle;
+import com.example.mars.tiles.TileManager2;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 public class NewScreenController {
@@ -22,26 +18,12 @@ public class NewScreenController {
     private final int screenWidth = 960; // Screen width
     private final int screenHeight = 640; // Screen height
     private final int tileSize = 80; // Tile size for consistent scaling
-    private final int mapWidth = 12; // Number of columns in the map
-    private final int mapHeight = 8; // Number of rows in the map
-
-    private final int[][] map = {
-            {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-            {0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    };
 
     private Hero1 hero;
     private final KeyHandle keyH = new KeyHandle();
     private AnimationTimer gameLoop;
     private GraphicsContext gc;
-    private Image wallTile;
-
+    private TileManager2 tileManager2;
 
     @FXML
     private Canvas gameCanvas;
@@ -50,14 +32,8 @@ public class NewScreenController {
     public void initialize() {
         gc = gameCanvas.getGraphicsContext2D();
 
-        // Load the wall tile image
-        try {
-            wallTile = new Image(getClass().getResourceAsStream("/tiles/wall.png"));
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // Initialize TileManager2
+        tileManager2 = new TileManager2(tileSize);
 
         // Initialize the hero at the screen's center
         int centerX = screenWidth / 2 - tileSize / 2;
@@ -120,41 +96,12 @@ public class NewScreenController {
         hero.setX(Math.max(0, Math.min(hero.getX(), screenWidth - tileSize)));
         hero.setY(Math.max(0, Math.min(hero.getY(), screenHeight - tileSize)));
     }
-    @FXML
-    private void onPauseClick() {
-        if (gameLoop != null) {
-            gameLoop.stop();
-        }
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("pause.fxml"));
-            Parent pauseRoot = loader.load();
-
-            Scene pauseScene = new Scene(pauseRoot);
-            Stage pauseStage = new Stage();
-            pauseStage.setTitle("Pause Menu");
-            pauseStage.setScene(pauseScene);
-            pauseStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     private void draw() {
         gc.clearRect(0, 0, screenWidth, screenHeight); // Clear the canvas
 
-        // Draw the map
-        for (int row = 0; row < mapHeight; row++) {
-            for (int col = 0; col < mapWidth; col++) {
-                int tile = map[row][col];
-                int tileX = col * tileSize;
-                int tileY = row * tileSize;
-
-                if (tile == 1) { // Render wall tile
-                    gc.drawImage(wallTile, tileX, tileY, tileSize, tileSize);
-                }
-                // Else, the tile is 0 and the background will remain visible
-            }
-        }
+        // Draw the map using TileManager2
+        tileManager2.draw(gc, 0, 0);
 
         // Draw the hero
         hero.draw(gc, hero.getX(), hero.getY());
