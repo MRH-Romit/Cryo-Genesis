@@ -1,6 +1,6 @@
 package com.example.mars;
 
-import com.example.mars.Socket.ChatServer;
+import com.example.mars.sound.SoundManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -26,11 +26,13 @@ public class Home {
 
     @FXML
     public void initialize() {
-        // Initialize logic if needed
+        // Play home page music
+        SoundManager.playLandingPageMusic("/audio/home_soundtrack.mp3");
     }
 
     @FXML
     private void onPlayGame() {
+        SoundManager.stopMusic(); // Stop home music before switching scenes
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GamePanel.fxml"));
             Scene gameScene = new Scene(fxmlLoader.load(), 850, 550);
@@ -56,7 +58,7 @@ public class Home {
         }
     }
 
-   @FXML
+    @FXML
     private void onSettings() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("settings.fxml"));
@@ -75,28 +77,21 @@ public class Home {
         try {
             System.out.println("Opening chat windows...");
 
-            // Client window
-            System.out.println("Loading client chat...");
             FXMLLoader clientLoader = new FXMLLoader(getClass().getResource("/com/example/mars/Chat.fxml"));
             Scene clientScene = new Scene(clientLoader.load(), 850, 550);
             Stage clientStage = new Stage();
             clientStage.setScene(clientScene);
             clientStage.setTitle("Client Support Chat");
             clientStage.show();
-            System.out.println("Client chat window opened");
 
-            // Agent window
-            System.out.println("Loading agent chat...");
             FXMLLoader agentLoader = new FXMLLoader(getClass().getResource("/com/example/mars/AgentChat.fxml"));
             Scene agentScene = new Scene(agentLoader.load(), 850, 550);
             Stage agentStage = new Stage();
             agentStage.setScene(agentScene);
             agentStage.setTitle("Agent Support Chat");
             agentStage.show();
-            System.out.println("Agent chat window opened");
 
         } catch (IOException e) {
-            System.err.println("Error opening chat windows: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -104,18 +99,13 @@ public class Home {
     @FXML
     private void onMarketplace() {
         try {
-            System.out.println("Marketplace button clicked!");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("marketplace.fxml"));
-            if (fxmlLoader == null) {
-                System.out.println("FXML file not found!");
-            }
             Scene marketplaceScene = new Scene(fxmlLoader.load(), 850, 550);
             Stage currentStage = (Stage) marketplace.getScene().getWindow();
             currentStage.setScene(marketplaceScene);
             currentStage.setTitle("Marketplace");
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error loading marketplace.fxml: " + e.getMessage());
         }
     }
 

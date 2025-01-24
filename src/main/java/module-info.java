@@ -1,6 +1,7 @@
 module com.example.mars {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
 
     // Export and open the main package
     exports com.example.mars;
