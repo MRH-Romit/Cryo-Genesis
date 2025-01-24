@@ -28,7 +28,7 @@
                         </image>
                     </ImageView>
                     <!-- Text on Top of Image -->
-                    <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" text="Resume" />
+                    <Label style="-fx-font-family: 'Monospace'; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Resume" />
                 </StackPane>
             </graphic>
         </Button>
@@ -44,7 +44,7 @@
                         </image>
                     </ImageView>
                     <!-- Text on Top of Image -->
-                    <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" text="Settings" />
+                    <Label style="-fx-font-family: 'Monospace'; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Settings" />
                 </StackPane>
             </graphic>
         </Button>
@@ -60,7 +60,7 @@
                         </image>
                     </ImageView>
                     <!-- Text on Top of Image -->
-                    <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" text="Main Menu" />
+                    <Label style="-fx-font-family: 'Monospace'; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Main Menu" />
                 </StackPane>
             </graphic>
         </Button>
@@ -76,7 +76,7 @@
                         </image>
                     </ImageView>
                     <!-- Text on Top of Image -->
-                    <Label style="-fx-font-family: 'Super Pixel'; -fx-font-size: 22px; -fx-text-fill: #000000;" text="Quit Game" />
+                    <Label style="-fx-font-family: 'Monospace'; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Quit Game" />
                 </StackPane>
             </graphic>
         </Button>

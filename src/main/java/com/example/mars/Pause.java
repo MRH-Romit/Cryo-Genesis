@@ -1,13 +1,12 @@
 package com.example.mars;
 
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -25,10 +24,23 @@ public class Pause {
 
     @FXML
     private void onResumeGame() {
-        // Logic to resume the game
-        Stage currentStage = (Stage) resume_game.getScene().getWindow();
-        currentStage.close(); // Close the pause menu to resume the game
+        try {
+            // Load the GamePanel FXML
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GamePanel.fxml"));
+            Scene gameScene = new Scene(fxmlLoader.load(), 850, 550);
+
+            Stage currentStage = (Stage) resume_game.getScene().getWindow();
+            currentStage.setScene(gameScene);
+            currentStage.setTitle("Game Page");
+
+            // Retrieve the GamePanel instance and resume the game loop
+            GamePanel gamePanel = fxmlLoader.getController();
+            gamePanel.resumeGameLoop();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @FXML
     private void onPauseSettings() {
