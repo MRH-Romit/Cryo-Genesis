@@ -5,10 +5,16 @@ import com.example.mars.keyHandle.KeyHandle;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.io.InputStream;
 
 public class NewScreenController {
@@ -114,7 +120,25 @@ public class NewScreenController {
         hero.setX(Math.max(0, Math.min(hero.getX(), screenWidth - tileSize)));
         hero.setY(Math.max(0, Math.min(hero.getY(), screenHeight - tileSize)));
     }
+    @FXML
+    private void onPauseClick() {
+        if (gameLoop != null) {
+            gameLoop.stop();
+        }
 
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("pause.fxml"));
+            Parent pauseRoot = loader.load();
+
+            Scene pauseScene = new Scene(pauseRoot);
+            Stage pauseStage = new Stage();
+            pauseStage.setTitle("Pause Menu");
+            pauseStage.setScene(pauseScene);
+            pauseStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void draw() {
         gc.clearRect(0, 0, screenWidth, screenHeight); // Clear the canvas
 
