@@ -4,13 +4,41 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <AnchorPane style="-fx-background-color: #FEEE99;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.GamePanel">
 
    <!-- Game Canvas for Drawing -->
-   <Canvas fx:id="gameCanvas" height="560.0" layoutX="5.0" layoutY="4.0" style="-fx-border-color: #444444; -fx-border-width: 2px;" width="864.0" />
-   <!-- Pause Button at the top-right corner -->
+   <Canvas fx:id="gameCanvas" height="640.0" style="-fx-border-color: #444444; -fx-border-width: 2px;" width="874.0" />
+
+   <!-- Upper Info Bar -->
+   <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="20">
+      <!-- Character Portrait -->
+      <HBox alignment="CENTER" spacing="10">
+         <ImageView fitHeight="64.0" fitWidth="64.0" preserveRatio="true">
+            <image>
+               <Image url="@../../../images/char.png" />
+            </image>
+         </ImageView>
+      </HBox>
+
+      <!-- Stats and Health/Mana Bars -->
+      <VBox spacing="5">
+         <!-- Health Bar -->
+         <HBox alignment="CENTER_LEFT" spacing="5">
+            <Label style="-fx-font-family: 'Monospace'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="40" />
+            <ProgressBar prefHeight="16" prefWidth="200" progress="0.65" style="-fx-accent: #FF0000;" />
+            <Label style="-fx-font-family: 'Monospace'; -fx-font-size: 14px; -fx-text-fill: #ffffff;" text="1652/2555" />
+         </HBox>
+         <!-- Mana Bar -->
+         <HBox alignment="CENTER_LEFT" spacing="5">
+            <Label style="-fx-font-family: 'Monospace'; -fx-font-size: 16px;" text=" " />
+            <ProgressBar prefHeight="16" prefWidth="200" progress="1.0" style="-fx-accent: #0000FF;" />
+            <Label style="-fx-font-family: 'Monospace'; -fx-font-size: 14px; -fx-text-fill: #ffffff;" text="1095/1095" />
+         </HBox>
+      </VBox>
+   </HBox>
+
+   <!-- Pause Button -->
    <Button fx:id="pause_btn" layoutX="750.0" layoutY="10.0" mnemonicParsing="false" onAction="#onPauseClick" style="-fx-background-color: transparent; -fx-border-color: transparent;">
       <graphic>
          <ImageView fitHeight="50.0" fitWidth="58.0">
@@ -20,28 +48,5 @@
          </ImageView>
       </graphic>
    </Button>
-
-   <!-- Life Indicator -->
-   <Label layoutX="379.0" layoutY="18.0" prefHeight="30.0" prefWidth="125.0" style="-fx-font-family: 'Monospace'; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Life: ⭐ ⭐ ⭐">
-      <graphic>
-         <VBox spacing="5.0">
-            <Label style="-fx-font-family: 'Monospace'; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Name: Hero">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-            <Label style="-fx-font-family: 'Monospace'; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #000000;" text="Level: 01">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-         </VBox>
-      </graphic>
-   </Label>
-
-   <!-- Character Info and Level at the top-left corner -->
-   <ImageView fitHeight="66.0" fitWidth="55.0" layoutX="10.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../../images/char.png" />
-      </image>
-   </ImageView>
 
 </AnchorPane>
