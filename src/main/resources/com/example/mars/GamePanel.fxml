@@ -10,10 +10,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Circle?>
 
-<AnchorPane style="-fx-background-color: #FEEE99;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.GamePanel">
+<!-- Single root AnchorPane -->
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.mars.GamePanel"
+            style="-fx-background-color: #FEEE99;">
 
    <!-- 1) Main Game Canvas -->
-   <Canvas fx:id="gameCanvas" height="640.0" style="-fx-border-color: #444444; -fx-border-width: 2px;" width="874.0" />
+   <Canvas fx:id="gameCanvas"
+           width="874.0"
+           height="640.0"
+           style="-fx-border-color: #444444; -fx-border-width: 2px;" />
 
    <!-- 2) Top-Left Info (Hero, HP, MP) -->
    <!-- Hero portrait, HP bar, MP bar, etc. placed with absolute coordinates for simplicity -->
@@ -27,54 +34,118 @@
       </image>
    </ImageView>
 
-   <Label layoutX="19.0" layoutY="60.0" style="-fx-font-family: 'Monospace'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Hero" />
+   <Label layoutX="19.0" layoutY="60.0"
+          style="-fx-font-family: 'Monospace'; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"
+          text="Hero" />
 
    <!-- HP Bar -->
-   <ProgressBar layoutX="76.0" layoutY="26.0" prefHeight="16" prefWidth="200" progress="0.65" style="-fx-accent: #FF0000;" />
-   <Label layoutX="277.0" layoutY="26.0" style="-fx-font-family: 'Monospace'; -fx-font-size: 14px; -fx-text-fill: #ffffff;" text="1652/2555" />
+   <ProgressBar layoutX="76.0" layoutY="26.0"
+                prefHeight="16" prefWidth="200"
+                progress="0.65"
+                style="-fx-accent: #FF0000;" />
+   <Label layoutX="277.0" layoutY="26.0"
+          style="-fx-font-family: 'Monospace'; -fx-font-size: 14px; -fx-text-fill: #ffffff;"
+          text="1652/2555" />
 
    <!-- MP Bar -->
-   <ProgressBar layoutX="76.0" layoutY="54.0" prefHeight="16" prefWidth="200" progress="1.0" style="-fx-accent: #0000FF;" />
-   <Label layoutX="282.0" layoutY="54.0" style="-fx-font-family: 'Monospace'; -fx-font-size: 14px; -fx-text-fill: #ffffff;" text="1095/1095" />
+   <ProgressBar layoutX="76.0" layoutY="54.0"
+                prefHeight="16" prefWidth="200"
+                progress="1.0"
+                style="-fx-accent: #0000FF;" />
+   <Label layoutX="282.0" layoutY="54.0"
+          style="-fx-font-family: 'Monospace'; -fx-font-size: 14px; -fx-text-fill: #ffffff;"
+          text="1095/1095" />
 
    <!-- 2a) Gems Panel (Top-Left) -->
-   <!-- Gem icon + gem count, placed below MP bar (adjust layoutY as needed) -->
    <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="19.0" layoutY="90.0" preserveRatio="true">
       <image>
          <Image url="@../../../images/gems.png" />
       </image>
    </ImageView>
-
-   <Label layoutX="48.0" layoutY="92.0" style="-fx-font-family: 'Monospace'; -fx-font-size: 14px; -fx-text-fill: #ffffff;" text="x 100" />
+   <Label layoutX="48.0" layoutY="92.0"
+          style="-fx-font-family: 'Monospace'; -fx-font-size: 14px; -fx-text-fill: #ffffff;"
+          text="x 100" />
 
    <!-- 3) Top-Right Container: Mini-Map + Coin Section -->
-   <HBox alignment="CENTER_RIGHT" spacing="20" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-
-      <!-- Mini-map (Optional) -->
+   <HBox alignment="CENTER_RIGHT" spacing="20"
+         AnchorPane.rightAnchor="10.0"
+         AnchorPane.topAnchor="10.0">
+      <!-- Mini-map -->
       <ImageView fitHeight="64.0" fitWidth="64.0" preserveRatio="true">
          <image>
             <Image url="@../../../images/Map1.jpg" />
          </image>
       </ImageView>
-
-      <!-- Coin Section -->
+      <!-- Coin Section (placeholder if needed) -->
       <HBox alignment="CENTER" spacing="5" />
    </HBox>
 
-   <!-- 4) Pause Button (onAction -> #onPauseClick) -->
-   <Button fx:id="pause_btn" onAction="#onPauseClick" style="-fx-background-color: transparent; -fx-border-color: transparent;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="90.0" />
+   <!-- 4) Pause Button -->
+   <Button fx:id="pause_btn"
+           onAction="#onPauseClick"
+           style="-fx-background-color: transparent; -fx-border-color: transparent;"
+           AnchorPane.rightAnchor="10.0"
+           AnchorPane.topAnchor="90.0" />
 
-   <!-- Optionally, an overlapping pause button graphic if needed (but you already have an ImageView below) -->
+   <!-- Pause Button Graphic (optional) -->
    <ImageView fitHeight="50.0" fitWidth="68.0" layoutX="780.0" layoutY="79.0">
       <image>
          <Image url="@../../../images/PauseButton.png" />
       </image>
    </ImageView>
+
+   <!-- Coins near top-right -->
    <ImageView fitHeight="24.0" fitWidth="30.0" layoutX="698.0" layoutY="14.0" preserveRatio="true">
       <image>
          <Image url="@../../../images/coin.png" />
       </image>
    </ImageView>
-   <Label layoutX="726.0" layoutY="15.0" style="-fx-font-family: 'Monospace'; -fx-font-size: 16px; -fx-text-fill: #ffffff;" text="999" />
+   <Label layoutX="726.0" layoutY="15.0"
+          style="-fx-font-family: 'Monospace'; -fx-font-size: 16px; -fx-text-fill: #ffffff;"
+          text="999" />
+
+   <!-- Tutorial Overlay (initially hidden) -->
+   <AnchorPane fx:id="tutorialOverlay"
+               visible="false"
+               pickOnBounds="true"
+               prefWidth="874.0"
+               prefHeight="640.0"
+               style="-fx-background-color: rgba(0,0,0,0.3);">
+
+      <!-- Tutorial Character -->
+      <ImageView fx:id="tutorialCharacterView"
+                 layoutX="50.0"
+                 layoutY="300.0"
+                 fitWidth="150.0"
+                 preserveRatio="true">
+         <image>
+            <Image url="@../../../images/hints_char.png" />
+         </image>
+      </ImageView>
+
+      <!-- Speech Bubble (simple Label) -->
+      <Label fx:id="tutorialLabel"
+             layoutX="200.0" layoutY="280.0"
+             text="Welcome to the game!\nTap here to begin."
+             style="
+                -fx-font-size: 18px;
+                -fx-padding: 10;
+                /* New background color to match your theme (#FEEE99).
+                   Slightly darker or lighter for contrast. */
+                -fx-background-color: #FCD87E;
+                -fx-text-fill: #2E2E2E;               /* Dark text color for contrast */
+                -fx-border-color: #C6982D;            /* A complementary border color */
+                -fx-border-width: 2;
+                -fx-background-radius: 10;
+                -fx-border-radius: 10;
+             " />
+
+      <!-- Tutorial Continue Button -->
+      <Button fx:id="tutorialContinueBtn"
+              layoutX="340.0"
+              layoutY="370.0"
+              text="Okay, got it!"
+              onAction="#onTutorialContinue" />
+   </AnchorPane>
 
 </AnchorPane>
