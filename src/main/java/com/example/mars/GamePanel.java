@@ -3,6 +3,7 @@ package com.example.mars;
 import com.example.mars.Entity.Hero1;
 import com.example.mars.Entity.Orc1;
 import com.example.mars.keyHandle.KeyHandle;
+import com.example.mars.sound.SoundManager;
 import com.example.mars.tiles.tileManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -76,6 +77,10 @@ public class GamePanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // Play game background sound
+        SoundManager.playLandingPageMusic("/audio/GamePanel_BG - Copy.mp3");
+
 
         Platform.runLater(() -> {
             gameCanvas.setFocusTraversable(true);
@@ -175,6 +180,8 @@ public class GamePanel {
             gameLoop.stop();
         }
 
+        SoundManager.stopMusic(); // Stop game music when paused
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("pause.fxml"));
             Parent pauseRoot = loader.load();
@@ -192,5 +199,6 @@ public class GamePanel {
         if (gameLoop != null) {
             gameLoop.start();
         }
+        SoundManager.playLandingPageMusic("/audio/GamePanel_BG - Copy.mp3"); // Resume game music
     }
 }
