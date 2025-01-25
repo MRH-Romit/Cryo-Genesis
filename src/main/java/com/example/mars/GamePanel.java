@@ -6,6 +6,8 @@ import com.example.mars.keyHandle.KeyHandle;
 import com.example.mars.sound.SoundManager;
 import com.example.mars.tiles.tileManager;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,7 +62,7 @@ public class GamePanel {
     private Button tutorialContinueBtn;
 
     /**
-     * The single initialize() method called by JavaFX after FXML is loaded.
+     * Called by JavaFX after the FXML is loaded.
      */
     @FXML
     private void initialize() {
@@ -106,30 +109,46 @@ public class GamePanel {
         // Start the game loop
         startGameLoop();
 
-        // Optionally show a tutorial message
+        // Optionally show a tutorial message with typewriter effect
         showTutorialMessage("If you're looking for new challenges to beat, just tap here!");
     }
 
     /**
-     * Finds a grass tile (type=2) on the map and returns its center coordinates.
+     * Creates a typewriter animation for the given Label with a specified delay per character.
      */
-    private int[] findGrassPosition() {
-        for (int row = 0; row < tileM.mapHeight; row++) {
-            for (int col = 0; col < tileM.mapWidth; col++) {
-                if (tileM.getTileTypeAt(col, row) == 2) { // 2 is grass tile
-                    return new int[]{col * tileSize + tileSize / 2, row * tileSize + tileSize / 2};
-                }
-            }
+    private void typeMessage(Label label, String fullText, Duration letterDelay) {
+        // Start empty
+        label.setText("");
+
+        // Convert the full text into characters
+        char[] characters = fullText.toCharArray();
+
+        Timeline timeline = new Timeline();
+
+        // Build a KeyFrame for each character
+        for (int i = 0; i < characters.length; i++) {
+            final int index = i;
+            KeyFrame kf = new KeyFrame(letterDelay.multiply(i), e -> {
+                // Append one character
+                label.setText(label.getText() + characters[index]);
+            });
+            timeline.getKeyFrames().add(kf);
         }
-        return new int[]{400, 300}; // Fallback if no grass tile found
+
+        // (Optional) After finishing, do something else:
+        // timeline.setOnFinished(e -> { ... });
+
+        timeline.play();
     }
 
     /**
-     * Shows the tutorial overlay with a given message.
+     * Shows the tutorial overlay with a given message (animated letter by letter).
      */
     public void showTutorialMessage(String message) {
-        tutorialLabel.setText(message);
+        // Make overlay visible
         tutorialOverlay.setVisible(true);
+        // Animate the text typing effect
+        typeMessage(tutorialLabel, message, Duration.millis(50));
     }
 
     /**
@@ -145,6 +164,23 @@ public class GamePanel {
     @FXML
     private void onTutorialContinue() {
         hideTutorialMessage();
+    }
+
+    /**
+     * Finds a grass tile (type=2) on the map and returns its center coordinates.
+     */
+
+
+
+    private int[] findGrassPosition() {
+        for (int row = 0; row < tileM.mapHeight; row++) {
+            for (int col = 0; col < tileM.mapWidth; col++) {
+                if (tileM.getTileTypeAt(col, row) == 2) {
+                    return new int[]{col * tileSize + tileSize / 2, row * tileSize + tileSize / 2};
+                }
+            }
+        }
+        return new int[]{400, 300}; // Fallback if no grass tile found
     }
 
     /**
