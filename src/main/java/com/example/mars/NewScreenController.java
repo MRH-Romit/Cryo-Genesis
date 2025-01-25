@@ -54,6 +54,7 @@ public class NewScreenController {
             e.printStackTrace();
         }
     }
+
     private class TileManagerWrapper extends tileManager {
         private final TileManager2 tileManager2;
 
@@ -67,15 +68,7 @@ public class NewScreenController {
             return tileManager2.isCollision(col, row);
         }
 
-        @Override
-        public boolean isGrassTile(int col, int row) {
-            return tileManager2.isGrassTile(col, row);
-        }
-
-        @Override
-        public int getTileTypeAt(int col, int row) {
-            return tileManager2.getTileTypeAt(col, row);
-        }
+        // Removed isGrassTile and getTileTypeAt as they are not part of TileManager2
     }
 
     private void startGameLoop() {

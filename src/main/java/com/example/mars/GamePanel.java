@@ -44,7 +44,7 @@ public class GamePanel {
         for (int row = 0; row < tileM.mapHeight; row++) {
             for (int col = 0; col < tileM.mapWidth; col++) {
                 if (tileM.getTileTypeAt(col, row) == 2) { // 2 is grass tile
-                    return new int[]{col * tileSize + tileSize / 2, row * tileSize + tileSize / 2};
+                    return new int[]{col * tileSize + tileSize/2, row * tileSize + tileSize/2};
                 }
             }
         }
@@ -116,14 +116,6 @@ public class GamePanel {
                 tileM.mapHeight * tileSize
         );
 
-        // Step 1: Check if the character is on tile[7] and go to the new screen
-        int col = hero.getX() / tileSize;
-        int row = hero.getY() / tileSize;
-        if (tileM.getTileTypeAt(col, row) == 7) { // Tile [7] detected
-            goToNewScreen();
-            return; // Stop further updates to avoid conflicts after scene change
-        }
-
         for (Orc1 orc : orcs) {
             double prevX = orc.getX();
             double prevY = orc.getY();
@@ -175,23 +167,6 @@ public class GamePanel {
         for (Orc1 orc : orcs) {
             orc.draw(gc, cameraX, cameraY);
         }
-    }
-
-    // Step 2: Navigate to the new screen
-    private void goToNewScreen() {
-        Platform.runLater(() -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("newScreen.fxml"));
-                Parent newScreenRoot = loader.load();
-                Scene newScreenScene = new Scene(newScreenRoot);
-
-                // Get the current stage
-                Stage currentStage = (Stage) gameCanvas.getScene().getWindow();
-                currentStage.setScene(newScreenScene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
     @FXML
