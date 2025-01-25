@@ -1,6 +1,7 @@
 package com.example.mars;
 
 import com.example.mars.Entity.Hero1;
+import com.example.mars.Entity.Orc1;
 import com.example.mars.keyHandle.KeyHandle;
 import com.example.mars.tiles.tileManager;
 import javafx.animation.AnimationTimer;
@@ -17,16 +18,18 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GamePanel {
-
     private final int originalTileSize = 16;
-    private final int scale = 5; // Adjusted scaling
+    private final int scale = 5;
     public final int maxScreenCol = 12;
     public final int maxScreenRow = 8;
-    public final int tileSize = originalTileSize * scale; // 80
-    private final int screenWidth = tileSize * maxScreenCol; // 960
-    private final int screenHeight = tileSize * maxScreenRow; // 640
+    public final int tileSize = originalTileSize * scale;
+    private final int screenWidth = tileSize * maxScreenCol;
+    private final int screenHeight = tileSize * maxScreenRow;
+    private final List<Orc1> orcs = new ArrayList<>();
 
     private Hero1 hero;
     public final tileManager tileM = new tileManager(this);
@@ -34,27 +37,46 @@ public class GamePanel {
 
     @FXML
     private Canvas gameCanvas;
-
     private GraphicsContext gc;
     private AnimationTimer gameLoop;
 
+    private int[] findGrassPosition() {
+        for (int row = 0; row < tileM.mapHeight; row++) {
+            for (int col = 0; col < tileM.mapWidth; col++) {
+                if (tileM.getTileTypeAt(col, row) == 2) { // 2 is grass tile
+                    return new int[]{col * tileSize + tileSize/2, row * tileSize + tileSize/2};
+                }
+            }
+        }
+        return new int[]{400, 300}; // fallback position
+    }
+
     @FXML
-    public void initialize() {
+    private void initialize() {
         gc = gameCanvas.getGraphicsContext2D();
 
-        // Calculate the center of the map
         int centerX = (tileM.mapWidth * tileSize) / 2 - tileSize / 2;
         int centerY = (tileM.mapHeight * tileSize) / 2 - tileSize / 2;
 
-        // Initialize the hero at the map's center
         try (InputStream is = getClass().getResourceAsStream("/images/character.png")) {
             Image heroSprite = new Image(is);
-            hero = new Hero1(centerX, centerY, 7, heroSprite, tileSize);
+            hero = new Hero1(centerX, centerY, 7, heroSprite, tileSize, tileM);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try (InputStream runStream = getClass().getResourceAsStream("/images/orc1_run_full.png");
+             InputStream attackStream = getClass().getResourceAsStream("/images/orc1_attack_full.png")) {
+
+            Image runSpriteSheet = new Image(runStream);
+            Image attackSpriteSheet = new Image(attackStream);
+
+            int[] orcPosition = findGrassPosition();
+            orcs.add(new Orc1(orcPosition[0], orcPosition[1], tileSize, runSpriteSheet, attackSpriteSheet, tileM));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Set up keyboard input
         Platform.runLater(() -> {
             gameCanvas.setFocusTraversable(true);
             gameCanvas.requestFocus();
@@ -68,13 +90,13 @@ public class GamePanel {
     private void startGameLoop() {
         gameLoop = new AnimationTimer() {
             private long lastUpdate = 0;
-            private final long frameDuration = 100_000_000; // 100ms
+            private final long frameDuration = 100_000_000;
 
             @Override
             public void handle(long currentNanoTime) {
                 if (currentNanoTime - lastUpdate >= frameDuration) {
-                    update(); // Update game state
-                    draw();   // Render the game
+                    update();
+                    draw();
                     lastUpdate = currentNanoTime;
                 }
             }
@@ -83,7 +105,6 @@ public class GamePanel {
     }
 
     private void update() {
-        // Update hero logic
         hero.update(
                 keyH.upPressed,
                 keyH.downPressed,
@@ -91,63 +112,60 @@ public class GamePanel {
                 keyH.rightPressed,
                 keyH.attackPressed,
                 System.nanoTime(),
-                tileM.mapWidth * tileSize, // Map width in pixels
-                tileM.mapHeight * tileSize // Map height in pixels
+                tileM.mapWidth * tileSize,
+                tileM.mapHeight * tileSize
         );
 
-        // Reset attack key after handling it
-        if (keyH.attackPressed) {
-            keyH.attackPressed = false; // Reset to prevent continuous attack
-        }
+        for (Orc1 orc : orcs) {
+            double prevX = orc.getX();
+            double prevY = orc.getY();
 
-        // Check the tile under the character
-        int heroTileX = hero.getX() / tileSize;
-        int heroTileY = hero.getY() / tileSize;
+            orc.update(hero.getX(), hero.getY(), System.nanoTime());
 
-        if (heroTileX >= 0 && heroTileX < tileM.mapWidth && heroTileY >= 0 && heroTileY < tileM.mapHeight) {
-            int currentTile = tileM.mapTileNum[heroTileY][heroTileX];
-
-            if (currentTile == 7) {
-                openNewFXML(); // Trigger new FXML loading
+            if (checkCollisionWithWalls(orc)) {
+                orc.setPosition(prevX, prevY);
             }
         }
+
+        if (keyH.attackPressed) {
+            keyH.attackPressed = false;
+        }
+    }
+
+    private boolean checkCollisionWithWalls(Orc1 orc) {
+        int tileCol = (int) (orc.getX() / tileSize);
+        int tileRow = (int) (orc.getY() / tileSize);
+
+        // Check surrounding tiles
+        for (int row = tileRow - 1; row <= tileRow + 1; row++) {
+            for (int col = tileCol - 1; col <= tileCol + 1; col++) {
+                if (row >= 0 && row < tileM.mapHeight && col >= 0 && col < tileM.mapWidth) {
+                    if (tileM.isCollision(col, row)) {  // Use isCollision instead of getTileTypeAt
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private void draw() {
         gc.clearRect(0, 0, screenWidth, screenHeight);
 
-        // Center the camera on the hero
         int cameraX = hero.getX() - screenWidth / 2 + tileSize / 2;
         int cameraY = hero.getY() - screenHeight / 2 + tileSize / 2;
 
-        // Constrain the camera to the map bounds
         cameraX = Math.max(0, Math.min(cameraX, tileM.mapWidth * tileSize - screenWidth));
         cameraY = Math.max(0, Math.min(cameraY, tileM.mapHeight * tileSize - screenHeight));
 
-        // Draw map relative to the camera
         tileM.draw(gc, cameraX, cameraY);
 
-        // Draw hero relative to the screen
         int heroScreenX = Math.max(tileSize / 2, Math.min(hero.getX() - cameraX, screenWidth - tileSize / 2));
         int heroScreenY = Math.max(tileSize / 2, Math.min(hero.getY() - cameraY, screenHeight - tileSize / 2));
         hero.draw(gc, heroScreenX - tileSize / 2, heroScreenY - tileSize / 2);
-    }
 
-    private void openNewFXML() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/mars/newScreen.fxml"));
-            Parent root = loader.load();
-
-            // Set the new scene
-            Stage primaryStage = (Stage) gameCanvas.getScene().getWindow();
-            primaryStage.setScene(new Scene(root));
-
-            // Stop the game loop if needed
-            gameLoop.stop();
-
-            System.out.println("Transitioned to new screen!");
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (Orc1 orc : orcs) {
+            orc.draw(gc, cameraX, cameraY);
         }
     }
 
@@ -160,7 +178,6 @@ public class GamePanel {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("pause.fxml"));
             Parent pauseRoot = loader.load();
-
             Scene pauseScene = new Scene(pauseRoot);
             Stage pauseStage = new Stage();
             pauseStage.setTitle("Pause Menu");

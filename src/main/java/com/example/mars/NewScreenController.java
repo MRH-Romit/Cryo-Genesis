@@ -3,6 +3,7 @@ package com.example.mars;
 import com.example.mars.Entity.Hero1;
 import com.example.mars.keyHandle.KeyHandle;
 import com.example.mars.tiles.TileManager2;
+import com.example.mars.tiles.tileManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -43,20 +44,37 @@ public class NewScreenController {
             try (InputStream is = getClass().getResourceAsStream("/images/character.png")) {
                 if (is == null) throw new Exception("Hero image not found!");
                 Image heroSprite = new Image(is);
-                hero = new Hero1(centerX, centerY, 7, heroSprite, tileSize);
+                // Create a wrapper class that implements the same interface as tileManager
+                TileManagerWrapper wrapper = new TileManagerWrapper(tileManager2);
+                hero = new Hero1(centerX, centerY, 7, heroSprite, tileSize, wrapper);
             }
 
-            // Set up keyboard input
-            Platform.runLater(() -> {
-                gameCanvas.setFocusTraversable(true);
-                gameCanvas.requestFocus();
-                gameCanvas.getScene().addEventHandler(KeyEvent.KEY_PRESSED, keyH.keyPressedHandler);
-                gameCanvas.getScene().addEventHandler(KeyEvent.KEY_RELEASED, keyH.keyReleasedHandler);
-            });
-
-            startGameLoop();
+            // Rest of your initialization code...
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    private class TileManagerWrapper extends tileManager {
+        private final TileManager2 tileManager2;
+
+        public TileManagerWrapper(TileManager2 tileManager2) {
+            super(null); // Pass null or appropriate parameter
+            this.tileManager2 = tileManager2;
+        }
+
+        @Override
+        public boolean isCollision(int col, int row) {
+            return tileManager2.isCollision(col, row);
+        }
+
+        @Override
+        public boolean isGrassTile(int col, int row) {
+            return tileManager2.isGrassTile(col, row);
+        }
+
+        @Override
+        public int getTileTypeAt(int col, int row) {
+            return tileManager2.getTileTypeAt(col, row);
         }
     }
 
