@@ -4,7 +4,8 @@ import com.example.mars.tiles.tileManager;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
+
+import java.util.List;
 
 public class Orc1 {
     private double x, y;
@@ -14,30 +15,19 @@ public class Orc1 {
     private WritableImage currentSprite;
     private int currentFrame = 0;
     private int framesPerRow = 8;
-    private int totalFrames = 8;
     private boolean isAttacking = false;
     private long lastFrameTime = 0;
-    private final long frameDuration = 150_000_000;
-    private int detectionRange = 150; // Reduced for closer detection
-    private int attackRange = 80;     // Reduced for closer attack
-    private double moveSpeed = 2.0;   // Adjusted for smoother movement
-    private Direction facing = Direction.DOWN;
-    private tileManager tileM;
+    private final long frameDuration = 100_000_000;
+    private int detectionRange = 300; // Orc detects hero within 300px
+    private int attackRange = 80;     // Orc attacks hero within 80px
+    private double moveSpeed = 2.0;   // Orc movement speed
     private boolean isMoving = false;
+    private int health = 5;
+    private boolean isDead = false;
+    private int minimumDistance = 50; // Minimum distance between orcs
+    private tileManager tileM;
 
-    private enum Direction {
-        UP(0),
-        RIGHT(1),
-        DOWN(2),
-        LEFT(3);
-
-        final int row;
-        Direction(int row) {
-            this.row = row;
-        }
-    }
-
-    public Orc1(int x, int y, int size, Image runSpriteSheet, Image attackSpriteSheet, tileManager tileM) {
+    public Orc1(double x, double y, int size, Image runSpriteSheet, Image attackSpriteSheet, tileManager tileM) {
         this.x = x;
         this.y = y;
         this.size = size;
@@ -47,143 +37,125 @@ public class Orc1 {
         updateCurrentSprite();
     }
 
-    public void update(int heroX, int heroY, long currentNanoTime) {
-        // Calculate distance and direction to hero
+    public void update(double heroX, double heroY, long currentNanoTime, List<Orc1> orcs) {
+        if (isDead) return;
+
         double dx = heroX - x;
         double dy = heroY - y;
-        double distance = Math.sqrt(dx * dx + dy * dy);
+        double distanceToHero = Math.sqrt(dx * dx + dy * dy);
 
-        // Debug print
-        System.out.println("Distance to hero: " + distance);
-        System.out.println("Current position: " + x + ", " + y);
-        System.out.println("Hero position: " + heroX + ", " + heroY);
-
-        // Check if both Orc and Hero are in grass tiles
-        int orcTileCol = (int) (x / size);
-        int orcTileRow = (int) (y / size);
-        int heroTileCol = heroX / size;
-        int heroTileRow = heroY / size;
-
-        boolean bothInGrass = tileM.isGrassTile(orcTileCol, orcTileRow) &&
-                tileM.isGrassTile(heroTileCol, heroTileRow);
-
-        // Update facing direction based on hero position
-        if (Math.abs(dx) > Math.abs(dy)) {
-            facing = dx > 0 ? Direction.RIGHT : Direction.LEFT;
-        } else {
-            facing = dy > 0 ? Direction.DOWN : Direction.UP;
-        }
-
-        if (bothInGrass && distance <= detectionRange) {
-            if (distance <= attackRange) {
-                // Close enough to attack
+        if (distanceToHero <= detectionRange) {
+            if (distanceToHero <= attackRange) {
                 isAttacking = true;
-                isMoving = false;
-                System.out.println("Attacking!");
+                isMoving = false; // Stop moving while attacking
             } else {
-                // Move towards hero
                 isAttacking = false;
                 isMoving = true;
 
-                // Calculate movement
                 double angle = Math.atan2(dy, dx);
                 double moveX = Math.cos(angle) * moveSpeed;
                 double moveY = Math.sin(angle) * moveSpeed;
 
-                // Calculate new position
                 double newX = x + moveX;
                 double newY = y + moveY;
 
-                // Check if new position is valid
-                int newTileCol = (int) (newX / size);
-                int newTileRow = (int) (newY / size);
-
-                if (tileM.isGrassTile(newTileCol, newTileRow) &&
-                        !tileM.isCollision(newTileCol, newTileRow)) {
+                // Check for collision and minimum distance with other orcs
+                if (isValidPosition(newX, newY) && !isOverlapping(newX, newY, orcs)) {
                     x = newX;
                     y = newY;
-                    System.out.println("Moving towards hero!");
                 }
             }
         } else {
-            // Reset state when hero is out of range or not in grass
             isAttacking = false;
             isMoving = false;
         }
 
-        // Update animation
+        // Update animation frames
         if (currentNanoTime - lastFrameTime > frameDuration) {
             if (isAttacking) {
-                // Use attack animation frames
-                currentFrame = (currentFrame + 1) % 8;
+                currentFrame = (currentFrame + 1) % framesPerRow; // Cycle attack frames
             } else if (isMoving) {
-                // Use running animation frames
-                currentFrame = (currentFrame + 1) % 8;
+                currentFrame = (currentFrame + 1) % framesPerRow; // Cycle run frames
             } else {
-                // Idle animation or reset to first frame
-                currentFrame = 0;
+                currentFrame = 0; // Idle frame
             }
             lastFrameTime = currentNanoTime;
             updateCurrentSprite();
         }
     }
 
-    private void updateCurrentSprite() {
-        try {
-            int frameWidth = 64;
-            int frameHeight = 64;
-
-            // Select the appropriate sprite sheet
-            Image currentSheet = isAttacking ? attackSpriteSheet : runSpriteSheet;
-
-            // Calculate the correct frame position
-            int col = currentFrame;
-            int row = facing.row;
-
-            if (currentSheet != null && currentSheet.getPixelReader() != null) {
-                currentSprite = new WritableImage(
-                        currentSheet.getPixelReader(),
-                        col * frameWidth,
-                        row * frameHeight,
-                        frameWidth,
-                        frameHeight
-                );
+    private boolean isOverlapping(double newX, double newY, List<Orc1> orcs) {
+        for (Orc1 other : orcs) {
+            if (other != this && !other.isDead) {
+                double distance = Math.sqrt(Math.pow(newX - other.x, 2) + Math.pow(newY - other.y, 2));
+                if (distance < minimumDistance) {
+                    return true; // Overlap detected
+                }
             }
-        } catch (Exception e) {
-            System.err.println("Error updating sprite: " + e.getMessage());
-            e.printStackTrace();
         }
+        return false;
+    }
+
+    private boolean isValidPosition(double newX, double newY) {
+        int newTileCol = (int) (newX / size);
+        int newTileRow = (int) (newY / size);
+        return tileM.isGrassTile(newTileCol, newTileRow);
     }
 
     public void draw(GraphicsContext gc, int cameraX, int cameraY) {
-        int drawX = (int)x - cameraX;
-        int drawY = (int)y - cameraY;
+        if (isDead) return;
+
+        int drawX = (int) x - cameraX;
+        int drawY = (int) y - cameraY;
 
         if (drawX + size >= 0 && drawX <= gc.getCanvas().getWidth() &&
                 drawY + size >= 0 && drawY <= gc.getCanvas().getHeight()) {
+            // Use attack sprite if attacking, otherwise use run sprite
+            Image spriteToDraw = isAttacking ? attackSpriteSheet : runSpriteSheet;
 
-            // Draw the sprite
-            gc.drawImage(currentSprite, drawX, drawY, size, size);
-
-            // Debug: Draw detection and attack ranges
-            gc.setStroke(Color.YELLOW);
-            gc.strokeOval(drawX - detectionRange + size/2, drawY - detectionRange + size/2,
-                    detectionRange * 2, detectionRange * 2);
-            gc.setStroke(Color.RED);
-            gc.strokeOval(drawX - attackRange + size/2, drawY - attackRange + size/2,
-                    attackRange * 2, attackRange * 2);
+            gc.drawImage(currentSprite, drawX, drawY, size * 1.5, size * 1.5); // Increased size
         }
     }
 
-    // Getter methods
-    public double getX() { return x; }
-    public double getY() { return y; }
-    public int getSize() { return size; }
-    public boolean isAttacking() { return isAttacking; }
+    private void updateCurrentSprite() {
+        int frameWidth = 64;
+        int frameHeight = 64;
+        int col = currentFrame;
+        int row = isAttacking ? 1 : 0;
 
-    // Setter method for position
+        if (runSpriteSheet.getPixelReader() != null) {
+            currentSprite = new WritableImage(
+                    runSpriteSheet.getPixelReader(),
+                    col * frameWidth,
+                    row * frameHeight,
+                    frameWidth,
+                    frameHeight
+            );
+        }
+    }
+
+    // Getter for x
+    public double getX() {
+        return x;
+    }
+
+    // Getter for y
+    public double getY() {
+        return y;
+    }
+
+    // Setter for position
     public void setPosition(double x, double y) {
         this.x = x;
         this.y = y;
+    }
+
+    // Method to check if hero is in attack range
+    public boolean isHeroInAttackRange(double heroX, double heroY) {
+        double dx = heroX - x;
+        double dy = heroY - y;
+        double distanceToHero = Math.sqrt(dx * dx + dy * dy);
+
+        return isAttacking && distanceToHero <= attackRange;
     }
 }

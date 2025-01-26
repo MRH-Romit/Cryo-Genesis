@@ -26,4 +26,7 @@ module com.example.mars {
     // Export and open keyHandle package if needed
     exports com.example.mars.keyHandle;
     opens com.example.mars.keyHandle to javafx.fxml;
+
+    exports com.example.mars.puzzle1;
+    opens com.example.mars.puzzle1 to javafx.fxml;
 }
