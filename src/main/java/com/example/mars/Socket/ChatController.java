@@ -60,20 +60,25 @@ public class ChatController {
         }
     }
     private void addMessage(String message, boolean isClient) {
-        String label = isClient ? "Client: " : "Agent: ";
-        String style = isClient
-                ? "-fx-text-fill: #1976D2; -fx-background-color: #BBDEFB;"
-                : "-fx-text-fill: #388E3C; -fx-background-color: #C8E6C9;";
-
-        Label messageLabel = new Label(label + message);
+        Label messageLabel = new Label(message);
         messageLabel.setWrapText(true);
-        messageLabel.setStyle(style);
+
+        // Style the message bubble
+        messageLabel.setStyle(isClient
+                ? "-fx-background-color: linear-gradient(to bottom, #FEEE99, #FFD166); -fx-text-fill: black; -fx-padding: 10; -fx-background-radius: 20;" // Client style with gradient
+                : "-fx-background-color: #A8E6A3; -fx-text-fill: black; -fx-padding: 10; -fx-background-radius: 20;"); // Agent style with light green
 
         HBox messageBox = new HBox(messageLabel);
-        messageBox.setAlignment(isClient ? Pos.CENTER_LEFT : Pos.CENTER_RIGHT);
-        messageBox.setStyle("-fx-padding: 10; -fx-background-radius: 10; -fx-border-width: 1;");
+        messageBox.setStyle("-fx-padding: 5;");
 
-        messageContainer.getChildren().add(messageBox);
-        scrollPane.setVvalue(1.0); // Scroll to the bottom
+        // Align based on sender
+        messageBox.setAlignment(isClient ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
+
+        // Add to the container
+        Platform.runLater(() -> {
+            messageContainer.getChildren().add(messageBox);
+            scrollPane.setVvalue(1.0); // Scroll to the bottom
+        });
     }
+
 }
