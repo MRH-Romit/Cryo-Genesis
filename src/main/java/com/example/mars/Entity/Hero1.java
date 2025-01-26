@@ -23,6 +23,8 @@ public class Hero1 {
     private boolean isFacingUp = false;
     private boolean isFacingDown = true;
 
+    private int health = 100; // Add health attribute
+
     public Hero1(int startX, int startY, int speed, Image spriteSheet, int tileSize, tileManager tileM) {
         this.x = startX;
         this.y = startY;
@@ -47,6 +49,22 @@ public class Hero1 {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    // Method to handle taking damage
+    public void takeDamage(int damage) {
+        health -= damage;
+        System.out.println("Hero took " + damage + " damage. Current health: " + health);
+
+        if (health <= 0) {
+            System.out.println("Hero is dead!");
+            // Handle hero death (e.g., restart game, show game over screen)
+        }
+    }
+
+    // Getter for health
+    public int getHealth() {
+        return health;
     }
 
     public void update(boolean upPressed, boolean downPressed, boolean leftPressed,

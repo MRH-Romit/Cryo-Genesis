@@ -235,12 +235,19 @@ public class GamePanel {
             double prevX = orc.getX();
             double prevY = orc.getY();
 
-            orc.update(hero.getX(), hero.getY(), System.nanoTime());
+            orc.update(hero.getX(), hero.getY(), System.nanoTime(), orcs);
+
+            // Check if the orc is attacking the hero
+            if (orc.isHeroInAttackRange(hero.getX(), hero.getY())) {
+                hero.takeDamage(1); // Hero takes 1 damage
+            }
+
 
             if (checkCollisionWithWalls(orc)) {
                 orc.setPosition(prevX, prevY);
             }
         }
+
 
         if (keyH.attackPressed) {
             keyH.attackPressed = false;
