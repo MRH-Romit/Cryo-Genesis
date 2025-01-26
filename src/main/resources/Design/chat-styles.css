@@ -1,24 +1,26 @@
-.client-message {
-    -fx-background-color: #e9ecef;
-    -fx-padding: 8px;
-    -fx-background-radius: 15px;
-    -fx-max-width: 300px; /* Set a fixed max width */
+.message-box {
+    -fx-padding: 5;
+    -fx-spacing: 10;
 }
 
 .agent-message {
-    -fx-background-color: #007bff;
-    -fx-text-fill: white;
-    -fx-padding: 8px;
-    -fx-background-radius: 15px;
-    -fx-max-width: 300px; /* Set a fixed max width */
+    -fx-background-color: #1976D2; /* Blue background for agent */
+    -fx-text-fill: #FFFFFF; /* White text */
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-font-family: 'Monospace';
+    -fx-font-size: 14px;
 }
 
-.message-container {
-    -fx-padding: 10px;
-    -fx-spacing: 10px;
-}
-
-.message-box {
-    -fx-padding: 5px;
-    -fx-min-width: 100%;
+.client-message {
+    -fx-background-color: #FFFFFF; /* White background for client */
+    -fx-text-fill: #000000; /* Black text */
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-font-family: 'Monospace';
+    -fx-font-size: 14px;
+    -fx-border-color: #DDDDDD;
+    -fx-border-width: 1px;
 }
