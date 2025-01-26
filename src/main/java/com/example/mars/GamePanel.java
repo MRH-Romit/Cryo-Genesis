@@ -367,35 +367,43 @@ public class GamePanel {
     /**
      * Pauses the game when pause button is clicked.
      */
+
     @FXML
     private void onPauseClick() {
         if (gameLoop != null) {
-            gameLoop.stop();
+            gameLoop.stop(); // Stop the game loop
         }
 
-        // Stop game music on pause
-        SoundManager.stopMusic();
+        SoundManager.stopMusic(); // Stop the background music
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("pause.fxml"));
+            // Load the pause menu FXML
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/mars/pause.fxml"));
             Parent pauseRoot = loader.load();
             Scene pauseScene = new Scene(pauseRoot);
             Stage pauseStage = new Stage();
             pauseStage.setTitle("Pause Menu");
+            pauseStage.setResizable(false);
             pauseStage.setScene(pauseScene);
+
+            // Make the pause menu modal (blocks interaction with the game)
+            pauseStage.initOwner(gameCanvas.getScene().getWindow());
+
+            // Resume the game when the pause menu is closed
+            pauseStage.setOnHidden(event -> resumeGameLoop());
+
+            // Show the pause menu
             pauseStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Error: Unable to load pause.fxml. Check the file path.");
         }
     }
 
-    /**
-     * Resume the game loop and music.
-     */
     public void resumeGameLoop() {
         if (gameLoop != null) {
-            gameLoop.start();
+            gameLoop.start(); // Resume the game loop
         }
-        SoundManager.playLandingPageMusic("/audio/GamePanel_BG - Copy.mp3");
+        SoundManager.playLandingPageMusic("/audio/GamePanel_BG - Copy.mp3"); // Restart the music
     }
 }

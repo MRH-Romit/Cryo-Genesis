@@ -63,22 +63,26 @@ public class AgentChatController {
         }
     }
 
-    private void addMessage(String message, boolean isAgent) {
-        String fullMessage = (isAgent ? "Agent: " : "Client: ") + message;
-
-        Label messageLabel = new Label(fullMessage);
+    private void addMessage(String message, boolean isClient) {
+        Label messageLabel = new Label(message);
         messageLabel.setWrapText(true);
-        messageLabel.setStyle(isAgent
-                ? "-fx-text-fill: #388E3C; -fx-font-family: 'Monospace'; -fx-font-size: 14px;" // Agent: green text
-                : "-fx-text-fill: #1976D2; -fx-font-family: 'Monospace'; -fx-font-size: 14px;"); // Client: blue text
+
+        // Style the message bubble
+        messageLabel.setStyle(isClient
+                ? "-fx-background-color: linear-gradient(to bottom, #FEEE99, #FFD166); -fx-text-fill: black; -fx-padding: 10; -fx-background-radius: 20;" // Client style with gradient
+                : "-fx-background-color: #A8E6A3; -fx-text-fill: black; -fx-padding: 10; -fx-background-radius: 20;"); // Agent style with light green
 
         HBox messageBox = new HBox(messageLabel);
-        messageBox.setStyle(isAgent
-                ? "-fx-background-color: #C8E6C9; -fx-padding: 10; -fx-background-radius: 10;" // Agent: green background
-                : "-fx-background-color: #BBDEFB; -fx-padding: 10; -fx-background-radius: 10;"); // Client: blue background
-        messageBox.setAlignment(isAgent ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT); // Align Agent right, Client left
+        messageBox.setStyle("-fx-padding: 5;");
 
-        messageContainer.getChildren().add(messageBox);
-        scrollPane.setVvalue(1.0); // Scroll to the bottom
+        // Align based on sender
+        messageBox.setAlignment(isClient ? Pos.CENTER_RIGHT : Pos.CENTER_LEFT);
+
+        // Add to the container
+        Platform.runLater(() -> {
+            messageContainer.getChildren().add(messageBox);
+            scrollPane.setVvalue(1.0); // Scroll to the bottom
+        });
     }
+
 }
