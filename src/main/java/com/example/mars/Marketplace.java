@@ -9,6 +9,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -62,12 +65,12 @@ public class Marketplace {
 
     /**
      * Handle search functionality.
+     * Shows/hides items based on user input in the search bar.
      */
     @FXML
     private void handleSearch(ActionEvent event) {
         String query = searchBar.getText().trim().toLowerCase();
 
-        // Show/hide items based on the search query
         boolean showCharacters = query.contains("char");
         boolean showMaps = query.contains("map");
 
@@ -87,7 +90,7 @@ public class Marketplace {
         map3Image.setVisible(showMaps);
         buyMap3.setVisible(showMaps);
 
-        // If the query is empty or does not match, show all items
+        // If the query is empty, show everything again
         if (query.isEmpty()) {
             character1Image.setVisible(true);
             buyCharacter1.setVisible(true);
@@ -111,11 +114,9 @@ public class Marketplace {
     @FXML
     private void handleBack(ActionEvent event) {
         try {
-            // Load the home.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/mars/home.fxml"));
             Parent homeRoot = loader.load();
 
-            // Get the current stage and set the scene to home.fxml
             Stage stage = (Stage) backButton.getScene().getWindow();
             stage.setScene(new Scene(homeRoot));
             stage.show();
@@ -129,4 +130,40 @@ public class Marketplace {
             alert.showAndWait();
         }
     }
+
+    /**
+     * Called when mouse enters a Buy Now button (for the hover effect).
+     */
+    @FXML
+    private void onButtonHover(MouseEvent event) {
+        Button sourceBtn = (Button) event.getSource();
+        // The button's graphic is a StackPane with an ImageView and a Label.
+        StackPane stack = (StackPane) sourceBtn.getGraphic();
+        if (stack != null && stack.getChildren().size() > 1) {
+            Label label = (Label) stack.getChildren().get(1);
+            // Make the label slightly bigger and bolder on hover.
+            label.setStyle("-fx-font-family: 'Monospace';"
+                    + " -fx-font-size: 20px;"
+                    + " -fx-font-weight: bolder;"
+                    + " -fx-text-fill: #000000;");
+        }
+    }
+
+    /**
+     * Called when mouse exits a Buy Now button (to remove the hover effect).
+     */
+    @FXML
+    private void onButtonExit(MouseEvent event) {
+        Button sourceBtn = (Button) event.getSource();
+        StackPane stack = (StackPane) sourceBtn.getGraphic();
+        if (stack != null && stack.getChildren().size() > 1) {
+            Label label = (Label) stack.getChildren().get(1);
+            // Revert to the original style from the FXML.
+            label.setStyle("-fx-font-family: 'Monospace';"
+                    + " -fx-font-size: 18px;"
+                    + " -fx-font-weight: bold;"
+                    + " -fx-text-fill: #000000;");
+        }
+    }
+
 }
