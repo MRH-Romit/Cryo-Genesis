@@ -1,5 +1,6 @@
 package com.example.mars;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -71,21 +72,28 @@ public class Pause {
         }
     }
 
+
     @FXML
     private void onQuitGame() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Quit Game");
-        alert.setHeaderText("Are you sure you want to quit?");
-        alert.setContentText("Select Yes to quit or No to stay.");
+        alert.setHeaderText(null); // No header for a cleaner look
+        alert.setContentText("Are you sure you want to quit the game?");
+
+        ButtonType yesButton = new ButtonType("Yes");
+        ButtonType noButton = new ButtonType("No", ButtonType.CANCEL.getButtonData());
+
+        alert.getButtonTypes().setAll(yesButton, noButton);
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Exit the game
-            Stage currentStage = (Stage) quit_game.getScene().getWindow();
-            currentStage.close();
+        if (result.isPresent() && result.get() == yesButton) {
+            // Close everything (terminate the application)
+            Platform.exit();
+            System.exit(0);
         } else {
-            // Stay in the game
+            // Do nothing and stay in the game
             alert.close();
         }
     }
-}
+    }
+
