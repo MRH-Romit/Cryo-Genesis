@@ -42,16 +42,16 @@ public class GamePanel {
     private final int screenWidth = tileSize * maxScreenCol;
     private final int screenHeight = tileSize * maxScreenRow;
 
-    private final List<Orc1> orcs = new ArrayList<>();
-
+    private final tileManager tileM = new tileManager(this);
     private Hero1 hero;
-    public final tileManager tileM = new tileManager(this);
+    private AnimationTimer gameLoop;
+    private final List<Orc1> orcs = new ArrayList<>();
     private final KeyHandle keyH = new KeyHandle();
 
     @FXML
     private Canvas gameCanvas;
     private GraphicsContext gc;
-    private AnimationTimer gameLoop;
+
 
     // Tutorial UI elements (must match IDs in your FXML)
     @FXML
@@ -222,13 +222,15 @@ public class GamePanel {
         );
         // Check for puzzle trigger
         if (!puzzleActive && !puzzleCompleted) {
-            int heroTileCol = hero.getX() / tileSize;
-            int heroTileRow = hero.getY() / tileSize;
-
-            if (tileM.getTileTypeAt(heroTileCol, heroTileRow) == 0) { // 0 is the chest tile
-                launchTowerOfHanoi();
+            if (tileM.isNearPuzzleTrigger(hero.getX(), hero.getY())) {
+                // Show prompt to press E to interact
+                if (keyH.interactPressed) {  // Changed from attackPressed to interactPressed
+                    puzzleActive = true;
+                    launchTowerOfHanoi();
+                }
             }
         }
+
         for (Orc1 orc : orcs) {
             double prevX = orc.getX();
             double prevY = orc.getY();
@@ -252,30 +254,36 @@ public class GamePanel {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/mars/tower_of_hanoi_puzzle.fxml"));
             Parent puzzleRoot = loader.load();
+
+            Controller puzzleController = loader.getController();
             Stage puzzleStage = new Stage();
             puzzleStage.setTitle("Tower of Hanoi");
             puzzleStage.setResizable(false);
+            puzzleStage.setScene(new Scene(puzzleRoot));
+            puzzleController.setPuzzleStage(puzzleStage); // Pass the stage to the controller
 
-            Controller puzzleController = loader.getController();
-            puzzleController.setPuzzleStage(puzzleStage);
-
+            // Handle puzzle closure
             puzzleStage.setOnHidden(e -> {
+                puzzleActive = false;
                 if (puzzleController.isPuzzleCompleted()) {
-                    handlePuzzleCompletion();
+                    handlePuzzleCompletion(); // Handle completion logic
                 }
                 if (gameLoop != null) {
-                    gameLoop.start();
+                    gameLoop.start(); // Resume the game loop
                 }
             });
 
-            Scene puzzleScene = new Scene(puzzleRoot);
-            puzzleStage.setScene(puzzleScene);
             puzzleStage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
+            if (gameLoop != null) {
+                gameLoop.start(); // Resume the game loop on failure
+            }
+            puzzleActive = false;
         }
     }
+
 
     private void handlePuzzleCompletion() {
         int heroTileCol = hero.getX() / tileSize;
@@ -323,21 +331,24 @@ public class GamePanel {
     private void draw() {
         gc.clearRect(0, 0, screenWidth, screenHeight);
 
-        // Center camera on hero
         int cameraX = hero.getX() - screenWidth / 2 + tileSize / 2;
         int cameraY = hero.getY() - screenHeight / 2 + tileSize / 2;
 
-        // Clamp camera to map boundaries
         cameraX = Math.max(0, Math.min(cameraX, tileM.mapWidth * tileSize - screenWidth));
         cameraY = Math.max(0, Math.min(cameraY, tileM.mapHeight * tileSize - screenHeight));
 
-        // Draw map
         tileM.draw(gc, cameraX, cameraY);
 
         // Draw hero
         int heroScreenX = Math.max(tileSize / 2, Math.min(hero.getX() - cameraX, screenWidth - tileSize / 2));
         int heroScreenY = Math.max(tileSize / 2, Math.min(hero.getY() - cameraY, screenHeight - tileSize / 2));
         hero.draw(gc, heroScreenX - tileSize / 2, heroScreenY - tileSize / 2);
+
+        // Draw interaction prompt if near chest
+        if (!puzzleActive && !puzzleCompleted && tileM.isNearPuzzleTrigger(hero.getX(), hero.getY())) {
+            gc.setFill(javafx.scene.paint.Color.WHITE);
+            gc.fillText("Press E to interact", heroScreenX, heroScreenY - 20);
+        }
 
         // Draw orcs
         for (Orc1 orc : orcs) {

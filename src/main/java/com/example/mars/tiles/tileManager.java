@@ -81,9 +81,29 @@ public class tileManager {
             int tileNum = mapTileNum[row][col];
             return tileNum >= 0 && tileNum < tile.length && tile[tileNum].collision;
         }
-        return true; // Consider out-of-bounds as collision
+        return true; // Out-of-bounds tiles are treated as collidable
     }
+    public boolean isPuzzleTrigger(int col, int row) {
+        if (col >= 0 && col < mapWidth && row >= 0 && row < mapHeight) {
+            int tileNum = mapTileNum[row][col];
+            return tileNum == 0; // 0 is the chest tile
+        }
+        return false;
+    }
+    public boolean isNearPuzzleTrigger(int heroX, int heroY) {
+        int tileCol = heroX / gp.tileSize;
+        int tileRow = heroY / gp.tileSize;
 
+        // Check surrounding tiles
+        for (int row = tileRow - 1; row <= tileRow + 1; row++) {
+            for (int col = tileCol - 1; col <= tileCol + 1; col++) {
+                if (isPuzzleTrigger(col, row)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public boolean isGrassTile(int col, int row) {
         if (col >= 0 && col < mapWidth && row >= 0 && row < mapHeight) {
             int tileNum = mapTileNum[row][col];

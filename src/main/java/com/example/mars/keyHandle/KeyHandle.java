@@ -1,63 +1,30 @@
 package com.example.mars.keyHandle;
+
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
 public class KeyHandle {
-    public boolean upPressed, downPressed, leftPressed, rightPressed, attackPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, attackPressed, interactPressed;
 
-    public EventHandler<KeyEvent> keyPressedHandler = new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent e) {
-            switch (e.getCode()) {
-                case W:
-                case UP:
-                    upPressed = true;
-                    break;
-                case S:
-                case DOWN:
-                    downPressed = true;
-                    break;
-                case A:
-                case LEFT:
-                    leftPressed = true;
-                    break;
-                case D:
-                case RIGHT:
-                    rightPressed = true;
-                    break;
-                case SPACE:
-                    attackPressed = true;
-                    break;
-                default:
-                    break;
-            }
+    public EventHandler<KeyEvent> keyPressedHandler = event -> {
+        switch (event.getCode()) {
+            case UP, W -> upPressed = true;
+            case DOWN, S -> downPressed = true;
+            case LEFT, A -> leftPressed = true;
+            case RIGHT, D -> rightPressed = true;
+            case SPACE -> attackPressed = true;
+            case E -> interactPressed = true;
         }
     };
 
-    public EventHandler<KeyEvent> keyReleasedHandler = new EventHandler<KeyEvent>() {
-        @Override
-        public void handle(KeyEvent e) {
-            switch (e.getCode()) {
-                case W:
-                case UP:
-                    upPressed = false;
-                    break;
-                case S:
-                case DOWN:
-                    downPressed = false;
-                    break;
-                case A:
-                case LEFT:
-                    leftPressed = false;
-                    break;
-                case D:
-                case RIGHT:
-                    rightPressed = false; // Ensure this is present
-                    break;
-                default:
-                    break;
-            }
+    public EventHandler<KeyEvent> keyReleasedHandler = event -> {
+        switch (event.getCode()) {
+            case UP, W -> upPressed = false;
+            case DOWN, S -> downPressed = false;
+            case LEFT, A -> leftPressed = false;
+            case RIGHT, D -> rightPressed = false;
+            case SPACE -> attackPressed = false;
+            case E -> interactPressed = false;
         }
     };
-
 }

@@ -10,7 +10,8 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="854.0" prefWidth="1198.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.puzzle1.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="854.0" prefWidth="1198.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.mars.puzzle1.Controller">
    <children>
       <Line endX="69.0" endY="390.0" fill="BLACK" layoutX="225.0" layoutY="229.0" startX="69.0" startY="-53.0" strokeLineCap="ROUND" strokeWidth="3.0" />
       <Line endX="69.0" endY="390.0" fill="BLACK" layoutX="555.0" layoutY="229.0" startX="69.0" startY="-53.0" strokeLineCap="ROUND" strokeWidth="3.0" />
