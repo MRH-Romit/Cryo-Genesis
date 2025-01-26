@@ -52,13 +52,11 @@ public class AgentChatController {
             e.printStackTrace();
         }
     }
-
     @FXML
     private void sendMessage() {
         String message = messageField.getText().trim();
         if (!message.isEmpty()) {
-            String fullMessage = "AGENT: " + message;
-            writer.println(fullMessage);
+            writer.println("AGENT: " + message);  // Changed from "CLIENT: " to "AGENT: "
             writer.flush();
             addMessage(message, true); // Sent by Agent
             messageField.clear();

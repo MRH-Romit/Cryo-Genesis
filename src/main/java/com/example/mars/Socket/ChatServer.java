@@ -69,10 +69,17 @@ public class ChatServer {
 
         // Broadcast a message to all connected clients
         private void broadcastMessage(String message) {
+            System.out.println("Broadcasting message: " + message); // Debug line
             for (ClientHandler client : clients) {
                 try {
-                    if (client != this) { // Optionally skip sending to the sender
-                        client.writer.println(message);
+                    if (client != this) { // Skip sending the message back to the sender
+                        if (message.startsWith("AGENT: ")) {
+                            System.out.println("Sending agent message: " + message); // Debug line
+                            client.writer.println(message);
+                        } else if (message.startsWith("CLIENT: ")) {
+                            System.out.println("Sending client message: " + message); // Debug line
+                            client.writer.println(message);
+                        }
                         client.writer.flush();
                     }
                 } catch (Exception e) {
