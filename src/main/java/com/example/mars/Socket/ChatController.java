@@ -59,7 +59,6 @@ public class ChatController {
             messageField.clear();
         }
     }
-
     private void addMessage(String message, boolean isClient) {
         String label = isClient ? "Client: " : "Agent: ";
         String style = isClient
