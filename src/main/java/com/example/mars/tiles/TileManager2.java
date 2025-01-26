@@ -14,6 +14,8 @@ public class TileManager2 {
     private final Tile[] tile;
     private final int tileSize;
 
+
+
     public TileManager2(int tileSize) {
         this.tileSize = tileSize;
 
@@ -35,6 +37,7 @@ public class TileManager2 {
         tile = new Tile[10];
         loadTileImages();
     }
+
 
     private static class Tile {
         public Image image;

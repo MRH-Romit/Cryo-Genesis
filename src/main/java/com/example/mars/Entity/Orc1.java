@@ -17,13 +17,17 @@ public class Orc1 {
     private int totalFrames = 8;
     private boolean isAttacking = false;
     private long lastFrameTime = 0;
-    private final long frameDuration = 150_000_000;
-    private int detectionRange = 150; // Reduced for closer detection
-    private int attackRange = 80;     // Reduced for closer attack
-    private double moveSpeed = 2.0;   // Adjusted for smoother movement
+    private final long frameDuration = 100_000_000;
+    private int detectionRange = 200; // Reduced for closer detection
+    private int attackRange = 60;     // Reduced for closer attack
+    private double moveSpeed = 2.5;   // Adjusted for smoother movement
     private Direction facing = Direction.DOWN;
     private tileManager tileM;
     private boolean isMoving = false;
+    private int health = 5;  // Orc dies after 5 hits
+    private boolean isDead = false;
+    private int minimumDistance = 40; // Minimum distance between Orc and Hero
+
 
     private enum Direction {
         UP(0),
@@ -36,36 +40,31 @@ public class Orc1 {
             this.row = row;
         }
     }
+    // Add getter for isDead
+    public boolean isDead() {
+        return isDead;
+    }
 
-    public Orc1(int x, int y, int size, Image runSpriteSheet, Image attackSpriteSheet, tileManager tileM) {
-        this.x = x;
-        this.y = y;
-        this.size = size;
-        this.runSpriteSheet = runSpriteSheet;
-        this.attackSpriteSheet = attackSpriteSheet;
-        this.tileM = tileM;
-        updateCurrentSprite();
+    public void takeHit() {
+        health--;
+        if (health <= 0) {
+            isDead = true;
+        }
     }
 
     public void update(int heroX, int heroY, long currentNanoTime) {
+        if (isDead) {
+            return; // Don't update if dead
+        }
+
+        if (tileM == null) {
+            return;
+        }
+
         // Calculate distance and direction to hero
         double dx = heroX - x;
         double dy = heroY - y;
         double distance = Math.sqrt(dx * dx + dy * dy);
-
-        // Debug print
-        System.out.println("Distance to hero: " + distance);
-        System.out.println("Current position: " + x + ", " + y);
-        System.out.println("Hero position: " + heroX + ", " + heroY);
-
-        // Check if both Orc and Hero are in grass tiles
-        int orcTileCol = (int) (x / size);
-        int orcTileRow = (int) (y / size);
-        int heroTileCol = heroX / size;
-        int heroTileRow = heroY / size;
-
-        boolean bothInGrass = tileM.isGrassTile(orcTileCol, orcTileRow) &&
-                tileM.isGrassTile(heroTileCol, heroTileRow);
 
         // Update facing direction based on hero position
         if (Math.abs(dx) > Math.abs(dy)) {
@@ -74,39 +73,42 @@ public class Orc1 {
             facing = dy > 0 ? Direction.DOWN : Direction.UP;
         }
 
-        if (bothInGrass && distance <= detectionRange) {
-            if (distance <= attackRange) {
-                // Close enough to attack
+        if (distance <= detectionRange) {
+            if (distance <= attackRange && distance >= minimumDistance) {
+                // Close enough to attack but not too close
                 isAttacking = true;
                 isMoving = false;
-                System.out.println("Attacking!");
+            } else if (distance < minimumDistance) {
+                // Too close, move away
+                double angle = Math.atan2(dy, dx);
+                double moveX = -Math.cos(angle) * moveSpeed; // Move in opposite direction
+                double moveY = -Math.sin(angle) * moveSpeed;
+
+                double newX = x + moveX;
+                double newY = y + moveY;
+
+                if (isValidPosition(newX, newY)) {
+                    x = newX;
+                    y = newY;
+                }
             } else {
-                // Move towards hero
+                // Move towards hero until minimum distance
                 isAttacking = false;
                 isMoving = true;
 
-                // Calculate movement
                 double angle = Math.atan2(dy, dx);
                 double moveX = Math.cos(angle) * moveSpeed;
                 double moveY = Math.sin(angle) * moveSpeed;
 
-                // Calculate new position
                 double newX = x + moveX;
                 double newY = y + moveY;
 
-                // Check if new position is valid
-                int newTileCol = (int) (newX / size);
-                int newTileRow = (int) (newY / size);
-
-                if (tileM.isGrassTile(newTileCol, newTileRow) &&
-                        !tileM.isCollision(newTileCol, newTileRow)) {
+                if (isValidPosition(newX, newY)) {
                     x = newX;
                     y = newY;
-                    System.out.println("Moving towards hero!");
                 }
             }
         } else {
-            // Reset state when hero is out of range or not in grass
             isAttacking = false;
             isMoving = false;
         }
@@ -114,18 +116,32 @@ public class Orc1 {
         // Update animation
         if (currentNanoTime - lastFrameTime > frameDuration) {
             if (isAttacking) {
-                // Use attack animation frames
                 currentFrame = (currentFrame + 1) % 8;
             } else if (isMoving) {
-                // Use running animation frames
                 currentFrame = (currentFrame + 1) % 8;
             } else {
-                // Idle animation or reset to first frame
                 currentFrame = 0;
             }
             lastFrameTime = currentNanoTime;
             updateCurrentSprite();
         }
+    }
+
+    private boolean isValidPosition(double newX, double newY) {
+        int newTileCol = (int)(newX / size);
+        int newTileRow = (int)(newY / size);
+        return tileM.isGrassTile(newTileCol, newTileRow);
+    }
+
+
+    public Orc1(int x, int y, int size, Image runSpriteSheet, Image attackSpriteSheet, tileManager tileM) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.runSpriteSheet = runSpriteSheet;
+        this.attackSpriteSheet = attackSpriteSheet;
+        this.tileM = tileM;  // Make sure this line exists
+        updateCurrentSprite();
     }
 
     private void updateCurrentSprite() {
@@ -156,22 +172,16 @@ public class Orc1 {
     }
 
     public void draw(GraphicsContext gc, int cameraX, int cameraY) {
+        if (isDead) {
+            return; // Don't draw if dead
+        }
+
         int drawX = (int)x - cameraX;
         int drawY = (int)y - cameraY;
 
         if (drawX + size >= 0 && drawX <= gc.getCanvas().getWidth() &&
                 drawY + size >= 0 && drawY <= gc.getCanvas().getHeight()) {
-
-            // Draw the sprite
             gc.drawImage(currentSprite, drawX, drawY, size, size);
-
-            // Debug: Draw detection and attack ranges
-            gc.setStroke(Color.YELLOW);
-            gc.strokeOval(drawX - detectionRange + size/2, drawY - detectionRange + size/2,
-                    detectionRange * 2, detectionRange * 2);
-            gc.setStroke(Color.RED);
-            gc.strokeOval(drawX - attackRange + size/2, drawY - attackRange + size/2,
-                    attackRange * 2, attackRange * 2);
         }
     }
 

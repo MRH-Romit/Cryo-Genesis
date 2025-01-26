@@ -23,12 +23,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import com.example.mars.puzzle1.Controller;
+import com.example.mars.puzzle1.Alerts;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
+import com.example.mars.puzzle1.Controller;
 public class GamePanel {
 
     private final int originalTileSize = 16;
@@ -36,7 +37,8 @@ public class GamePanel {
     public final int maxScreenCol = 12;
     public final int maxScreenRow = 8;
     public final int tileSize = originalTileSize * scale;
-
+    private boolean puzzleActive = false;
+    private boolean puzzleCompleted = false;
     private final int screenWidth = tileSize * maxScreenCol;
     private final int screenHeight = tileSize * maxScreenRow;
 
@@ -112,6 +114,7 @@ public class GamePanel {
         // Optionally show a tutorial message with typewriter effect
         showTutorialMessage("If you're looking for new challenges to beat, just tap here!");
     }
+
 
     /**
      * Creates a typewriter animation for the given Label with a specified delay per character.
@@ -217,7 +220,15 @@ public class GamePanel {
                 tileM.mapWidth * tileSize,
                 tileM.mapHeight * tileSize
         );
+        // Check for puzzle trigger
+        if (!puzzleActive && !puzzleCompleted) {
+            int heroTileCol = hero.getX() / tileSize;
+            int heroTileRow = hero.getY() / tileSize;
 
+            if (tileM.getTileTypeAt(heroTileCol, heroTileRow) == 0) { // 0 is the chest tile
+                launchTowerOfHanoi();
+            }
+        }
         for (Orc1 orc : orcs) {
             double prevX = orc.getX();
             double prevY = orc.getY();
@@ -231,6 +242,59 @@ public class GamePanel {
 
         if (keyH.attackPressed) {
             keyH.attackPressed = false;
+        }
+    }
+    private void launchTowerOfHanoi() {
+        try {
+            if (gameLoop != null) {
+                gameLoop.stop();
+            }
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/mars/tower_of_hanoi_puzzle.fxml"));
+            Parent puzzleRoot = loader.load();
+            Stage puzzleStage = new Stage();
+            puzzleStage.setTitle("Tower of Hanoi");
+            puzzleStage.setResizable(false);
+
+            Controller puzzleController = loader.getController();
+            puzzleController.setPuzzleStage(puzzleStage);
+
+            puzzleStage.setOnHidden(e -> {
+                if (puzzleController.isPuzzleCompleted()) {
+                    handlePuzzleCompletion();
+                }
+                if (gameLoop != null) {
+                    gameLoop.start();
+                }
+            });
+
+            Scene puzzleScene = new Scene(puzzleRoot);
+            puzzleStage.setScene(puzzleScene);
+            puzzleStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handlePuzzleCompletion() {
+        int heroTileCol = hero.getX() / tileSize;
+        int heroTileRow = hero.getY() / tileSize;
+
+        // Play completion sound
+        try {
+            SoundManager.playSound("/audio/puzzle_complete.mp3");
+
+            // Optional: Change the chest tile to an opened chest
+            // tileM.mapTileNum[heroTileRow][heroTileCol] = OPENED_CHEST_TILE;
+
+            // Optional: Show completion message
+            Platform.runLater(() -> {
+                showTutorialMessage("Puzzle Completed! Well done!");
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

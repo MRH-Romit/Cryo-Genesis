@@ -30,8 +30,9 @@ public class tileManager {
     public void getTileImage() {
         try {
             tile[0] = new tile();
-            tile[0].image = loadImage("/obj/chestBG.png"); // Empty tile
-            tile[0].collision = false;  // No collision
+            tile[0].image = loadImage("/obj/chestBG.png"); // Chest/puzzle trigger tile
+            tile[0].collision = false;
+            tile[0].isPuzzleTrigger = true;  // Add this property to tile class
 
             tile[1] = new tile();
             tile[1].image = loadImage("/Map1/Map_Wall_3.png"); // Wall tile
