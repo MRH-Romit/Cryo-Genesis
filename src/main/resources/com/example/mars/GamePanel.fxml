@@ -85,14 +85,15 @@
            onAction="#onPauseClick"
            style="-fx-background-color: transparent; -fx-border-color: transparent;"
            AnchorPane.rightAnchor="10.0"
-           AnchorPane.topAnchor="90.0" />
-
-   <!-- Pause Button Graphic (optional) -->
-   <ImageView fitHeight="50.0" fitWidth="68.0" layoutX="780.0" layoutY="79.0">
-      <image>
-         <Image url="@../../../images/PauseButton.png" />
-      </image>
-   </ImageView>
+           AnchorPane.topAnchor="90.0">
+      <graphic>
+         <ImageView fitHeight="50.0" fitWidth="68.0">
+            <image>
+               <Image url="@../../../images/PauseButton.png" />
+            </image>
+         </ImageView>
+      </graphic>
+   </Button>
 
    <!-- Coins near top-right -->
    <ImageView fitHeight="24.0" fitWidth="30.0" layoutX="698.0" layoutY="14.0" preserveRatio="true">
