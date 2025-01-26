@@ -22,9 +22,9 @@
       <Rectangle fx:id="Rectangle1" arcHeight="20.0" arcWidth="20.0" fill="linear-gradient(to right, #FFD700, #FFA500)" height="30.0" layoutX="144.0" layoutY="450.0" stroke="transparent" strokeType="INSIDE" width="62.0" />
 
       <!-- Loading Text -->
-      <Label fx:id="Label1" alignment="CENTER" layoutX="155.0" layoutY="400.0" prefHeight="40.0" prefWidth="500.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 15, 0.5, 0, 4); -fx-text-fill: linear-gradient(to right, #FFFFFF, #FFD700); -fx-font-size: 30px; -fx-font-family: 'Monospace'; -fx-font-weight: bold;" text="Loading..." />
+      <Label fx:id="Label1" alignment="CENTER" layoutX="144.0" layoutY="403.0" prefHeight="40.0" prefWidth="195.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 15, 0.5, 0, 4); -fx-text-fill: linear-gradient(to right, #FFFFFF, #FFD700); -fx-font-size: 30px; -fx-font-family: 'Monospace'; -fx-font-weight: bold;" text="Loading..." />
 
       <!-- Percentage Display -->
-      <Label fx:id="Label2" alignment="CENTER" layoutX="376.0" layoutY="480.0" prefHeight="40.0" prefWidth="69.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 15, 0.5, 0, 4); -fx-text-fill: linear-gradient(to right, #FFFFFF, #FFA500); -fx-font-size: 24px; -fx-font-family: 'Monospace'; -fx-font-weight: bold;" text="25%" />
+      <Label fx:id="Label2" alignment="CENTER" layoutX="674.0" layoutY="403.0" prefHeight="40.0" prefWidth="62.0" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 15, 0.5, 0, 4); -fx-text-fill: linear-gradient(to right, #FFFFFF, #FFA500); -fx-font-size: 24px; -fx-font-family: 'Monospace'; -fx-font-weight: bold;" text="25%" />
    </children>
 </AnchorPane>
