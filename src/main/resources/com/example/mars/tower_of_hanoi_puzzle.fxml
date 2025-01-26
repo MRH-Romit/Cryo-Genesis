@@ -10,70 +10,49 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="854.0" prefWidth="1198.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1018.0" style="-fx-background-color: #1e1e2f;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.mars.puzzle1.Controller">
    <children>
-      <Line endX="69.0" endY="390.0" fill="BLACK" layoutX="225.0" layoutY="229.0" startX="69.0" startY="-53.0" strokeLineCap="ROUND" strokeWidth="3.0" />
-      <Line endX="69.0" endY="390.0" fill="BLACK" layoutX="555.0" layoutY="229.0" startX="69.0" startY="-53.0" strokeLineCap="ROUND" strokeWidth="3.0" />
-      <Line endX="69.0" endY="390.0" layoutX="869.0" layoutY="229.0" startX="69.0" startY="-53.0" strokeLineCap="ROUND" strokeWidth="3.0" />
-      <Label alignment="CENTER" layoutX="-10.0" prefHeight="111.0" prefWidth="1198.0" style="-fx-background-color: #721eff;" text=" ~ TOWER OF HANOI ~" textFill="WHITE" translateX="10.0">
+      <Line endX="59.0" endY="332.0" fill="#a6a6a6" layoutX="191.25" layoutY="195.0" startX="59.0" startY="-45.0" strokeLineCap="ROUND" stroke="#a6a6a6" strokeWidth="2.5" />
+      <Line endX="59.0" endY="332.0" fill="#a6a6a6" layoutX="472.5" layoutY="195.0" startX="59.0" startY="-45.0" strokeLineCap="ROUND" stroke="#a6a6a6" strokeWidth="2.5" />
+      <Line endX="59.0" endY="332.0" layoutX="739.5" layoutY="195.0" startX="59.0" startY="-45.0" strokeLineCap="ROUND" stroke="#a6a6a6" strokeWidth="2.5" />
+
+      <Label alignment="CENTER" layoutX="-8.5" prefHeight="94.35" prefWidth="1018.0" style="-fx-background-color: #ef476f;" text=" ~ TOWER OF HANOI ~" textFill="#ffffff" translateX="8.5">
          <font>
-            <Font name="Lucida Console" size="36.0" />
+            <Font name="Lucida Console" size="30.6" />
          </font>
          <effect>
             <Blend />
          </effect>
       </Label>
-      <Button fx:id="rulesBtn" layoutX="14.0" layoutY="794.0" mnemonicParsing="false" onAction="#showRules" prefHeight="46.0" prefWidth="81.0" text="Rules">
-         <font>
-            <Font name="Lucida Console" size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="tower1To2" layoutX="202.0" layoutY="652.0" mnemonicParsing="false" onAction="#setNoOfMoves" onMouseClicked="#RealMove" prefHeight="31.0" prefWidth="184.0" text="1 --&gt; 2">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font></Button>
-      <Button fx:id="tower1To3" layoutX="201.0" layoutY="710.0" mnemonicParsing="false" onAction="#setNoOfMoves" onMouseClicked="#RealMove" prefHeight="31.0" prefWidth="184.0" text="1 --&gt; 3">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font></Button>
-      <Button fx:id="tower2To1" layoutX="534.0" layoutY="652.0" mnemonicParsing="false" onAction="#setNoOfMoves" onMouseClicked="#RealMove" prefHeight="31.0" prefWidth="184.0" text="2 --&gt;1">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font></Button>
-      <Line endX="670.0" fill="BLACK" layoutX="455.0" layoutY="626.0" startX="-383.0" strokeLineCap="ROUND" strokeWidth="10.0" />
-      <Label fx:id="noOfMoveLabel" alignment="CENTER" layoutX="911.0" layoutY="794.0" prefHeight="46.0" prefWidth="273.0" text="No:of Moves: 0">
-         <font>
-            <Font name="Lucida Console" size="24.0" />
-         </font>
-      </Label>
-      <VBox fx:id="tower1" alignment="TOP_CENTER" layoutX="171.0" layoutY="175.0" prefHeight="446.0" prefWidth="250.0" rotate="180.0" />
-      <VBox fx:id="tower2" alignment="TOP_CENTER" layoutX="501.0" layoutY="175.0" prefHeight="446.0" prefWidth="250.0" rotate="180.0" />
-      <VBox fx:id="tower3" alignment="TOP_CENTER" layoutX="815.0" layoutY="175.0" prefHeight="446.0" prefWidth="250.0" rotate="180.0" />
-      <Button fx:id="tower2To3" layoutX="535.0" layoutY="710.0" mnemonicParsing="false" onAction="#setNoOfMoves" onMouseClicked="#RealMove" prefHeight="51.0" prefWidth="184.0" text="2 --&gt;3">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Button>
-      <Button fx:id="tower3To1" layoutX="848.0" layoutY="652.0" mnemonicParsing="false" onAction="#setNoOfMoves" onMouseClicked="#RealMove" prefHeight="31.0" prefWidth="184.0" text="3 --&gt;1">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Button>
-      <Button fx:id="tower3To2" layoutX="848.0" layoutY="710.0" mnemonicParsing="false" onAction="#setNoOfMoves" onMouseClicked="#RealMove" prefHeight="31.0" prefWidth="184.0" text="3--&gt;2">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Button>
-      <Rectangle fx:id="block1" arcHeight="5.0" arcWidth="5.0" fill="#00ff2b" height="100.0" layoutX="848.0" layoutY="-4.0" stroke="BLACK" strokeType="INSIDE" width="150.0" />
-      <Rectangle fx:id="block2" arcHeight="5.0" arcWidth="5.0" fill="RED" height="100.0" layoutX="959.0" layoutY="22.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-      <Rectangle fx:id="block3" arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="100.0" layoutX="827.0" layoutY="46.0" stroke="BLACK" strokeType="INSIDE" width="250.0" />
-      <Label layoutX="114.0" layoutY="788.0" prefHeight="58.0" prefWidth="175.0" text="No:of Disks:">
-         <font>
-            <Font name="Lucida Console" size="24.0" />
-         </font>
-      </Label>
-      <Rectangle fx:id="block0" arcHeight="5.0" arcWidth="5.0" fill="YELLOW" height="100.0" layoutX="887.0" layoutY="37.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="100.0" />
-      <ComboBox fx:id="comboBox" layoutX="289.0" layoutY="802.0" onAction="#comboBoxFunc" prefHeight="31.0" prefWidth="81.0" />
+
+      <Button fx:id="rulesBtn" layoutX="11.9" layoutY="675.4" mnemonicParsing="false" onAction="#showRules" prefHeight="39.1" prefWidth="68.9" style="-fx-background-color: #ffd166; -fx-text-fill: #000000; -fx-font-family: 'Lucida Console'; -fx-font-size: 15.3px; -fx-font-weight: bold;" text="Rules" />
+
+      <Button fx:id="tower1To2" layoutX="171.7" layoutY="555.2" mnemonicParsing="false" onAction="#setNoOfMoves" onMouseClicked="#RealMove" prefHeight="26.35" prefWidth="156.4" style="-fx-background-color: #06d6a0; -fx-text-fill: #000000; -fx-font-family: 'Lucida Console'; -fx-font-size: 20.4px;" text="1 → 2" />
+
+      <Button fx:id="tower1To3" layoutX="170.85" layoutY="604.5" mnemonicParsing="false" onAction="#setNoOfMoves" onMouseClicked="#RealMove" prefHeight="26.35" prefWidth="156.4" style="-fx-background-color: #06d6a0; -fx-text-fill: #000000; -fx-font-family: 'Lucida Console'; -fx-font-size: 20.4px;" text="1 → 3" />
+
+      <Button fx:id="tower2To1" layoutX="453.9" layoutY="555.2" mnemonicParsing="false" onAction="#setNoOfMoves" onMouseClicked="#RealMove" prefHeight="26.35" prefWidth="156.4" style="-fx-background-color: #06d6a0; -fx-text-fill: #000000; -fx-font-family: 'Lucida Console'; -fx-font-size: 20.4px;" text="2 → 1" />
+
+      <Line endX="569.5" fill="BLACK" layoutX="387.5" layoutY="531.0" startX="-326.55" strokeLineCap="ROUND" stroke="#ffffff" strokeWidth="8.5" />
+
+      <Label fx:id="noOfMoveLabel" alignment="CENTER" layoutX="774.35" layoutY="675.4" prefHeight="39.1" prefWidth="233.15" style="-fx-text-fill: #ffffff; -fx-font-family: 'Lucida Console'; -fx-font-size: 20.4px;" text="No: of Moves: 0" />
+
+      <VBox fx:id="tower1" alignment="TOP_CENTER" layoutX="145.35" layoutY="148.75" prefHeight="379.1" prefWidth="212.5" rotate="180.0" />
+      <VBox fx:id="tower2" alignment="TOP_CENTER" layoutX="426.35" layoutY="148.75" prefHeight="379.1" prefWidth="212.5" rotate="180.0" />
+      <VBox fx:id="tower3" alignment="TOP_CENTER" layoutX="693.75" layoutY="148.75" prefHeight="379.1" prefWidth="212.5" rotate="180.0" />
+
+      <Button fx:id="tower2To3" layoutX="454.95" layoutY="604.5" mnemonicParsing="false" onAction="#setNoOfMoves" onMouseClicked="#RealMove" prefHeight="43.35" prefWidth="156.4" style="-fx-background-color: #06d6a0; -fx-text-fill: #000000; -fx-font-family: 'Lucida Console'; -fx-font-size: 20.4px;" text="2 → 3" />
+
+      <Button fx:id="tower3To1" layoutX="720.8" layoutY="555.2" mnemonicParsing="false" onAction="#setNoOfMoves" onMouseClicked="#RealMove" prefHeight="26.35" prefWidth="156.4" style="-fx-background-color: #06d6a0; -fx-text-fill: #000000; -fx-font-family: 'Lucida Console'; -fx-font-size: 20.4px;" text="3 → 1" />
+
+      <Button fx:id="tower3To2" layoutX="720.8" layoutY="604.5" mnemonicParsing="false" onAction="#setNoOfMoves" onMouseClicked="#RealMove" prefHeight="26.35" prefWidth="156.4" style="-fx-background-color: #06d6a0; -fx-text-fill: #000000; -fx-font-family: 'Lucida Console'; -fx-font-size: 20.4px;" text="3 → 2" />
+
+      <Rectangle fx:id="block1" arcHeight="4.25" arcWidth="4.25" fill="#118ab2" height="85.0" layoutX="720.8" layoutY="-3.4" stroke="#ffffff" strokeType="INSIDE" width="127.5" />
+      <Rectangle fx:id="block2" arcHeight="4.25" arcWidth="4.25" fill="#ef476f" height="85.0" layoutX="815.15" layoutY="18.7" stroke="#ffffff" strokeType="INSIDE" width="170.0" />
+      <Rectangle fx:id="block3" arcHeight="4.25" arcWidth="4.25" fill="#ffd166" height="85.0" layoutX="702.95" layoutY="39.1" stroke="#ffffff" strokeType="INSIDE" width="212.5" />
+
+      <Label layoutX="96.9" layoutY="670.4" prefHeight="49.3" prefWidth="148.75" style="-fx-text-fill: #ffffff; -fx-font-family: 'Lucida Console'; -fx-font-size: 20.4px;" text="No: of Disks:" />
+      <ComboBox fx:id="comboBox" layoutX="244.85" layoutY="683.7" onAction="#comboBoxFunc" prefHeight="26.35" prefWidth="68.9" style="-fx-font-family: 'Lucida Console'; -fx-background-color: #ffd166;" />
    </children>
 </AnchorPane>

@@ -1,41 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.mars.Home"
-            prefHeight="400.0" prefWidth="600.0"
-            style="-fx-background-color: #FEEE99;">
+<AnchorPane prefHeight="550.0" prefWidth="850.0" style="-fx-background-color: linear-gradient(to bottom, #FEEE99, #FFD166);" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Home">
 
     <children>
+        <!-- Background Image -->
+        <ImageView fitHeight="550.0" fitWidth="850.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="false">
+            <image>
+                <Image url="@../../../images/pic.jpg" />
+            </image>
+        </ImageView>
+
         <!-- Title Label -->
-        <Label layoutX="200.0" layoutY="20.0" text="Settings"
-               style="-fx-font-family: 'Super Pixel'; -fx-font-size: 28px; -fx-text-fill: #000000;" />
+        <Label layoutX="325.0" layoutY="30.0" style="-fx-font-family: monospace; -fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #000000; -fx-effect: dropshadow(gaussian, #ffffff, 5, 0.8, 1, 1);" text="Settings" />
 
         <!-- Volume Control -->
-        <Label layoutX="50.0" layoutY="100.0" text="Volume"
-               style="-fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-text-fill: #000000;" />
-        <Slider layoutX="150.0" layoutY="100.0" prefWidth="300.0" />
+        <Label layoutX="100.0" layoutY="150.0" prefHeight="34.0" prefWidth="98.0" style="-fx-font-family: monospace; -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #000000; -fx-effect: dropshadow(gaussian, #ffffff, 3, 0.8, 1, 1);" text="Volume" />
+        <Slider layoutX="254.0" layoutY="155.0" prefWidth="400.0" style="-fx-control-inner-background: #E5E5E5; -fx-border-radius: 5;" />
 
         <!-- Brightness Control -->
-        <Label layoutX="50.0" layoutY="150.0" text="Brightness"
-               style="-fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-text-fill: #000000;" />
-        <Slider layoutX="150.0" layoutY="150.0" prefWidth="300.0" />
+        <Label layoutX="100.0" layoutY="230.0" style="-fx-font-family: monospace; -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #000000; -fx-effect: dropshadow(gaussian, #ffffff, 3, 0.8, 1, 1);" text="Brightness" />
+        <Slider layoutX="256.0" layoutY="235.0" prefWidth="400.0" style="-fx-control-inner-background: #E5E5E5; -fx-border-radius: 5;" />
 
         <!-- Toggle Fullscreen -->
-        <Label layoutX="50.0" layoutY="200.0" text="Fullscreen"
-               style="-fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-text-fill: #000000;" />
-        <CheckBox layoutX="150.0" layoutY="200.0" />
+        <Label layoutX="100.0" layoutY="310.0" style="-fx-font-family: monospace; -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #000000; -fx-effect: dropshadow(gaussian, #ffffff, 3, 0.8, 1, 1);" text="Fullscreen" />
+        <CheckBox layoutX="256.0" layoutY="315.0" style="-fx-background-color: #FFFFFF;" />
 
         <!-- Back Button -->
-        <Button fx:id="back_button" layoutX="250.0" layoutY="300.0" text="Back"
-                style="-fx-background-color: #000000; -fx-text-fill: #FEEE99; -fx-font-family: 'Super Pixel'; -fx-font-size: 18px; -fx-border-color: #000000; -fx-border-width: 2px; -fx-background-radius: 5;"
-                onAction="#onBack" />
+        <Button fx:id="back_button" layoutX="375.0" layoutY="450.0" onAction="#onBack" style="-fx-background-color: #FFFFFF; -fx-text-fill: #000000; -fx-font-family: monospace; -fx-font-size: 24px; -fx-font-weight: bold; -fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, #000000, 5, 0.8, 1, 1);" text="Back" />
     </children>
 
 </AnchorPane>

@@ -6,51 +6,28 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.paint.Color?>
-
 <?import javafx.scene.shape.Rectangle?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="900.0"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.mars.Marketplace">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Marketplace">
 
    <children>
 
       <!-- Background Image -->
-      <ImageView fitHeight="704.0" fitWidth="962.0"
-                 layoutX="0.0" layoutY="0.0"
-                 pickOnBounds="true"
-                 preserveRatio="true">
+      <ImageView fitHeight="704.0" fitWidth="962.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../images/pic.jpg" />
          </image>
       </ImageView>
 
       <!-- Semi-Transparent Banner (behind the title) -->
-      <Rectangle layoutX="250.0" layoutY="15.0"
-                 width="400.0" height="55.0"
-                 arcWidth="20" arcHeight="20"
-                 fill="rgba(0,0,0,0.5)" />
+      <Rectangle arcHeight="20" arcWidth="20" fill="rgba(0,0,0,0.5)" height="55.0" layoutX="250.0" layoutY="15.0" width="296.0" />
 
       <!-- Title Label -->
-      <Label layoutX="300.0" layoutY="22.0"
-             text="MARKETPLACE"
-             style="-fx-font-family: 'Monospace';
-                      -fx-font-size: 32px;
-                      -fx-font-weight: bold;
-                      -fx-text-fill: linear-gradient(#FFD700, #FFA500);
-                      -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 6, 0, 2, 2);"/>
+      <Label layoutX="300.0" layoutY="22.0" style="-fx-font-family: 'Monospace';                       -fx-font-size: 32px;                       -fx-font-weight: bold;                       -fx-text-fill: linear-gradient(#FFD700, #FFA500);                       -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.8), 6, 0, 2, 2);" text="MARKETPLACE" />
 
       <!-- Back Button -->
-      <Button fx:id="backButton" layoutX="20.0" layoutY="20.0"
-              mnemonicParsing="false"
-              onAction="#handleBack"
-              style="-fx-background-color: transparent;
-                       -fx-border-color: transparent;">
+      <Button fx:id="backButton" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleBack" style="-fx-background-color: transparent;                        -fx-border-color: transparent;">
          <graphic>
             <StackPane>
                <ImageView fitHeight="50.0" fitWidth="150.0">
@@ -58,63 +35,24 @@
                      <Image url="@../../../images/bg.png" />
                   </image>
                </ImageView>
-               <Label style="-fx-font-family: 'Monospace';
-                                  -fx-font-size: 16px;
-                                  -fx-font-weight: bold;
-                                  -fx-text-fill: #000000;"
-                      text="Back" />
+               <Label style="-fx-font-family: 'Monospace';                                   -fx-font-size: 16px;                                   -fx-font-weight: bold;                                   -fx-text-fill: #000000;" text="Back" />
             </StackPane>
          </graphic>
       </Button>
 
       <!-- Search Bar -->
-      <TextField fx:id="searchBar"
-                 layoutX="650.0" layoutY="25.0"
-                 onAction="#handleSearch"
-                 promptText="Search items..."
-                 prefHeight="30.0" prefWidth="200.0"
-                 style="-fx-background-color: rgba(255,255,255,0.7);
-                          -fx-border-color: #FFFFFF;
-                          -fx-border-width: 1;
-                          -fx-border-radius: 5;
-                          -fx-background-radius: 5;
-                          -fx-font-family: 'Monospace';
-                          -fx-font-size: 14px;
-                          -fx-font-weight: bold;" />
+      <TextField fx:id="searchBar" layoutX="601.0" layoutY="27.0" onAction="#handleSearch" prefHeight="30.0" prefWidth="200.0" promptText="Search items..." style="-fx-background-color: rgba(255,255,255,0.7);                           -fx-border-color: #FFFFFF;                           -fx-border-width: 1;                           -fx-border-radius: 5;                           -fx-background-radius: 5;                           -fx-font-family: 'Monospace';                           -fx-font-size: 14px;                           -fx-font-weight: bold;" />
 
       <!-- First Row: Characters -->
 
       <!-- Character 1 -->
-      <ImageView fx:id="character1Image"
-                 fitHeight="150.0" fitWidth="200.0"
-                 layoutX="100.0" layoutY="80.0"
-                 pickOnBounds="true" preserveRatio="true"
-                 style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 4, 4);
-                          -fx-border-color: #FFD700;
-                          -fx-border-width: 2;">
+      <ImageView fx:id="character1Image" fitHeight="150.0" fitWidth="200.0" layoutX="100.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 4, 4);                           -fx-border-color: #FFD700;                           -fx-border-width: 2;">
          <image>
             <Image url="@../../../images/MaleCharacter.jpg" />
          </image>
       </ImageView>
-      <TextField layoutX="100.0" layoutY="240.0"
-                 prefHeight="26.0" prefWidth="150.0"
-                 style="-fx-background-color: rgba(255,255,255,0.7);
-                          -fx-border-color: #FFFFFF;
-                          -fx-border-width: 1;
-                          -fx-border-radius: 5;
-                          -fx-background-radius: 5;
-                          -fx-font-family: 'Monospace';
-                          -fx-font-size: 14px;
-                          -fx-font-weight: bold;"
-                 text="💎 × 500 Gems" />
-      <Button fx:id="buyCharacter1"
-              layoutX="100.0" layoutY="270.0"
-              mnemonicParsing="false"
-              onAction="#handleBuyNow"
-              style="-fx-background-color: transparent;
-                       -fx-border-color: transparent;"
-              onMouseEntered="#onButtonHover"
-              onMouseExited="#onButtonExit">
+      <TextField layoutX="100.0" layoutY="240.0" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: rgba(255,255,255,0.7);                           -fx-border-color: #FFFFFF;                           -fx-border-width: 1;                           -fx-border-radius: 5;                           -fx-background-radius: 5;                           -fx-font-family: 'Monospace';                           -fx-font-size: 14px;                           -fx-font-weight: bold;" text="💎 × 500 Gems" />
+      <Button fx:id="buyCharacter1" layoutX="100.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleBuyNow" onMouseEntered="#onButtonHover" onMouseExited="#onButtonExit" style="-fx-background-color: transparent;                        -fx-border-color: transparent;">
          <graphic>
             <StackPane>
                <ImageView fitHeight="50.0" fitWidth="150.0">
@@ -122,46 +60,19 @@
                      <Image url="@../../../images/bg.png" />
                   </image>
                </ImageView>
-               <Label style="-fx-font-family: 'Monospace';
-                                  -fx-font-size: 18px;
-                                  -fx-font-weight: bold;
-                                  -fx-text-fill: #000000;"
-                      text="Buy Now" />
+               <Label style="-fx-font-family: 'Monospace';                                   -fx-font-size: 18px;                                   -fx-font-weight: bold;                                   -fx-text-fill: #000000;" text="Buy Now" />
             </StackPane>
          </graphic>
       </Button>
 
       <!-- Character 2 -->
-      <ImageView fx:id="character2Image"
-                 fitHeight="150.0" fitWidth="200.0"
-                 layoutX="350.0" layoutY="80.0"
-                 pickOnBounds="true" preserveRatio="true"
-                 style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 4, 4);
-                          -fx-border-color: #FFD700;
-                          -fx-border-width: 2;">
+      <ImageView fx:id="character2Image" fitHeight="150.0" fitWidth="200.0" layoutX="350.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 4, 4);                           -fx-border-color: #FFD700;                           -fx-border-width: 2;">
          <image>
             <Image url="@../../../images/MaleCharacter2.jpg" />
          </image>
       </ImageView>
-      <TextField layoutX="350.0" layoutY="240.0"
-                 prefHeight="26.0" prefWidth="150.0"
-                 style="-fx-background-color: rgba(255,255,255,0.7);
-                          -fx-border-color: #FFFFFF;
-                          -fx-border-width: 1;
-                          -fx-border-radius: 5;
-                          -fx-background-radius: 5;
-                          -fx-font-family: 'Monospace';
-                          -fx-font-size: 14px;
-                          -fx-font-weight: bold;"
-                 text="💎 × 400 Gems" />
-      <Button fx:id="buyCharacter2"
-              layoutX="350.0" layoutY="270.0"
-              mnemonicParsing="false"
-              onAction="#handleBuyNow"
-              style="-fx-background-color: transparent;
-                       -fx-border-color: transparent;"
-              onMouseEntered="#onButtonHover"
-              onMouseExited="#onButtonExit">
+      <TextField layoutX="350.0" layoutY="240.0" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: rgba(255,255,255,0.7);                           -fx-border-color: #FFFFFF;                           -fx-border-width: 1;                           -fx-border-radius: 5;                           -fx-background-radius: 5;                           -fx-font-family: 'Monospace';                           -fx-font-size: 14px;                           -fx-font-weight: bold;" text="💎 × 400 Gems" />
+      <Button fx:id="buyCharacter2" layoutX="350.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleBuyNow" onMouseEntered="#onButtonHover" onMouseExited="#onButtonExit" style="-fx-background-color: transparent;                        -fx-border-color: transparent;">
          <graphic>
             <StackPane>
                <ImageView fitHeight="50.0" fitWidth="150.0">
@@ -169,46 +80,19 @@
                      <Image url="@../../../images/bg.png" />
                   </image>
                </ImageView>
-               <Label style="-fx-font-family: 'Monospace';
-                                  -fx-font-size: 18px;
-                                  -fx-font-weight: bold;
-                                  -fx-text-fill: #000000;"
-                      text="Buy Now" />
+               <Label style="-fx-font-family: 'Monospace';                                   -fx-font-size: 18px;                                   -fx-font-weight: bold;                                   -fx-text-fill: #000000;" text="Buy Now" />
             </StackPane>
          </graphic>
       </Button>
 
       <!-- Character 3 -->
-      <ImageView fx:id="character3Image"
-                 fitHeight="150.0" fitWidth="200.0"
-                 layoutX="600.0" layoutY="80.0"
-                 pickOnBounds="true" preserveRatio="true"
-                 style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 4, 4);
-                          -fx-border-color: #FFD700;
-                          -fx-border-width: 2;">
+      <ImageView fx:id="character3Image" fitHeight="150.0" fitWidth="200.0" layoutX="600.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 4, 4);                           -fx-border-color: #FFD700;                           -fx-border-width: 2;">
          <image>
             <Image url="@../../../images/FemaleCharacter.jpg" />
          </image>
       </ImageView>
-      <TextField layoutX="600.0" layoutY="240.0"
-                 prefHeight="26.0" prefWidth="150.0"
-                 style="-fx-background-color: rgba(255,255,255,0.7);
-                          -fx-border-color: #FFFFFF;
-                          -fx-border-width: 1;
-                          -fx-border-radius: 5;
-                          -fx-background-radius: 5;
-                          -fx-font-family: 'Monospace';
-                          -fx-font-size: 14px;
-                          -fx-font-weight: bold;"
-                 text="💎 × 300 Gems" />
-      <Button fx:id="buyCharacter3"
-              layoutX="600.0" layoutY="270.0"
-              mnemonicParsing="false"
-              onAction="#handleBuyNow"
-              style="-fx-background-color: transparent;
-                       -fx-border-color: transparent;"
-              onMouseEntered="#onButtonHover"
-              onMouseExited="#onButtonExit">
+      <TextField layoutX="600.0" layoutY="240.0" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: rgba(255,255,255,0.7);                           -fx-border-color: #FFFFFF;                           -fx-border-width: 1;                           -fx-border-radius: 5;                           -fx-background-radius: 5;                           -fx-font-family: 'Monospace';                           -fx-font-size: 14px;                           -fx-font-weight: bold;" text="💎 × 300 Gems" />
+      <Button fx:id="buyCharacter3" layoutX="600.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleBuyNow" onMouseEntered="#onButtonHover" onMouseExited="#onButtonExit" style="-fx-background-color: transparent;                        -fx-border-color: transparent;">
          <graphic>
             <StackPane>
                <ImageView fitHeight="50.0" fitWidth="150.0">
@@ -216,11 +100,7 @@
                      <Image url="@../../../images/bg.png" />
                   </image>
                </ImageView>
-               <Label style="-fx-font-family: 'Monospace';
-                                  -fx-font-size: 18px;
-                                  -fx-font-weight: bold;
-                                  -fx-text-fill: #000000;"
-                      text="Buy Now" />
+               <Label style="-fx-font-family: 'Monospace';                                   -fx-font-size: 18px;                                   -fx-font-weight: bold;                                   -fx-text-fill: #000000;" text="Buy Now" />
             </StackPane>
          </graphic>
       </Button>
@@ -228,36 +108,13 @@
       <!-- Second Row: Maps -->
 
       <!-- Map 1 -->
-      <ImageView fx:id="map1Image"
-                 fitHeight="150.0" fitWidth="200.0"
-                 layoutX="101.0" layoutY="331.0"
-                 pickOnBounds="true" preserveRatio="true"
-                 style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 4, 4);
-                          -fx-border-color: #FFD700;
-                          -fx-border-width: 2;">
+      <ImageView fx:id="map1Image" fitHeight="150.0" fitWidth="200.0" layoutX="101.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 4, 4);                           -fx-border-color: #FFD700;                           -fx-border-width: 2;">
          <image>
             <Image url="@../../../images/Map1.jpg" />
          </image>
       </ImageView>
-      <TextField layoutX="100.0" layoutY="486.0"
-                 prefHeight="26.0" prefWidth="150.0"
-                 style="-fx-background-color: rgba(255,255,255,0.7);
-                          -fx-border-color: #FFFFFF;
-                          -fx-border-width: 1;
-                          -fx-border-radius: 5;
-                          -fx-background-radius: 5;
-                          -fx-font-family: 'Monospace';
-                          -fx-font-size: 14px;
-                          -fx-font-weight: bold;"
-                 text="💎 × 1000 Gems" />
-      <Button fx:id="buyMap1"
-              layoutX="100.0" layoutY="510.0"
-              mnemonicParsing="false"
-              onAction="#handleBuyNow"
-              style="-fx-background-color: transparent;
-                       -fx-border-color: transparent;"
-              onMouseEntered="#onButtonHover"
-              onMouseExited="#onButtonExit">
+      <TextField layoutX="100.0" layoutY="486.0" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: rgba(255,255,255,0.7);                           -fx-border-color: #FFFFFF;                           -fx-border-width: 1;                           -fx-border-radius: 5;                           -fx-background-radius: 5;                           -fx-font-family: 'Monospace';                           -fx-font-size: 14px;                           -fx-font-weight: bold;" text="💎 × 1000 Gems" />
+      <Button fx:id="buyMap1" layoutX="100.0" layoutY="510.0" mnemonicParsing="false" onAction="#handleBuyNow" onMouseEntered="#onButtonHover" onMouseExited="#onButtonExit" style="-fx-background-color: transparent;                        -fx-border-color: transparent;">
          <graphic>
             <StackPane>
                <ImageView fitHeight="50.0" fitWidth="150.0">
@@ -265,46 +122,19 @@
                      <Image url="@../../../images/bg.png" />
                   </image>
                </ImageView>
-               <Label style="-fx-font-family: 'Monospace';
-                                  -fx-font-size: 18px;
-                                  -fx-font-weight: bold;
-                                  -fx-text-fill: #000000;"
-                      text="Buy Now" />
+               <Label style="-fx-font-family: 'Monospace';                                   -fx-font-size: 18px;                                   -fx-font-weight: bold;                                   -fx-text-fill: #000000;" text="Buy Now" />
             </StackPane>
          </graphic>
       </Button>
 
       <!-- Map 2 -->
-      <ImageView fx:id="map2Image"
-                 fitHeight="150.0" fitWidth="200.0"
-                 layoutX="351.0" layoutY="329.0"
-                 pickOnBounds="true" preserveRatio="true"
-                 style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 4, 4);
-                          -fx-border-color: #FFD700;
-                          -fx-border-width: 2;">
+      <ImageView fx:id="map2Image" fitHeight="150.0" fitWidth="200.0" layoutX="351.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 4, 4);                           -fx-border-color: #FFD700;                           -fx-border-width: 2;">
          <image>
             <Image url="@../../../images/Map2.jpg" />
          </image>
       </ImageView>
-      <TextField layoutX="350.0" layoutY="484.0"
-                 prefHeight="26.0" prefWidth="150.0"
-                 style="-fx-background-color: rgba(255,255,255,0.7);
-                          -fx-border-color: #FFFFFF;
-                          -fx-border-width: 1;
-                          -fx-border-radius: 5;
-                          -fx-background-radius: 5;
-                          -fx-font-family: 'Monospace';
-                          -fx-font-size: 14px;
-                          -fx-font-weight: bold;"
-                 text="💎 × 800 Gems" />
-      <Button fx:id="buyMap2"
-              layoutX="350.0" layoutY="510.0"
-              mnemonicParsing="false"
-              onAction="#handleBuyNow"
-              style="-fx-background-color: transparent;
-                       -fx-border-color: transparent;"
-              onMouseEntered="#onButtonHover"
-              onMouseExited="#onButtonExit">
+      <TextField layoutX="350.0" layoutY="484.0" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: rgba(255,255,255,0.7);                           -fx-border-color: #FFFFFF;                           -fx-border-width: 1;                           -fx-border-radius: 5;                           -fx-background-radius: 5;                           -fx-font-family: 'Monospace';                           -fx-font-size: 14px;                           -fx-font-weight: bold;" text="💎 × 800 Gems" />
+      <Button fx:id="buyMap2" layoutX="350.0" layoutY="510.0" mnemonicParsing="false" onAction="#handleBuyNow" onMouseEntered="#onButtonHover" onMouseExited="#onButtonExit" style="-fx-background-color: transparent;                        -fx-border-color: transparent;">
          <graphic>
             <StackPane>
                <ImageView fitHeight="50.0" fitWidth="150.0">
@@ -312,46 +142,19 @@
                      <Image url="@../../../images/bg.png" />
                   </image>
                </ImageView>
-               <Label style="-fx-font-family: 'Monospace';
-                                  -fx-font-size: 18px;
-                                  -fx-font-weight: bold;
-                                  -fx-text-fill: #000000;"
-                      text="Buy Now" />
+               <Label style="-fx-font-family: 'Monospace';                                   -fx-font-size: 18px;                                   -fx-font-weight: bold;                                   -fx-text-fill: #000000;" text="Buy Now" />
             </StackPane>
          </graphic>
       </Button>
 
       <!-- Map 3 -->
-      <ImageView fx:id="map3Image"
-                 fitHeight="150.0" fitWidth="200.0"
-                 layoutX="601.0" layoutY="330.0"
-                 pickOnBounds="true" preserveRatio="true"
-                 style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 4, 4);
-                          -fx-border-color: #FFD700;
-                          -fx-border-width: 2;">
+      <ImageView fx:id="map3Image" fitHeight="150.0" fitWidth="200.0" layoutX="601.0" layoutY="330.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 8, 0, 4, 4);                           -fx-border-color: #FFD700;                           -fx-border-width: 2;">
          <image>
             <Image url="@../../../images/Map3.jpg" />
          </image>
       </ImageView>
-      <TextField layoutX="600.0" layoutY="484.0"
-                 prefHeight="26.0" prefWidth="150.0"
-                 style="-fx-background-color: rgba(255,255,255,0.7);
-                          -fx-border-color: #FFFFFF;
-                          -fx-border-width: 1;
-                          -fx-border-radius: 5;
-                          -fx-background-radius: 5;
-                          -fx-font-family: 'Monospace';
-                          -fx-font-size: 14px;
-                          -fx-font-weight: bold;"
-                 text="💎 × 600 Gems" />
-      <Button fx:id="buyMap3"
-              layoutX="600.0" layoutY="510.0"
-              mnemonicParsing="false"
-              onAction="#handleBuyNow"
-              style="-fx-background-color: transparent;
-                       -fx-border-color: transparent;"
-              onMouseEntered="#onButtonHover"
-              onMouseExited="#onButtonExit">
+      <TextField layoutX="600.0" layoutY="484.0" prefHeight="26.0" prefWidth="150.0" style="-fx-background-color: rgba(255,255,255,0.7);                           -fx-border-color: #FFFFFF;                           -fx-border-width: 1;                           -fx-border-radius: 5;                           -fx-background-radius: 5;                           -fx-font-family: 'Monospace';                           -fx-font-size: 14px;                           -fx-font-weight: bold;" text="💎 × 600 Gems" />
+      <Button fx:id="buyMap3" layoutX="600.0" layoutY="510.0" mnemonicParsing="false" onAction="#handleBuyNow" onMouseEntered="#onButtonHover" onMouseExited="#onButtonExit" style="-fx-background-color: transparent;                        -fx-border-color: transparent;">
          <graphic>
             <StackPane>
                <ImageView fitHeight="50.0" fitWidth="150.0">
@@ -359,11 +162,7 @@
                      <Image url="@../../../images/bg.png" />
                   </image>
                </ImageView>
-               <Label style="-fx-font-family: 'Monospace';
-                                  -fx-font-size: 18px;
-                                  -fx-font-weight: bold;
-                                  -fx-text-fill: #000000;"
-                      text="Buy Now" />
+               <Label style="-fx-font-family: 'Monospace';                                   -fx-font-size: 18px;                                   -fx-font-weight: bold;                                   -fx-text-fill: #000000;" text="Buy Now" />
             </StackPane>
          </graphic>
       </Button>
