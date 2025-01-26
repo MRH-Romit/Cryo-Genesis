@@ -112,7 +112,7 @@ public class GamePanel {
         startGameLoop();
 
         // Optionally show a tutorial message with typewriter effect
-        showTutorialMessage("If you're looking for new challenges to beat, just tap here!");
+        showTutorialMessage("Hello Hero! If you're looking for new challenges to beat, just tap here!");
     }
 
 

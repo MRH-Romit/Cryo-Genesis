@@ -4,15 +4,24 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="550.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Socket.AgentChatController">
-    <VBox spacing="10" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
+    <VBox spacing="10" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10" style="-fx-background-color: linear-gradient(to bottom, #E3F2FD, #f5f5f5); -fx-padding: 15;">
+        <!-- Header Area -->
+        <HBox spacing="10" alignment="CENTER" style="-fx-background-color: #0078D4; -fx-padding: 10; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0.5, 0, 2);">
+            <Label text="Agent Chat" style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold; -fx-font-family: 'Monospace';" />
+        </HBox>
+
         <!-- ScrollPane for message history -->
-        <ScrollPane fx:id="scrollPane" fitToWidth="true" VBox.vgrow="ALWAYS">
-            <VBox fx:id="messageContainer" styleClass="message-container" style="-fx-background-color: transparent; -fx-padding: 10;" />
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-padding: 10; -fx-border-color: #CCCCCC; -fx-border-width: 1; -fx-border-radius: 10;">
+            <VBox fx:id="messageContainer" style="-fx-background-color: transparent; -fx-spacing: 10;" />
         </ScrollPane>
+
         <!-- Input area for sending messages -->
-        <HBox spacing="10">
-            <TextField fx:id="messageField" promptText="Enter your message..." HBox.hgrow="ALWAYS" />
-            <Button text="Send" onAction="#sendMessage" />
+        <HBox spacing="10" style="-fx-padding: 10;">
+            <TextField fx:id="messageField" promptText="Type a message..." HBox.hgrow="ALWAYS"
+                       style="-fx-font-size: 14px; -fx-font-family: 'Monospace'; -fx-text-fill: #333333; -fx-background-color: #ffffff; -fx-border-color: #CCCCCC; -fx-border-radius: 20; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 5, 0.2, 0, 1);" />
+            <Button text="Send" onAction="#sendMessage"
+                    style="-fx-background-color: #0078D4; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-family: 'Monospace'; -fx-padding: 8 20; -fx-border-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0.5, 0, 2);" />
         </HBox>
     </VBox>
 </AnchorPane>
+

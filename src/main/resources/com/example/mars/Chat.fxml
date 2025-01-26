@@ -4,13 +4,23 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="550.0" prefWidth="850.0" stylesheets="@../../../Design/chat-styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mars.Socket.ChatController">
-   <VBox spacing="10" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10">
-      <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="474.0" prefWidth="798.0" VBox.vgrow="ALWAYS" style="-fx-background-color: #FEEE99; -fx-padding: 10;">
-         <VBox fx:id="messageContainer" styleClass="message-container" style="-fx-background-color: #FFFFFF; -fx-border-color: #CCCCCC; -fx-border-width: 1px; -fx-padding: 5;" />
+   <VBox spacing="10" AnchorPane.bottomAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="10" style="-fx-background-color: #f5f5f5; -fx-padding: 15;">
+      <!-- Header Area -->
+      <HBox spacing="10" alignment="CENTER" style="-fx-background-color: #444444; -fx-padding: 10; -fx-background-radius: 10;">
+         <Label text="Client Chat" style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-family: 'Monospace'; -fx-font-weight: bold;" />
+      </HBox>
+
+      <!-- ScrollPane for message history -->
+      <ScrollPane fx:id="scrollPane" fitToWidth="true" prefHeight="474.0" prefWidth="798.0" VBox.vgrow="ALWAYS" style="-fx-background-color: #EFEFEF; -fx-padding: 10; -fx-border-color: #CCCCCC; -fx-border-width: 1; -fx-border-radius: 10;">
+         <VBox fx:id="messageContainer" styleClass="message-container" style="-fx-background-color: #FFFFFF; -fx-border-color: #CCCCCC; -fx-border-width: 1px; -fx-spacing: 10; -fx-padding: 10;" />
       </ScrollPane>
-      <HBox spacing="10">
-         <TextField fx:id="messageField" onAction="#sendMessage" HBox.hgrow="ALWAYS" style="-fx-font-family: 'Monospace'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #333333; -fx-background-color: #EFEFEF; -fx-border-color: #CCCCCC; -fx-border-radius: 5px; -fx-background-radius: 5px;" />
-         <Button onAction="#sendMessage" text="Send" style="-fx-font-family: 'Monospace'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-color: #444444; -fx-text-fill: #FFFFFF; -fx-border-radius: 5px; -fx-background-radius: 5px;" />
+
+      <!-- Input area for sending messages -->
+      <HBox spacing="10" style="-fx-padding: 10;">
+         <TextField fx:id="messageField" onAction="#sendMessage" HBox.hgrow="ALWAYS" promptText="Type a message..."
+                    style="-fx-font-size: 14px; -fx-font-family: 'Monospace'; -fx-text-fill: #333333; -fx-background-color: #ffffff; -fx-border-color: #CCCCCC; -fx-border-radius: 20; -fx-padding: 10;" />
+         <Button onAction="#sendMessage" text="Send"
+                 style="-fx-background-color: #444444; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-family: 'Monospace'; -fx-font-weight: bold; -fx-padding: 8 20; -fx-border-radius: 20;" />
       </HBox>
    </VBox>
 </AnchorPane>
