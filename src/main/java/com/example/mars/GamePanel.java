@@ -220,11 +220,11 @@ public class GamePanel {
                 tileM.mapWidth * tileSize,
                 tileM.mapHeight * tileSize
         );
-        // Check for puzzle trigger
+
+        // Check for puzzle trigger only if the puzzle is not already completed
         if (!puzzleActive && !puzzleCompleted) {
             if (tileM.isNearPuzzleTrigger(hero.getX(), hero.getY())) {
-                // Show prompt to press E to interact
-                if (keyH.interactPressed) {  // Changed from attackPressed to interactPressed
+                if (keyH.interactPressed) {
                     puzzleActive = true;
                     launchTowerOfHanoi();
                 }
@@ -246,10 +246,11 @@ public class GamePanel {
             keyH.attackPressed = false;
         }
     }
+
     private void launchTowerOfHanoi() {
         try {
             if (gameLoop != null) {
-                gameLoop.stop();
+                gameLoop.stop(); // Pause the game loop
             }
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/mars/tower_of_hanoi_puzzle.fxml"));
@@ -260,50 +261,50 @@ public class GamePanel {
             puzzleStage.setTitle("Tower of Hanoi");
             puzzleStage.setResizable(false);
             puzzleStage.setScene(new Scene(puzzleRoot));
-            puzzleController.setPuzzleStage(puzzleStage); // Pass the stage to the controller
+            puzzleController.setPuzzleStage(puzzleStage);
 
-            // Handle puzzle closure
+            // Handle the closure of the puzzle stage
             puzzleStage.setOnHidden(e -> {
-                puzzleActive = false;
                 if (puzzleController.isPuzzleCompleted()) {
-                    handlePuzzleCompletion(); // Handle completion logic
+                    handlePuzzleCompletion(); // Mark puzzle as completed
+                } else {
+                    // If the puzzle is closed without completion, reset only `puzzleActive`
+                    puzzleActive = false;
                 }
+
+                // Restart the game loop
                 if (gameLoop != null) {
-                    gameLoop.start(); // Resume the game loop
+                    gameLoop.start();
                 }
             });
 
             puzzleStage.show();
-
+            puzzleActive = true; // Mark puzzle as active
         } catch (IOException e) {
             e.printStackTrace();
+
+            // Ensure the game loop resumes if there's an error
             if (gameLoop != null) {
-                gameLoop.start(); // Resume the game loop on failure
+                gameLoop.start();
             }
+
             puzzleActive = false;
         }
     }
 
 
+
     private void handlePuzzleCompletion() {
-        int heroTileCol = hero.getX() / tileSize;
-        int heroTileRow = hero.getY() / tileSize;
+        // Set the completion message and play a sound
+        Platform.runLater(() -> {
+            showTutorialMessage("Puzzle Completed! Well done!");
+        });
 
-        // Play completion sound
-        try {
-            SoundManager.playSound("/audio/puzzle_complete.mp3");
+        SoundManager.playSound("/audio/puzzle_complete.mp3");
 
-            // Optional: Change the chest tile to an opened chest
-            // tileM.mapTileNum[heroTileRow][heroTileCol] = OPENED_CHEST_TILE;
-
-            // Optional: Show completion message
-            Platform.runLater(() -> {
-                showTutorialMessage("Puzzle Completed! Well done!");
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // Update flags to prevent reopening
+        puzzleActive = false;
+        puzzleCompleted = true; // Mark the puzzle as fully completed
     }
 
     /**
